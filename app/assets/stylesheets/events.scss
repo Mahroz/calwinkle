@@ -1,0 +1,51 @@
+.new-event-container {
+  font-family: Roboto;
+  font-style: normal;
+  // font-weight: normal;
+  line-height: normal;
+  color: #707070;
+  h3 {
+    font-size: 40px;
+    font-weight: normal;
+  }
+  h4 {
+    font-weight: bold;
+    font-size: 24px;
+  }
+  h5 {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  h6 {
+    font-size: 12px;
+  }
+}
+
+.event-form {
+  .form-control {
+    border: 1px solid #707070
+  }
+  .event-date-block {
+    input {
+      height: 30px;
+    }
+  }
+  .row {
+    margin: 0px;
+  }
+  label {
+    // font-size: 14px;
+  }
+}
+
+.event-container {
+  margin-left: 40.5%;
+  width: 400px;
+
+  .event-start, .event-end, .event-address {
+    h5 {
+      display: inline;
+      margin-right: 5px;
+    }
+  }
+}

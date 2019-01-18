@@ -1,0 +1,64 @@
+.h4
+  | ADD DETAILS
+  hr
+  br
+.event-form
+  h5
+    | DETAILS:
+  br
+  br/
+  = form_for @event do |f|
+    .form-group
+      label
+        | EVENT NAME
+      = f.text_field :name, class: 'form-control'
+    .form-group
+      label
+        | EVENT DESCRIPTION
+      = f.text_area :description, class: 'form-control'
+    .form-group
+      label
+        | EVENT ADDRESS
+      = f.text_field :address, class: 'form-control'
+    .row.event-date-block
+      .form-group.col-md-6.padding-0
+        .row
+          label
+            | EVENT START DATE/TIME:
+        .row
+          .col-md-3.padding-0
+            h6 STARTS ON:
+          .col-md-4.padding-0
+            = f.date_field :start_date, class: 'form-control'
+          .col-md-4.padding-0.margin-l5
+            = f.time_field :start_time, class: 'form-control'
+      .form-group.col-md-6.padding-0
+        .row
+          label
+            | EVENT END DATE/TIME:
+        .row
+          .col-md-3.padding-0
+            h6 ENDS ON:
+          .col-md-4.padding-0
+            = f.date_field :end_date, class: 'form-control'
+          .col-md-4.padding-0.margin-l5
+            = f.time_field :end_time, class: 'form-control'
+    .form-group
+      label
+        | HOW OFTEN DOES IT REOCCURS:
+      = f.text_field :name, class: 'form-control'
+    br/
+    h5
+      | PCITURES & VIDEO:
+    br/
+    br/
+    .form-group
+      lable
+        | EVENT MAIN PICTURE (require, 1200x250)
+      br
+      = f.label :main_picture, 'Upload', class: 'btn-upload'
+      = f.file_field :main_picture, class: 'form-control file-input'
+    .form-group
+      = f.submit 'Save', class: 'btn btn-primary'
+
+

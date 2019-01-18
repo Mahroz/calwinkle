@@ -1,0 +1,21 @@
+h3
+  | BigEvents
+
+.row
+  .col-md-7
+    h5
+      | MY CURRENT EVENTS
+    .event-list
+      - @events.each do |event|
+        .event-item
+          = event.name
+          = event.description
+          img src=event.main_picture.url
+          = link_to  'Edit', edit_event_path(event) 
+
+
+  .col-md-5
+    h5
+      | CREATE A NEW EVENT
+
+    = link_to  'Create new event', new_event_path, class: 'btn btn-secondary'

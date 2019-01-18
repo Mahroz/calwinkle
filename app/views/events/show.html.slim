@@ -1,0 +1,21 @@
+.event-container
+  .event-image.rows
+    img src=@event.main_picture.url height='170' width='400'
+  .event-name.rows
+    strong = @event.name.upcase
+  .event-description.rows
+    = @event.description
+  .event-start
+    h5 Starts on:
+    = @event.start_on
+  .event-end
+    h5 Ends on:
+    = @event.end_on
+  .event-address
+    h5 Address:
+    = @event.address
+  hr
+  .event-scan
+    h5 SCAN QR. - OR - CLICK BUTTON
+    .event-qr-code
+      = image_tag @qr 

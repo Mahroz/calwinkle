@@ -10,8 +10,12 @@ class CreateEvent < ActiveRecord::Migration[5.2]
       t.date :start_date
       t.date :end_date
       t.string :main_picture
+      t.string :event_url
+      t.references :user
 
       t.timestamps
     end
+
+    add_index :events, :event_url, unique: true
   end
 end

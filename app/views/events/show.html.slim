@@ -1,21 +1,37 @@
 .event-container
   .event-image.rows
-    img src=@event.main_picture.url height='170' width='400'
+    img src=@event.main_picture.url height='auto' width='100%'
   .event-name.rows
     strong = @event.name.upcase
   .event-description.rows
     = @event.description
+  br/
   .event-start
     h5 Starts on:
     = @event.start_on
   .event-end
     h5 Ends on:
     = @event.end_on
+  br/
   .event-address
     h5 Address:
     = @event.address
   hr
-  .event-scan
-    h5 SCAN QR. - OR - CLICK BUTTON
-    .event-qr-code
-      = image_tag @qr 
+  .event-subscribe
+    h5 Subscribe Now To This Event
+    .row
+      .event-qr-code.col-md-5
+        .row
+          p.col-md-12 Scan QR with your phone
+        .row
+          .col-md-12 
+            = image_tag @qr
+      .col-md-2
+        h6 OR
+      .col-md-5
+        .row
+          p.col-md-12 Click To Add To Calendar
+        .row
+          .col-md-12
+            button.btn.btn-primary.subscribe-btn Add To Your Calendar
+

@@ -1,21 +1,19 @@
 h3
-  | BigEvents
+  | CalWinkle - Hi #{current_user.name}
+  = link_to  '(Sign out)', destroy_user_session_path, method: :delete
+hr/
 
 .row
   .col-md-7
     h5
       | MY CURRENT EVENTS
+    hr/
     .event-list
       - @events.each do |event|
-        .event-item
-          = event.name
-          = event.description
-          img src=event.main_picture.url
-          = link_to  'Edit', edit_event_path(event) 
-
+        = render partial: 'event_item', locals: { event: event } 
 
   .col-md-5
     h5
       | CREATE A NEW EVENT
-
-    = link_to  'Create new event', new_event_path, class: 'btn btn-secondary'
+    .btn-center
+      = link_to  'Create new event', new_event_path, class: 'btn btn-primary'

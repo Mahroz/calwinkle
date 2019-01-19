@@ -1,0 +1,46 @@
+- url = get_event_url(event)
+h4
+  | YOUR CALENDAR EVENT IS READY!
+  hr
+  br
+.event-preview-details
+  h5
+    | EVENT PAGE WEBSITE URL:
+  .point
+    | - you can share this url with your customers
+  .point
+    | - when they click on the url, they can view your event and subscribe to your calendar
+  br/
+  label
+    | URL: #{url}
+  br/
+  label
+    | Share this now: Facebook Linkden Email
+  br/
+  br/
+  .event-qr-block
+    h5
+      | EVENT QR CODE:
+    .point
+      | - QR codes make it easy for your customer scan and add subscribe to your calendar, try it now yourself!
+    .point
+      | - you can download and share this QR code via email, on your printed materials, etc
+    .row
+      .qr-code.col-md-2
+        = image_tag get_qr_code(100)
+      .col-md-1
+      .col-md-5
+        br
+        h7 To download:
+        .point
+          | - right click and save
+  br/
+  br/
+  h7
+    | Need to make any changes?
+  .point
+    | change the event details on the left side and then click the UPDATE button
+  br/
+  br/
+  .btn-center
+    button.btn.btn-primary id='event-done-btn' DONE

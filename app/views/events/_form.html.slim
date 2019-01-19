@@ -7,7 +7,8 @@
     | DETAILS:
   br
   br/
-  = form_for @event do |f|
+  = form_for(@event, url: form_url,remote: true, html: { id: 'event-form'}) do |f|
+    = f.hidden_field :user_id, value: current_user.id
     .form-group
       label
         | EVENT NAME
@@ -46,7 +47,7 @@
     .form-group
       label
         | HOW OFTEN DOES IT REOCCURS:
-      = f.text_field :name, class: 'form-control'
+      / = f.text_field :name, class: 'form-control'
     br/
     h5
       | PCITURES & VIDEO:
@@ -58,7 +59,8 @@
       br
       = f.label :main_picture, 'Upload', class: 'btn-upload'
       = f.file_field :main_picture, class: 'form-control file-input'
-    .form-group
-      = f.submit 'Save', class: 'btn btn-primary'
+    .form-group.btn-center
+      - button_text = @event.persisted? ? 'Update' : 'Save'
+      button#event-preview-btn.btn.btn-primary type='submit' #{button_text}
 
 

@@ -1,0 +1,5 @@
+$('#event-preview-block').html("<%= escape_javascript(render partial: 'events/preview', locals: { event: @event } ) %>");
+$('#event-preview-btn').text('Update');
+$('#event-done-btn').click(function() {
+  $('#event-form').attr('action', "/events").submit()
+});

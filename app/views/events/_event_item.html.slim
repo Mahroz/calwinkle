@@ -1,0 +1,32 @@
+.event-item.row
+  .col-md-3
+    = display_date(event.start_date)
+  .col-md-9
+    - url = event.event_url
+    h6 = event.name
+    .event-url.row
+      .col-md-1
+        h6.event-url-heading URL:
+      .col-md-11
+        a href=url #{url}
+        .point
+          | - you can share this url with your customers
+        .point
+          | - share this now: Facebook Linkden Email
+    .event-qr-code
+      .row
+        .col-md-12
+          h6 QR CODE:
+      .row
+        .col-md-2
+          = image_tag get_qr_code(70)
+        .col-md-10
+          .point
+            | - QR code makes it easier for your customer to scan and add subscribe
+          .point
+            | - you can download and share this QR code via email, on your printed materials, etc
+          .point
+            | - to download, right click and save
+    .event-edit
+      = link_to  '[Edit event]', edit_event_path(event)      
+hr

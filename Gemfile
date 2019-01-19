@@ -47,7 +47,8 @@ gem 'jquery-rails'
 
 gem 'carrierwave', '~> 1.0'
 
-# gem 'rqrcode'
+gem 'devise'
+
 gem 'rqrcode_png'
 
 group :development, :test do

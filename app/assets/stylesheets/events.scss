@@ -38,14 +38,74 @@
   }
 }
 
+// For the Event Show page
+@media screen and (max-width: 420px) {
+  .event-container {
+    width: 60%;
+    margin-left: 20%;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .event-container {
+     width: 40%;
+     margin-left: 30%;
+  }
+}
+// @media (min-width: 40em) {
+//   /* Probably some parent element that limits the img width */
+//   .event-container {
+//     width: 60%;
+//   }
+// }
+
 .event-container {
-  margin-left: 40.5%;
-  width: 400px;
+  // margin-left: 30%;
+  // width: 400px;
 
   .event-start, .event-end, .event-address {
     h5 {
       display: inline;
       margin-right: 5px;
     }
+  }
+  .event-subscribe {
+    p {
+      font-size: 12px;
+    }
+    .subscribe-btn {
+      font-size: 12px;
+      margin-top: 1.7rem;
+    }
+  }
+}
+////////////////////////////////////////////////////
+
+// For event index page
+.event-list {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.event-item {
+  .event-url-heading {
+    display: inline;
+  }
+  .point {
+    font-size: 12px;
+    margin: 0px;
+  }
+  .event-edit a {
+    color: grey;
+    font-size: 12px;
+  }
+}
+//////////////////////////////////////////////////
+
+// For event preview
+.event-preview-details {
+  .point {
+    margin: 0px;
+    font-size: 12px;
   }
 }

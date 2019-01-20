@@ -1,5 +1,5 @@
 body {
-  padding: 31px 50px;
+  padding: 15px 25px;
 }
 
 .field_with_errors {
@@ -33,7 +33,16 @@ body {
 .btn-center {
   text-align: center;
   .btn {
-    padding: 7px 50px;
+    padding: 8px 35px;
     border-radius: 25px;
+  }
+}
+
+.user-header-block {
+  h4 {
+    display: inline;
+  }
+  a {
+    float: right;
   }
 }

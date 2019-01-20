@@ -1,13 +1,16 @@
 .event-item.row
-  .col-md-3
+  .col-md-2
     = display_date(event.start_date)
-  .col-md-9
-    - url = event.event_url
-    h6 = event.name
+  .col-md-10
+    - url = get_event_url(event)
+    .event-name
+      h6 = event.name
+      = link_to  edit_event_path(event), class: 'event-edit' do
+        i.fa.fa-pencil.fa-lg title='Edit event'
     .event-url.row
-      .col-md-1
+      .col-md-2
         h6.event-url-heading URL:
-      .col-md-11
+      .col-md-10
         a href=url #{url}
         .point
           | - you can share this url with your customers
@@ -15,11 +18,11 @@
           | - share this now: Facebook Linkden Email
     .event-qr-code
       .row
-        .col-md-12
+        .col-md-2
           h6 QR CODE:
       .row
         .col-md-2
-          = image_tag get_qr_code(70)
+          = image_tag get_qr_code(calendar_url(format: :ics, id: event.id), 80)
         .col-md-10
           .point
             | - QR code makes it easier for your customer to scan and add subscribe
@@ -27,6 +30,4 @@
             | - you can download and share this QR code via email, on your printed materials, etc
           .point
             | - to download, right click and save
-    .event-edit
-      = link_to  '[Edit event]', edit_event_path(event)      
 hr

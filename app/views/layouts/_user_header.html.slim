@@ -1,0 +1,7 @@
+.user-header-block
+  h4
+    | CalWinkle - Hi #{current_user.name}
+  = link_to destroy_user_session_path, method: :delete do
+    i.fa.fa-sign-out.fa-2x title='Sign out'
+  br/
+  hr/

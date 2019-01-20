@@ -82,6 +82,12 @@
 ////////////////////////////////////////////////////
 
 // For event index page
+.new-event-block, .event-list-block {
+  margin-bottom: 7px;
+  h5 {
+    text-align: center;
+  }
+}
 .event-list {
   overflow-y: auto;
   overflow-x: hidden;
@@ -95,9 +101,15 @@
     font-size: 12px;
     margin: 0px;
   }
-  .event-edit a {
+  .event-name {
+    h6 {
+      display: inline
+    }
+  }
+  .event-edit {
     color: grey;
     font-size: 12px;
+    float: right;
   }
 }
 //////////////////////////////////////////////////

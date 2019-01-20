@@ -1,10 +1,12 @@
 module EventHelper
   def display_date(date)
-    date.strftime("%m/%d/%y") rescue 'MM/DD/YY'
+    date.strftime("%m/%d/%Y") rescue 'MM/DD/YY'
   end
 
-  def get_qr_code(size)
-    RQRCode::QRCode.new("http://codingricky.com").to_img.resize(size, size).to_data_url
+  def get_qr_code(url, size)
+    # calendar_url(format: :ics, id: event.id)
+    RQRCode::QRCode.new(url).to_img
+                   .resize(size, size).to_data_url
   end
 
   def get_event_url(event)

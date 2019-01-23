@@ -15,4 +15,6 @@ Rails.application.routes.draw do
   get '/:username/:eventname' => 'events#show', as: :show_event
   post '/new/preview' => 'events#preview', as: :event_preview
   get '/events/:id/calendar' => 'events#calendar', as: :calendar
+
+  get '/google8bd9dfe9e823ee85', :to => redirect('/google8bd9dfe9e823ee85.html')
 end

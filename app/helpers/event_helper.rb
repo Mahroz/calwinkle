@@ -12,12 +12,4 @@ module EventHelper
   def get_event_url(event)
     "#{request.base_url}/#{current_user.name.parameterize}/#{event.name.parameterize}"
   end
-
-  def form_url
-    if @event.persisted?
-      event_url
-    else
-      event_preview_url
-    end
-  end
 end

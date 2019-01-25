@@ -6,7 +6,7 @@
   h5
     | DETAILS:
   br
-  = form_for(@event, url: form_url,remote: true, html: { id: 'event-form' }) do |f|
+  = form_for(@event, remote: true, html: { id: 'event-form' }) do |f|
     = f.hidden_field :user_id, value: current_user.id
     .form-group
       label
@@ -59,6 +59,6 @@
       = f.label :main_picture, 'Upload', class: 'btn-upload'
       = f.file_field :main_picture, class: 'form-control file-input'
     .form-group.btn-center
-      button#event-preview-btn.btn.btn-primary type='submit' #{event_msg}
+      button#event-create-btn.btn.btn-primary type='submit' #{event_msg}
 
 

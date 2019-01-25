@@ -1,5 +1,4 @@
-.alert-container
-    - flash.each do |key, value|
-        - alert_class = key == 'alert' ? 'alert-danger' : 'alert-info'
-        div class="alert #{alert_class}"
-            = value
+- flash.each do |key, value|
+    - alert_class = key == 'alert' ? 'alert-danger' : 'alert-info'
+    div class="alert #{alert_class}"
+        = value

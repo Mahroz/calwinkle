@@ -5,3 +5,4 @@ $('.alert-container').html("<%= escape_javascript(render partial: 'layouts/alert
   $('#event-form').attr('action', "<%= event_path(@event) %>");
   $('#event-form').append("<input type='hidden' name='_method' value='patch'/>");
 <%- end %>
+$('html, body').animate({ scrollTop: 0 }, 'fast');

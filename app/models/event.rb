@@ -4,6 +4,8 @@ class Event < ApplicationRecord
   mount_uploader :main_picture, PictureUploader
 
   validates :name, presence: true, uniqueness: { scope: :user_id }
+  validates_presence_of :start_date, :start_time, :end_date, :end_time
+  validate :start_end_date_time
 
   belongs_to :user
 
@@ -35,7 +37,16 @@ class Event < ApplicationRecord
   end
 
   private
-  
+
+  def start_end_date_time
+    return if !start_date || !start_time || !end_date || !end_time
+    if end_date < start_date
+      errors.add(:base, "Event end date and time can't be before start time.")
+    elsif end_date == start_date && end_time <= start_time
+      errors.add(:base, "Event end date and time can't be before start time.")
+    end
+  end  
+
   def get_formatted_date_time(date,time)
     date.strftime('%A, %d %b, %Y') + ' - ' + time.strftime('%l:%M %p') rescue 'N/A'
   end

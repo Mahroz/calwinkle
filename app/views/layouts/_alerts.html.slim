@@ -1,7 +1,13 @@
 - flash.each do |key, value|
     - alert_class = key == 'alert' ? 'alert-danger' : 'alert-info'
-    div class="alert #{alert_class}"
-        = value
+    - if (key == 'errors')
+		- value.each do |error|
+	    	div class="alert alert-danger"
+		        = error
+    - else
+	    div class="alert #{alert_class}"
+	        = value
 
 / To make flash disappear
 = javascript_tag "setTimeout((function() { $('.alert').slideUp(500); }), 5000);"
+= javascript_tag "$('html, body').animate({ scrollTop: 0 }, 'fast');"

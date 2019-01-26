@@ -3,6 +3,7 @@ html
   head
     title
       | CalWinkle
+    = favicon_link_tag asset_path('calwinkle-icon.png')
     = csrf_meta_tags
     = csp_meta_tag
 
@@ -13,8 +14,9 @@ html
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   body
-    .container-fluid
-      = render 'layouts/user_header'
+    - if current_user
+      .container-fluid
+        = render 'layouts/user_header'
 
     .alert-container
       = render 'layouts/alerts'

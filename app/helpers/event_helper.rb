@@ -12,4 +12,18 @@ module EventHelper
   def get_event_url(event)
     "#{request.base_url}/#{current_user.name.parameterize}/#{event.name.parameterize}"
   end
+
+  def split_datetime(datetime)
+    date_part = datetime.strftime('%Y/%m/%d') rescue ''
+    time_part = datetime.strftime('%H:%M') rescue ''
+    [date_part, time_part]
+  end
+
+  def form_url
+    if @event.persisted?
+      event_url
+    else
+      event_preview_url
+    end
+  end
 end

@@ -28,10 +28,12 @@
         .row
           .col-md-3.padding-0
             h6 STARTS ON:
-          .col-md-4.padding-0
-            = f.date_field :start_date, class: 'form-control', required: true
-          .col-md-4.padding-0.margin-l5
-            = f.time_field :start_time, class: 'form-control', required: true
+          .col-md-8.padding-0.margin-l5
+            #datetimepicker1.input-group.date data-target-input='nearest' 
+              input.form-control.datetimepicker-input data-target='#datetimepicker1' type='text' name='event[start_on]' value="#{@event.start_on}"
+              .input-group-append data-target='#datetimepicker1' data-toggle='datetimepicker'
+                .input-group-text
+                  i.fa.fa-calendar
       .form-group.col-md-6.padding-0
         .row
           label
@@ -39,10 +41,12 @@
         .row
           .col-md-3.padding-0
             h6 ENDS ON:
-          .col-md-4.padding-0
-            = f.date_field :end_date, class: 'form-control', required: true
-          .col-md-4.padding-0.margin-l5
-            = f.time_field :end_time, class: 'form-control', required: true
+          .col-md-8.padding-0.margin-l5
+            #datetimepicker2.input-group.date data-target-input='nearest' 
+              input.form-control.datetimepicker-input data-target='#datetimepicker2' type='text' name='event[end_on]' value="#{@event.end_on}"
+              .input-group-append data-target='#datetimepicker2' data-toggle='datetimepicker'
+                .input-group-text
+                  i.fa.fa-calendar
     .form-group
       label
         | HOW OFTEN DOES IT REOCCURS:

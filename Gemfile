@@ -36,7 +36,7 @@ gem 'jbuilder', '~> 2.5'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
-# Added by Ahmad
+# Added by Developer
 gem 'devise'
 
 gem 'slim-rails'
@@ -52,6 +52,8 @@ gem 'carrierwave', '~> 1.0'
 gem 'rqrcode_png'
 
 gem 'icalendar', '~> 2.3'
+
+gem 'bootstrap4-datetime-picker-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

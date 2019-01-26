@@ -8,11 +8,11 @@ class Event < ApplicationRecord
   belongs_to :user
 
   def start_on
-    start_date.strftime('%m/%d/%y') + ' ' + start_time.strftime('%H:%M') rescue 'MM/DD/YY HH:MM'
+    start_date.strftime('%Y/%m/%d') + ' ' + start_time.strftime('%H:%M') rescue ''
   end
 
   def end_on
-    end_date.strftime('%m/%d/%y') + ' ' + end_time.strftime('%H:%M') rescue 'MM/DD/YY HH:MM'
+    end_date.strftime('%Y/%m/%d') + ' ' + end_time.strftime('%H:%M') rescue ''
   end
 
   def calendar_url

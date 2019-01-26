@@ -13,6 +13,9 @@ html
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   body
+    .container-fluid
+      = render 'layouts/user_header'
+
     .alert-container
       = render 'layouts/alerts'
     = yield

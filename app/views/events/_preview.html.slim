@@ -1,4 +1,4 @@
-- url = get_event_url(event)
+- url = get_event_url(@event)
 h4
   | YOUR CALENDAR EVENT IS READY!
   hr
@@ -43,4 +43,4 @@ h4
   br/
   br/
   .btn-center
-    button.btn.btn-primary id='event-done-btn' DONE
+    = link_to 'Done', events_path, class: 'btn btn-primary'

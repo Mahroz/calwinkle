@@ -1,0 +1,7 @@
+$('.alert-container').html("<%= escape_javascript(render partial: 'layouts/alerts')%>");
+<%- if @event.valid? %>
+  $('#event-preview-block').html("<%= escape_javascript(render partial: 'events/preview', locals: { event: @event } ) %>");
+  $('#event-create-btn').text('Update');
+  $('#event-form').attr('action', "<%= event_path(@event) %>");
+  $('#event-form').append("<input type='hidden' name='_method' value='patch'/>");
+<%- end %>

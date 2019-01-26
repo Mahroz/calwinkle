@@ -16,23 +16,18 @@ class EventsController < ApplicationController
     @event = Event.new
   end
 
-  def preview
-    @event = Event.new(permitted_params)
-    respond_to do |format|
-      format.js { render layout: false }
-    end
-  end
-
   def create
     @event = Event.new(permitted_params)
     @event.event_url = "/#{current_user.name.parameterize}/#{@event.name.parameterize}"
     if @event.save
-      flash[:notice] = 'An event was created.'
-      redirect_to events_path
+      flash.now[:notice] = 'An event was created.'
     else
-      flash[:alert] = 'Could not create new event'
-      flash[:errors] = @event.errors.full_messages
-      render :new
+      flash.now[:alert] = 'Could not create new event'
+      flash.now[:errors] = @event.errors.full_messages
+    end
+
+    respond_to do |format|
+      format.js { render layout: false }
     end
   end
 

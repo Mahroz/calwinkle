@@ -16,5 +16,5 @@ Rails.application.routes.draw do
   post '/new/preview' => 'events#preview', as: :event_preview
   get '/events/:id/calendar:id' => 'events#calendar', as: :calendar
 
-  get '/google8bd9dfe9e823ee85', :to => redirect('/google8bd9dfe9e823ee85.html')
+  get '/google8bd9dfe9e823ee85', to: redirect('/google8bd9dfe9e823ee85.html')
 end

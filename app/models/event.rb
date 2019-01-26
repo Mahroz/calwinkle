@@ -8,11 +8,11 @@ class Event < ApplicationRecord
   belongs_to :user
 
   def start_on
-    start_date.strftime('%Y/%m/%d') + ' ' + start_time.strftime('%H:%M') rescue ''
+    get_formatted_date_time(start_date, start_time)
   end
 
   def end_on
-    end_date.strftime('%Y/%m/%d') + ' ' + end_time.strftime('%H:%M') rescue ''
+    get_formatted_date_time(end_date, end_time)
   end
 
   def calendar_url
@@ -32,5 +32,11 @@ class Event < ApplicationRecord
     end
     cal.publish
     cal.to_ical
+  end
+
+  private
+  
+  def get_formatted_date_time(date,time)
+    date.strftime('%A, %d %b, %Y') + ' - ' + time.strftime('%l:%M %p') rescue 'N/A'
   end
 end

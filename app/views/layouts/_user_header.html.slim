@@ -1,7 +1,17 @@
 .user-header-block
   h4
-    | CalWinkle - Hi #{current_user.name}
+    img src=asset_path('calwinkle-logo.gif') height='23px'
+
+
   = link_to destroy_user_session_path, method: :delete do
-    i.fa.fa-sign-out.fa-2x title='Sign out'
+    span
+      'Logout
+  
+  = link_to  'Create New Event', new_event_path, class: 'mr-15'
+  
+  = link_to  'Home', authenticated_root_url, class: 'mr-15'
+  
+  = link_to  "Welcome #{current_user.name}", authenticated_root_url, class: 'mr-15 black-text'
+
   br/
   hr/

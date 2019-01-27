@@ -30,4 +30,5 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  errors:
+    end_date_time: The event's End Date and Time can't be before Start Time. 

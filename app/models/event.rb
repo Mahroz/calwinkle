@@ -41,9 +41,9 @@ class Event < ApplicationRecord
   def start_end_date_time
     return if !start_date || !start_time || !end_date || !end_time
     if end_date < start_date
-      errors.add(:base, "Event end date and time can't be before start time.")
+      errors.add(:base, I18n.t('errors.end_date_time'))
     elsif end_date == start_date && end_time <= start_time
-      errors.add(:base, "Event end date and time can't be before start time.")
+      errors.add(:base, I18n.t('errors.end_date_time'))
     end
   end  
 

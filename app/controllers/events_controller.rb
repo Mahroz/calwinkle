@@ -60,14 +60,10 @@ class EventsController < ApplicationController
   private
 
   def permitted_params
-    if params[:event][:start_on].present?
-      start_on = split_datetime(DateTime.parse(params[:event][:start_on]))
-      params[:event][:start_date], params[:event][:start_time] = start_on
-    end
-    if params[:event][:end_on].present?
-      end_on = split_datetime(DateTime.parse(params[:event][:end_on]))
-      params[:event][:end_date], params[:event][:end_time] = end_on
-    end
+  	params[:event][:start_date] = params[:start_date] rescue nil
+  	params[:event][:start_time] = params[:start_time] rescue nil
+  	params[:event][:end_date] = params[:end_date] rescue nil
+  	params[:event][:end_time] = params[:end_time] rescue nil
     params.require(:event).permit(:name, :description, :main_picture, :address,
                                   :start_date, :start_time, :end_date,
                                   :end_time, :user_id)

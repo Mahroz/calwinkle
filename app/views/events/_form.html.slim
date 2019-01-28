@@ -1,54 +1,48 @@
 - event_msg = @event.persisted? ? 'Update' : 'Add'
 .h4
-  | #{event_msg} EVENT
+  | #{event_msg} Event
   hr
 .event-form
-  h5
-    | DETAILS:
-  br
   = form_for(@event, remote: true, html: { id: 'event-form' }) do |f|
     = f.hidden_field :user_id, value: current_user.id
     .form-group
-      label
-        | EVENT NAME
+      h5
+        | Event Name
       = f.text_field :name, class: 'form-control', required: true
     .form-group
-      label
-        | EVENT DESCRIPTION
+      h5
+        | Event Description
       = f.text_area :description, class: 'form-control', maxlength: 8000
     .form-group
-      label
-        | EVENT ADDRESS
+      h5
+        | Event Address
       = f.text_field :address, class: 'form-control'
     .row.event-date-block
-      .form-group.col-md-6.padding-0
+      .form-group.col-md-6.p-10-0
         .row
-          label
-            | EVENT START DATE/TIME:
+          .col-md-4.padding-0
+            h5.mt-7 Start Date:
+          .col-md-7.padding-0
+            input.form-control(name="start_date" data-role="datebox" data-datebox-mode="calbox" data-options='{"mode":"calbox"}' value="#{@event.start_date}")
         .row
-          .col-md-3.padding-0
-            h6 STARTS ON:
-          .col-md-8.padding-0.margin-l5
-            #datetimepicker1.input-group.date data-target-input='nearest' 
-              input.form-control.datetimepicker-input data-target='#datetimepicker1' type='text' name='event[start_on]' value="#{@event.start_on}"
-              .input-group-append data-target='#datetimepicker1' data-toggle='datetimepicker'
-                .input-group-text
-                  i.fa.fa-calendar
-      .form-group.col-md-6.padding-0
+          .col-md-4.padding-0
+            h5.mt-7.mt-7 Start Time:
+          .col-md-7.padding-0
+            input.form-control(name="start_time" data-role="datebox" data-datebox-mode="timebox" data-options='{"mode":"timebox"}' value="#{@event.formatted_start_time}")
+
+      .form-group.col-md-6.p-10-0
         .row
-          label
-            | EVENT END DATE/TIME:
+          .col-md-4.padding-0
+            h5.mt-7 End Date:
+          .col-md-8.padding-0
+            input.form-control(name="end_date" data-role="datebox" data-datebox-mode="calbox" data-options='{"mode":"calbox"}' value="#{@event.end_date}")
         .row
-          .col-md-3.padding-0
-            h6 ENDS ON:
-          .col-md-8.padding-0.margin-l5
-            #datetimepicker2.input-group.date data-target-input='nearest' 
-              input.form-control.datetimepicker-input data-target='#datetimepicker2' type='text' name='event[end_on]' value="#{@event.end_on}"
-              .input-group-append data-target='#datetimepicker2' data-toggle='datetimepicker'
-                .input-group-text
-                  i.fa.fa-calendar
+          .col-md-4.padding-0
+            h5.mt-7 End Time:
+          .col-md-8.padding-0
+            input.form-control(name="end_time" data-role="datebox" data-datebox-mode="timebox" data-options='{"mode":"timebox"}' value="#{@event.formatted_end_time}")
     /.form-group
-    /  label
+    /  h5
     /    | HOW OFTEN DOES IT REOCCURS:
     /   = f.text_field :name, class: 'form-control'
     br/

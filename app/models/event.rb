@@ -9,6 +9,14 @@ class Event < ApplicationRecord
 
   belongs_to :user
 
+  def formatted_start_time
+    start_time.strftime('%I:%M %p') rescue '12:00 PM'
+  end
+
+  def formatted_end_time
+    end_time.strftime('%I:%M %p') rescue '01:00 PM'
+  end
+
   def start_on
     get_formatted_date_time(start_date, start_time)
   end

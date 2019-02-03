@@ -11,6 +11,17 @@ class Event < ApplicationRecord
 
   scope :not_cancelled, -> { where(is_cancel: false) }
 
+  OCR_DONT_REPEAT = 'Do not repeat'.freeze
+  OCR_DAILY = 'Daily'.freeze
+  OCR_WEEKL_DAYS = 'Week Days'.freeze
+  OCR_WEEKENDS = 'Weekends'.freeze
+  OCR_MONTHLY = 'Monthly'.freeze
+  OCR_YEARLY = 'Yearly'.freeze
+  OCR_CUSTOM = 'Custom Days'.freeze
+
+  enum occurance_type: [OCR_DONT_REPEAT, OCR_DAILY, OCR_WEEKL_DAYS,
+                        OCR_WEEKENDS, OCR_MONTHLY, OCR_YEARLY, OCR_CUSTOM]
+
   def formatted_start_time
     start_time.strftime('%I:%M %p') rescue '12:00 PM'
   end

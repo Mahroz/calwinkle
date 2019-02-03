@@ -5,6 +5,8 @@
     - url = get_event_url(event)
     .event-name
       h6 = event.name
+      = link_to event_path(event), method: :delete, data: { confirm: 'Are you sure?' }, class: 'event-delete' do
+        i.fa.fa-trash.fa-lg title='Delete event'
       = link_to  edit_event_path(event), class: 'event-edit' do
         i.fa.fa-pencil.fa-lg title='Edit event'
     .event-url.row

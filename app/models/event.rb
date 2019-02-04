@@ -9,6 +9,8 @@ class Event < ApplicationRecord
 
   belongs_to :user
 
+  scope :not_cancelled, -> { where(is_cancel: false) }
+
   def formatted_start_time
     start_time.strftime('%I:%M %p') rescue '12:00 PM'
   end
@@ -37,7 +39,8 @@ class Event < ApplicationRecord
       e.dtend       = end_dtime
       e.summary     = name
       e.description = description
-      e.location = address || ''
+      e.location    = address || ''
+      e.status      = 'CANCELLED' if is_cancel?
       # e.ip_class    = "PRIVATE"
     end
     cal.publish
@@ -53,7 +56,7 @@ class Event < ApplicationRecord
     elsif end_date == start_date && end_time <= start_time
       errors.add(:base, I18n.t('errors.end_date_time'))
     end
-  end  
+  end
 
   def get_formatted_date_time(date,time)
     date.strftime('%A, %d %b, %Y') + ' - ' + time.strftime('%l:%M %p') rescue 'N/A'

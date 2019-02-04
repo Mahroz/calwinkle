@@ -5,11 +5,11 @@ class EventsController < ApplicationController
 
   skip_before_action :verify_authenticity_token
   before_action :authenticate_user!, except: %i[show calendar]
-  before_action :set_event, only: %i[edit update]
-  before_action :validate_user, only: %i[edit update]
+  before_action :set_event, only: %i[edit update destroy]
+  before_action :validate_user, only: %i[edit update destroy]
 
   def index
-    @events = current_user.events.order(:start_date)
+    @events = current_user.events.not_cancelled.order(:start_date)
   end
 
   def new
@@ -45,7 +45,7 @@ class EventsController < ApplicationController
   end
 
   def show
-    @event = Event.find_by(event_url: request.original_fullpath)
+    @event = Event.not_cancelled.find_by(event_url: request.original_fullpath)
     goto_main if @event.blank?
   end
 
@@ -55,6 +55,16 @@ class EventsController < ApplicationController
       format.html
       format.ics { render plain: @event.calendar_url }
     end
+  end
+
+  def destroy
+    if @event.update(is_cancel: true)
+      flash[:notice] = 'Event was successfully deleted.'
+    else
+      flash[:alert]  = 'Event cant be deleted.'
+      flash[:errors] = @event.errors.full_messages
+    end
+    redirect_to events_path
   end
 
   private
@@ -70,7 +80,7 @@ class EventsController < ApplicationController
   end
 
   def set_event
-    @event ||= Event.find(params[:id])
+    @event ||= Event.not_cancelled.find(params[:id])
   end
 
   def validate_user

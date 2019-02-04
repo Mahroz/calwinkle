@@ -24,7 +24,7 @@
           h6 QR CODE:
       .row
         .col-md-2
-          = image_tag get_qr_code(calendar_url(format: :ics, id: event.id), 80)
+          = image_tag get_qr_code(calendar_url(format: :ics, id: event.id, name: event.event_url.parameterize), 80)
         .col-md-10
           .point
             | - QR code makes it easier for your customer to scan and add subscribe

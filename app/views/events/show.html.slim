@@ -24,8 +24,8 @@
         .row
           p.col-md-12 Scan QR with your phone
         .row
-          .col-md-12 
-            = image_tag get_qr_code(calendar_url(format: :ics, id: @event.id), 120)
+          .col-md-12
+            = image_tag get_qr_code(calendar_url(format: :ics, id: @event.id, name: @event.event_url.parameterize), 120)
       .col-md-2
         h6 OR
       .col-md-5
@@ -35,11 +35,11 @@
         .row
           .col-md-12
             / button.btn.btn-primary.subscribe-btn Add To Your Calendar
-            .btn-group role='group' 
+            .btn-group role='group'
               button#btnGroupDrop1.btn.btn-primary.subscribe-btn.dropdown-toggle aria-expanded='false' aria-haspopup='true' data-toggle='dropdown'
                 | Add To Your Calendar
               .dropdown-menu aria-labelledby='btnGroupDrop1'
-                = link_to 'Apple Mac', calendar_url(protocol: :webcal, format: :ics, id: @event.id), class: 'dropdown-item'
-                = link_to 'Google', "https://calendar.google.com/calendar/render?cid=#{calendar_url(format: :ics, id: @event.id)}",
+                = link_to 'Apple Mac', calendar_url(protocol: :webcal, format: :ics, id: @event.id, name: @event.event_url.parameterize), class: 'dropdown-item'
+                = link_to 'Google', "https://calendar.google.com/calendar/render?cid=#{calendar_url(format: :ics, id: @event.id, name: @event.event_url.parameterize)}",
                                      class: 'dropdown-item', target: :_blank
 

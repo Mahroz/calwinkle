@@ -41,6 +41,13 @@
             h5.mt-7 End Time:
           .col-md-8.padding-0
             input.form-control(name="end_time" data-role="datebox" data-datebox-mode="timebox" data-options='{"mode":"timebox"}' value="#{@event.formatted_end_time}")
+
+    .form-group
+      h5
+        | Time Zone
+      select.form-control id='event_time_zone' name='event[time_zone]' data-value=f.object.time_zone
+
+
     /.form-group
     /  h5
     /    | HOW OFTEN DOES IT REOCCURS:

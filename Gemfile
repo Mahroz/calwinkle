@@ -45,6 +45,10 @@ gem 'bootstrap', '~> 4.2.1'
 
 gem 'jquery-rails'
 
+gem 'momentjs-rails'
+
+gem 'moment_timezone-rails'
+
 gem 'font-awesome-rails'
 
 gem 'carrierwave', '~> 1.0'

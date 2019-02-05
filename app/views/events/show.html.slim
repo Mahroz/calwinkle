@@ -1,6 +1,6 @@
 .event-container
   .event-image.rows
-    img src=@event.main_picture.url height='auto' width='100%'
+    img src=@event.main_picture.url max-height='400' width='100%'
   .event-name.rows
     strong = @event.name.upcase
   .event-description.rows

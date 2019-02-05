@@ -52,11 +52,9 @@
     br/
     .form-group
       lable
-        | EVENT MAIN PICTURE (require, 1200x250)
+        | EVENT MAIN PICTURE
       br
       = f.label :main_picture, 'Upload', class: 'btn-upload'
       = f.file_field :main_picture, class: 'form-control file-input'
     .form-group.btn-center
       button#event-create-btn.btn.btn-primary type='submit' #{event_msg}
-
-

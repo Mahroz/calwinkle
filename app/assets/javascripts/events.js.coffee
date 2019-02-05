@@ -3,16 +3,12 @@ $(document).on 'turbolinks:load', (e) ->
     format: 'YYYY/MM/DD HH:mm'
   })
 
-
   setEventTimezone = () ->
     options = $('#event_time_zone option')
     local_time_zone = Intl.DateTimeFormat().resolvedOptions().timeZone
     time_zone = $('#event_time_zone').data('value') || local_time_zone
 
-    for option in options
-      if (option.value == time_zone)
-        document.getElementById('event_time_zone').value = option.value
-        break
+    document.getElementById('event_time_zone').value = time_zone
 
   if ($('#event_time_zone').length)
     $('#event_time_zone').timezones()

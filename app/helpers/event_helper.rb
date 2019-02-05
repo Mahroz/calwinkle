@@ -4,7 +4,6 @@ module EventHelper
   end
 
   def get_qr_code(url, size)
-    # calendar_url(format: :ics, id: event.id)
     RQRCode::QRCode.new(url).to_img
                    .resize(size, size).to_data_url
   end

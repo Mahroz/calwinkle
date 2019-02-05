@@ -54,7 +54,7 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     respond_to do |format|
       format.html
-      format.ics { render plain: @event.calendar_url }
+      format.ics { render plain: @event.calendar }
     end
   end
 

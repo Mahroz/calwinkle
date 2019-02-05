@@ -8,7 +8,6 @@ $(document).on 'turbolinks:load', (e) ->
   OCR_CUSTOM = 'Custom Days'
 
   setEventTimezone = () ->
-    options = $('#event_time_zone option')
     local_time_zone = Intl.DateTimeFormat().resolvedOptions().timeZone
     time_zone = $('#event_time_zone').data('value') || local_time_zone
 

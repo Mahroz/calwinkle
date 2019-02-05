@@ -26,7 +26,7 @@ class Event < ApplicationRecord
   OCR_CUSTOM = 'Custom Days'.freeze
 
   enum occurance_type: [OCR_DONT_REPEAT, OCR_DAILY, OCR_WEEKL_DAYS,
-                        OCR_WEEKENDS, OCR_MONTHLY, OCR_YEARLY, OCR_CUSTOM]
+                        OCR_WEEKENDS, OCR_MONTHLY, OCR_YEARLY]
 
   def formatted_start_time
     start_time.strftime('%I:%M %p') rescue '12:00 PM'

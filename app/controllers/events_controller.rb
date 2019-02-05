@@ -3,6 +3,8 @@
 class EventsController < ApplicationController
   include EventHelper
 
+  layout :set_layout, only: %i[show]
+
   skip_before_action :verify_authenticity_token
   before_action :authenticate_user!, except: %i[show calendar]
   before_action :set_event, only: %i[edit update destroy]
@@ -36,6 +38,7 @@ class EventsController < ApplicationController
 
   def update
     if @event.update(permitted_params)
+      @event.update(event_url: "/#{current_user.name.parameterize}/#{@event.name.parameterize}")
       flash[:notice] = 'An event was update.'
       redirect_to events_path
     else
@@ -90,5 +93,9 @@ class EventsController < ApplicationController
 
   def increase_viewer_count
     @event.viewer_count_increment
+  end
+
+  def set_layout
+    current_user.present? ? 'application' : 'users'
   end
 end

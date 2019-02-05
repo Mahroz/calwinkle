@@ -1,1 +1,8 @@
-= render 'form'
+.new-event-container
+  .row
+    .col-md-6
+      = render 'form'
+    .col-md-1
+    .col-md-5
+      #event-preview-block
+        / = render partial: 'preview'

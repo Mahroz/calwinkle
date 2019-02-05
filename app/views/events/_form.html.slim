@@ -49,7 +49,7 @@
 
     .form-group
       h5
-        | HOW OFTEN DOES IT REOCCURS
+        | How often does it reoccurs?
       = f.hidden_field :occurance_type, id: 'event_occurance_type'
       = f.hidden_field :occurance_rule, id: 'event_occurance_rule'
       .occurance-dropdown.show
@@ -62,15 +62,13 @@
 
     br/
     h5
-      | IMAGE UPLOAD
-    br/
+      | IMAGE UPLOAD 
+      label
+        |  ( Event Main Picture - suggested size: 1600x400 )
     .form-group
-      lable
-        | EVENT MAIN PICTURE (suggested size: 1600x400 .jpg, .gif, .png only)
-      br
       .upload-btn-block
-        = f.label :main_picture, 'Upload', class: 'btn-upload'
-        = f.file_field :main_picture, class: 'form-control file-input'
+        = f.label :main_picture, 'Upload Event Image', class: 'btn btn-info'
+        = f.file_field :main_picture, class: 'form-control file-input', accept: 'image/*'
       .uploaded-block.hidden
         .img-block
           i.fa.fa-check

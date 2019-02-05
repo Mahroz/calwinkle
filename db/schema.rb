@@ -26,7 +26,6 @@ ActiveRecord::Schema.define(version: 2019_02_05_145835) do
     t.string "name"
     t.string "description"
     t.string "address"
-    t.string "occurance"
     t.time "start_time"
     t.time "end_time"
     t.date "start_date"
@@ -36,6 +35,8 @@ ActiveRecord::Schema.define(version: 2019_02_05_145835) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "occurance_rule"
+    t.integer "occurance_type"
     t.boolean "is_cancel", default: false
     t.string "time_zone"
     t.index ["event_url"], name: "index_events_on_event_url", unique: true

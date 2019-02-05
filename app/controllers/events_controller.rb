@@ -18,7 +18,6 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
-    # @event = Event.first
   end
 
   def create

@@ -8,9 +8,6 @@
 }
 
 .event-form {
-  .form-control {
-    //border: 1px solid #707070
-  }
   .event-date-block {
     input {
       height: 30px;
@@ -20,14 +17,23 @@
   .row {
     margin: 0px;
   }
-  label {
-    // font-size: 14px;
-  }
   .ui-datebox-datebox-group {
     padding-top: 10px;
     div:nth-child(2) {
       width: 4.6rem;
       margin-left: 0.55rem;
+    }
+  }
+  .uploaded-block {
+    display: inline-flex;
+    .img-block {
+      color: black;
+    }
+    .replace-img-block {
+      margin-left: 2rem;
+      a {
+        color: black;
+      }
     }
   }
 }

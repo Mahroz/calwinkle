@@ -1,5 +1,5 @@
 class Event < ApplicationRecord
-  require 'icalendar'
+  include EventCalandar
 
   mount_uploader :main_picture, PictureUploader
 
@@ -27,24 +27,8 @@ class Event < ApplicationRecord
     get_formatted_date_time(end_date, end_time)
   end
 
-  def calendar_url
-    return '' if start_date.blank? || start_time.blank? || end_date.blank? || end_time.blank?
-
-    start_dtime = start_date.to_datetime + start_time.seconds_since_midnight.seconds
-    end_dtime = end_date.to_datetime + end_time.seconds_since_midnight.seconds
-    cal = Icalendar::Calendar.new
-    cal.event do |e|
-      # Icalendar::Values::Date.new('20050428')
-      e.dtstart     = start_dtime
-      e.dtend       = end_dtime
-      e.summary     = name
-      e.description = description
-      e.location    = address || ''
-      e.status      = 'CANCELLED' if is_cancel?
-      # e.ip_class    = "PRIVATE"
-    end
-    cal.publish
-    cal.to_ical
+  def calendar
+    get_calendar(self)
   end
 
   def viewer_count_increment

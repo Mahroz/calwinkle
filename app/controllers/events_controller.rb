@@ -57,7 +57,7 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     respond_to do |format|
       format.html
-      format.ics { render plain: @event.calendar_url }
+      format.ics { render plain: @event.calendar }
     end
   end
 
@@ -80,7 +80,7 @@ class EventsController < ApplicationController
   	params[:event][:end_time] = params[:end_time] rescue nil
     params.require(:event).permit(:name, :description, :main_picture, :address,
                                   :start_date, :start_time, :end_date,
-                                  :end_time, :user_id)
+                                  :end_time, :user_id, :time_zone)
   end
 
   def set_event

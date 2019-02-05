@@ -8,10 +8,10 @@
   br/
   .event-start
     h5 Starts on:
-    = @event.start_on
+    = @event.start_on + "  (#{@event.time_zone})"
   .event-end
     h5 Ends on:
-    = @event.end_on
+    = @event.end_on + "  (#{@event.time_zone})"
   br/
   .event-address
     h5 Address:

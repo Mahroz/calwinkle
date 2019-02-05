@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_04_173006) do
+ActiveRecord::Schema.define(version: 2019_02_04_182437) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 2019_02_04_173006) do
     t.datetime "updated_at", null: false
     t.boolean "is_cancel", default: false
     t.integer "viewer_count", default: 0
+    t.string "time_zone"
     t.index ["event_url"], name: "index_events_on_event_url", unique: true
     t.index ["user_id"], name: "index_events_on_user_id"
   end

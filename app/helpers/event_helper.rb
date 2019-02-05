@@ -18,6 +18,10 @@ module EventHelper
     [date_part, time_part]
   end
 
+  def format_date(date)
+    Date.strptime(date, '%m/%d/%Y').strftime('%Y-%m-%d')
+  end
+
   def form_url
     if @event.persisted?
       event_url

@@ -4,7 +4,7 @@
   .col-md-10
     - url = get_event_url(event)
     .event-name
-      h6 = event.name
+      h5 = event.name
       = link_to event_path(event), method: :delete, data: { confirm: 'Are you sure?' }, class: 'event-delete' do
         i.fa.fa-trash.fa-lg title='Delete event'
       = link_to  edit_event_path(event), class: 'event-edit' do
@@ -15,9 +15,7 @@
       .col-md-10
         a href=url #{url}
         .point
-          | - you can share this url with your customers
-        .point
-          | - share this now: Facebook Linkden Email
+          | Share this url with your customers. When they click on the url, they can view your event and subscribe to your calendar.
     .event-qr-code
       .row
         .col-md-2
@@ -25,14 +23,20 @@
       .row
         .col-md-2
           = image_tag get_qr_code(calendar_url(format: :ics, id: event.id, name: event.event_url.parameterize), 80)
-        .col-md-10
+        .col-md-10.qr-points
           .point
-            | - QR code makes it easier for your customer to scan and add subscribe
+            | QR codes make it easy for your customer scan and add subscribe to your calendar.
           .point
-            | - you can download and share this QR code via email, on your printed materials, etc
+            | Tip: download and share this QR code via email, on your printed materials, etc.
           .point
-            | - to download, right click and save
-    .event-viewer-block
-      i.fa.fa-eye title='No of Viewers'
-      span = event.viewer_count
+            | To download, right click and click "Save Image as".
+    .row
+      .col-md-2
+      .event-report-block.col-md-10
+        h5
+          | Report:
+        span = "Pg Viewes: #{event.viewer_count} | Subscribers: #{event.subscriber_count}"
+        / .event-viewer-block
+        /   i.fa.fa-eye title='No of Viewers'
+        /   span = event.viewer_count
 hr

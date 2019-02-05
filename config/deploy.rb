@@ -33,9 +33,12 @@ set :branch,        :master
 # set :log_level,     :debug
 # set :keep_releases, 5
 
+# To prevent capistrano from generating binstubs
+set :bundle_binstubs, nil
+
 ## Linked Files & Directories (Default None):
 set :linked_files, %w{config/database.yml}
-set :linked_dirs,  %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+set :linked_dirs,  %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 namespace :puma do
   desc 'Create Directories for Puma Pids and Socket'
@@ -69,6 +72,11 @@ namespace :deploy do
     end
   end
 
+  desc 'Symlink Changed Uploads directory to preserve data after deploy'
+  task :symlink_directories do
+    run "ln -nfs #{shared_path}/uploads #{release_path}/public/uploads"
+  end
+
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
@@ -79,5 +87,6 @@ namespace :deploy do
   before :starting,     :check_revision
   after  :finishing,    :compile_assets
   after  :finishing,    :cleanup
+  after  :finishing,    :symlink_directories
   after  :finishing,    :restart
 end

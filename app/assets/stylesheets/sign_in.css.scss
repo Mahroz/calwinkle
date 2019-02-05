@@ -39,4 +39,12 @@
 	}
 }
 
-
+.sign-in-container, .sign-up-container {
+  .sign-up-block {
+    text-align: center;
+		padding-top: 2rem;
+		a {
+			padding-left: 3px;
+		}
+	}
+}

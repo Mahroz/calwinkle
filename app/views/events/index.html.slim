@@ -1,23 +1,15 @@
   .row
     .col-md-7.order-2.order-lg-1.event-list-block
-      h5
+      h4
         | MY CURRENT EVENTS
       .event-list
         - @events.each do |event|
           = render partial: 'event_item', locals: { event: event }
 
     .col-md-5.order-1.order-lg-2.new-event-block
-      h5
+      h4
         | CREATE A NEW EVENT
       br/
       .btn-center
         = link_to  'Create new event', new_event_path, class: 'btn btn-primary'
       hr/
-    / .addeventatc title=("Add to Calendar") 
-    /   | Add to Calendar
-    /   span.start 02/02/2019 08:00 AM
-    /   span.end 02/02/2019 10:00 AM
-    /   span.timezone America/Los_Angeles
-    /   span.title Summary of the event
-    /   span.description Description of the event
-    /   span.location Location of the event

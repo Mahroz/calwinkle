@@ -8,6 +8,10 @@ body {
   }
 }
 
+.hidden {
+  display: none !important;
+}
+
 .padding-0 {
   padding: 0px !important;
 }
@@ -43,6 +47,9 @@ body {
     display: inline;
   }
   a {
+    float: right;
+  }
+  strong {
     float: right;
   }
 }

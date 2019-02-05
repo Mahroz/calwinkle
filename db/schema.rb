@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_04_182437) do
+ActiveRecord::Schema.define(version: 2019_02_05_145835) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "event_reports", force: :cascade do |t|
+    t.bigint "event_id"
+    t.integer "viewer_count", default: 0
+    t.integer "subscriber_count", default: 0
+    t.index ["event_id"], name: "index_event_reports_on_event_id"
+  end
 
   create_table "events", force: :cascade do |t|
     t.string "name"
@@ -31,7 +38,6 @@ ActiveRecord::Schema.define(version: 2019_02_04_182437) do
     t.string "occurance_rule"
     t.integer "occurance_type"
     t.boolean "is_cancel", default: false
-    t.integer "viewer_count", default: 0
     t.string "time_zone"
     t.index ["event_url"], name: "index_events_on_event_url", unique: true
     t.index ["user_id"], name: "index_events_on_user_id"

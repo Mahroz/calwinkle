@@ -1,9 +1,9 @@
-- event_msg = @event.persisted? ? 'Update' : 'Add'
+- persisted = @event.persisted?
 .h4
-  | #{event_msg} Event
+  | #{ persisted ? 'Update' : 'Add' } Event
   hr
 .event-form
-  = form_for(@event, remote: true, html: { id: 'event-form' }) do |f|
+  = form_for(@event, remote: !@event.persisted?, html: { id: 'event-form' }) do |f|
     = f.hidden_field :user_id, value: current_user.id
     .form-group
       h5
@@ -23,7 +23,7 @@
           .col-md-4.padding-0
             h5.mt-7 Start Date:
           .col-md-7.padding-0
-            input.form-control(name="start_date" data-role="datebox" data-datebox-mode="calbox" data-options='{"mode":"calbox"}' value="#{@event.start_date}")
+            input.form-control(name="start_date" data-role="datebox" data-datebox-mode="calbox" data-options='{"mode":"calbox","dateFieldOrder":["m","d","y"], "overrideDateFormat": "%m/%d/%Y"}' value="#{@event.start_date}")
         .row
           .col-md-4.padding-0
             h5.mt-7.mt-7 Start Time:
@@ -35,7 +35,7 @@
           .col-md-4.padding-0
             h5.mt-7 End Date:
           .col-md-8.padding-0
-            input.form-control(name="end_date" data-role="datebox" data-datebox-mode="calbox" data-options='{"mode":"calbox"}' value="#{@event.end_date}")
+            input.form-control(name="end_date" data-role="datebox" data-datebox-mode="calbox" data-options='{"mode":"calbox","dateFieldOrder":["m","d","y"], "overrideDateFormat": "%m/%d/%Y"}' value="#{@event.end_date}")
         .row
           .col-md-4.padding-0
             h5.mt-7 End Time:
@@ -62,14 +62,22 @@
 
     br/
     h5
-      | PCITURES & VIDEO:
-    br/
+      | IMAGE UPLOAD
     br/
     .form-group
       lable
-        | EVENT MAIN PICTURE
+        | EVENT MAIN PICTURE (suggested size: 1600x400 .jpg, .gif, .png only)
       br
-      = f.label :main_picture, 'Upload', class: 'btn-upload'
-      = f.file_field :main_picture, class: 'form-control file-input'
+      .upload-btn-block
+        = f.label :main_picture, 'Upload', class: 'btn-upload'
+        = f.file_field :main_picture, class: 'form-control file-input'
+      .uploaded-block.hidden
+        .img-block
+          i.fa.fa-check
+          span Image Uploaded :)
+        .replace-img-block
+          a href='#' id='replace-img-btn' Replace Image
     .form-group.btn-center
-      button#event-create-btn.btn.btn-primary type='submit' #{event_msg}
+      - unless persisted
+        button#event-next-btn.btn.btn-primary Next Step
+      button#event-create-btn.btn.btn-primary type='submit' class="#{persisted ? '' : 'hidden'}" #{persisted ? 'Update' : 'Add'}

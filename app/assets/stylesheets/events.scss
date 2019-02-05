@@ -1,3 +1,4 @@
+// For event new page
 .new-event-container {
   font-family: Roboto;
   font-style: normal;
@@ -7,9 +8,6 @@
 }
 
 .event-form {
-  .form-control {
-    //border: 1px solid #707070
-  }
   .event-date-block {
     input {
       height: 30px;
@@ -19,6 +17,14 @@
   .row {
     margin: 0px;
   }
+  .ui-datebox-datebox-group {
+    padding-top: 10px;
+    div:nth-child(2) {
+      width: 4.6rem;
+      margin-left: 0.55rem;
+    }
+  }
+
   label {
     // font-size: 14px;
   }
@@ -64,41 +70,55 @@
       margin-right: 5px;
     }
   }
-  .event-subscribe {
-    p {
-      font-size: 12px;
+  .uploaded-block {
+    display: inline-flex;
+    .img-block {
+      color: black;
     }
-    .subscribe-btn {
-      font-size: 12px;
-      margin-top: 1.7rem;
+    .replace-img-block {
+      margin-left: 2rem;
+      a {
+        color: black;
+      }
     }
   }
 }
-////////////////////////////////////////////////////
+//////////////////////////////////////////////////
 
 // For event index page
 .new-event-block, .event-list-block {
   margin-bottom: 7px;
-  h5 {
+  h4 {
     text-align: center;
+    font-size: 18px;
   }
 }
 .event-list {
-  overflow-y: auto;
+  overflow-y: scroll;
   overflow-x: hidden;
+  padding-right: 0.8rem;
 }
 
 .event-item {
+  h6{
+    color: black;
+  }
   .event-url-heading {
     display: inline;
   }
+  .event-qr-code {
+    .qr-points {
+      padding-left: 5px;
+    }
+  }
   .point {
-    font-size: 12px;
+    font-size: 13px;
     margin: 0px;
   }
   .event-name {
-    h6 {
-      display: inline
+    h5 {
+      // display: inline
+      font-size: 15px;
     }
   }
   .event-edit {
@@ -118,13 +138,39 @@
       margin-right: 5px;
     }
   }
+  .event-report-block {
+    h5 {
+      display: inline-block;
+    }
+    span {
+      margin-left: 10px;
+    }
+  }
 }
 //////////////////////////////////////////////////
 
 // For event preview
-.event-preview-details {
-  .point {
-    margin: 0px;
-    font-size: 12px;
+#event-preview-block {
+  .event-preview-details {
+    h5 {
+      font-size: 18px;
+    }
+    .point {
+      margin: 0px;
+      font-size: 14px;
+    }
+    .event-preview-url {
+      margin-left: 20px;
+      a {
+        margin-left: 3px;
+      }
+    }
+  }
+
+  .event-preview-heading {
+    font-size: 20px;
+    strong {
+      margin-right: 5px;
+    }
   }
 }

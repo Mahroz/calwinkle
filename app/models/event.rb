@@ -8,6 +8,12 @@ class Event < ApplicationRecord
   validate :start_end_date_time
 
   belongs_to :user
+  has_one :event_report
+  delegate :viewer_count, to: :event_report
+  delegate :subscriber_count, to: :event_report
+
+  after_create :create_event_report
+  after_save   :set_event_report
 
   scope :not_cancelled, -> { where(is_cancel: false) }
 
@@ -43,7 +49,11 @@ class Event < ApplicationRecord
   end
 
   def viewer_count_increment
-    increment!(:viewer_count)
+    event_report.increment!(:viewer_count)
+  end
+
+  def subscriber_count_increment
+    event_report.increment!(:subscriber_count)
   end
 
   private
@@ -59,5 +69,13 @@ class Event < ApplicationRecord
 
   def get_formatted_date_time(date,time)
     date.strftime('%A, %d %b, %Y') + ' - ' + time.strftime('%l:%M %p') rescue 'N/A'
+  end
+
+  def create_event_report
+    EventReport.create(event_id: id)
+  end
+
+  def set_event_report
+    event_report.destroy if is_cancel?
   end
 end

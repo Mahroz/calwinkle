@@ -10,6 +10,7 @@ class EventsController < ApplicationController
   before_action :set_event, only: %i[edit update destroy]
   before_action :validate_user, only: %i[edit update destroy]
   after_action  :increase_viewer_count, only: %i[show]
+  after_action  :increase_subscriber_count, only: %i[calendar]
 
   def index
     @events = current_user.events.not_cancelled.order(:start_date)
@@ -40,12 +41,22 @@ class EventsController < ApplicationController
   def update
     if @event.update(permitted_params)
       @event.update(event_url: "/#{current_user.name.parameterize}/#{@event.name.parameterize}")
-      flash[:notice] = 'An event was update.'
-      redirect_to events_path
+      flash.now[:notice] = 'An event was update.'
     else
-      flash[:alert] = 'Could not update the event'
-      flash[:errors] = @event.errors.full_messages
-      render :edit
+      flash.now[:alert] = 'Could not update the event'
+      flash.now[:errors] = @event.errors.full_messages
+    end
+    respond_to do |format|
+      # When user update from the event new page
+      format.js { render 'create.js.erb', layout: false }
+      # When user update from the event edit page
+      format.html do
+        if flash[:alert].present?
+          render :edit
+        else
+          redirect_to events_path
+        end
+      end
     end
   end
 
@@ -75,9 +86,9 @@ class EventsController < ApplicationController
   private
 
   def permitted_params
-  	params[:event][:start_date] = params[:start_date] rescue nil
+  	params[:event][:start_date] = format_date(params[:start_date]) rescue nil
   	params[:event][:start_time] = params[:start_time] rescue nil
-  	params[:event][:end_date] = params[:end_date] rescue nil
+  	params[:event][:end_date] = format_date(params[:end_date]) rescue nil
   	params[:event][:end_time] = params[:end_time] rescue nil
     params.require(:event).permit(:name, :description, :main_picture,
                                   :address, :start_date, :start_time,
@@ -94,7 +105,11 @@ class EventsController < ApplicationController
   end
 
   def increase_viewer_count
-    @event.viewer_count_increment
+    @event&.viewer_count_increment
+  end
+
+  def increase_subscriber_count
+    @event&.subscriber_count_increment
   end
 
   def set_layout

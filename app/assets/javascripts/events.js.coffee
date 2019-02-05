@@ -18,6 +18,24 @@ $(document).on 'turbolinks:load', (e) ->
     $('#event_time_zone').timezones()
     if !($('#event_time_zone').hasClass('assigned'))
       setEventTimezone()
+
+  $('#replace-img-btn').on 'click', (e) ->
+    e.preventDefault()
+
+    $('.upload-btn-block').removeClass('hidden')
+    $('.uploaded-block').addClass('hidden')
+    $('#event_main_picture').val('')
+
+  $('#event_main_picture').on 'change', (e) ->
+    $('.upload-btn-block').addClass('hidden')
+    $('.uploaded-block').removeClass('hidden')
+
+  $('#event-next-btn').on 'click', (e) ->
+    e.preventDefault()
+
+    $('#event-create-btn').removeClass('hidden')
+    $(this).addClass('hidden')
+    
   # If user change date after setting occurance
   $('input[name="start_date"], input[name="end_date"]').on 'change', (e) ->
     setOccuranceRule()

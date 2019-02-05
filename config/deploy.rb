@@ -74,7 +74,7 @@ namespace :deploy do
 
   desc 'Symlink Changed Uploads directory to preserve data after deploy'
   task :symlink_directories do
-    run "ln -nfs #{shared_path}/uploads #{release_path}/public/uploads"
+    execute "ln -nfs #{shared_path}/uploads #{release_path}/public/uploads"
   end
 
   desc 'Restart application'

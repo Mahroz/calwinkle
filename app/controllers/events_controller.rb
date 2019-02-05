@@ -7,6 +7,7 @@ class EventsController < ApplicationController
   before_action :authenticate_user!, except: %i[show calendar]
   before_action :set_event, only: %i[edit update destroy]
   before_action :validate_user, only: %i[edit update destroy]
+  after_action  :increase_viewer_count, only: %i[show]
 
   def index
     @events = current_user.events.not_cancelled.order(:start_date)
@@ -85,5 +86,9 @@ class EventsController < ApplicationController
 
   def validate_user
     goto_main unless @event.user == current_user
+  end
+
+  def increase_viewer_count
+    @event.viewer_count_increment
   end
 end

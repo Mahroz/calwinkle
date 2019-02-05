@@ -47,6 +47,10 @@ class Event < ApplicationRecord
     cal.to_ical
   end
 
+  def viewer_count_increment
+    increment!(:viewer_count)
+  end
+
   private
 
   def start_end_date_time

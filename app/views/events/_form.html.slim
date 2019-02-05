@@ -47,10 +47,19 @@
         | Time Zone
       select.form-control id='event_time_zone' name='event[time_zone]' data-value=f.object.time_zone
 
-    /.form-group
-    /  h5
-    /    | HOW OFTEN DOES IT REOCCURS:
-    /   = f.text_field :name, class: 'form-control'
+    .form-group
+      h5
+        | HOW OFTEN DOES IT REOCCURS
+      = f.hidden_field :occurance_type, id: 'event_occurance_type'
+      = f.hidden_field :occurance_rule, id: 'event_occurance_rule'
+      .occurance-dropdown.show
+        a#dropdownMenuLink.btn aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" role="button"
+          = f.object.occurance_type
+        .dropdown-menu aria-labelledby="dropdownMenuLink"
+          - Event::occurance_types.each do |ocr_type, _ocr_id|
+            a.dropdown-item.occurance-type href="#"
+              = ocr_type
+
     br/
     h5
       | PCITURES & VIDEO:

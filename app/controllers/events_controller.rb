@@ -17,6 +17,7 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
+    @event.occurance_type = Event::OCR_DONT_REPEAT
   end
 
   def create
@@ -78,9 +79,10 @@ class EventsController < ApplicationController
   	params[:event][:start_time] = params[:start_time] rescue nil
   	params[:event][:end_date] = params[:end_date] rescue nil
   	params[:event][:end_time] = params[:end_time] rescue nil
-    params.require(:event).permit(:name, :description, :main_picture, :address,
-                                  :start_date, :start_time, :end_date,
-                                  :end_time, :user_id, :time_zone)
+    params.require(:event).permit(:name, :description, :main_picture,
+                                  :address, :start_date, :start_time,
+                                  :end_date, :end_time, :user_id,
+                                  :occurance_type, :occurance_rule, :time_zone)
   end
 
   def set_event

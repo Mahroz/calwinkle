@@ -29,4 +29,8 @@ module EventHelper
       event_preview_url
     end
   end
+
+  def event_address
+    @event.address.present? ? link_to(@event.address, URI.encode("https://www.google.co.in/maps/place/#{@event.address}"), target: '_blank', style: 'color: rgba(0, 0, 0, 0.8);') : nil
+  end
 end

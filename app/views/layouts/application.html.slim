@@ -16,7 +16,7 @@ html
   body class="#{body_class}"
     - if current_user
       .container-fluid
-        = render 'layouts/user_header'
+        = render 'layouts/user_header' if can_show_header?
 
     .alert-container
       = render 'layouts/alerts'

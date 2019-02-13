@@ -1,4 +1,4 @@
-div class='user-header-block' style='z-index: 99; top: 0; position: absolute;'
+div class='user-header-block' id='main-header'
   h4
     img src=asset_path('calwinkle-logo.gif') height='23px'
 
@@ -8,4 +8,3 @@ div class='user-header-block' style='z-index: 99; top: 0; position: absolute;'
   = link_to  'Home', authenticated_root_url, class: 'mr-15'
   strong.mr-15.black-text = "Welcome #{current_user.name.capitalize}"
   br/
-  hr/

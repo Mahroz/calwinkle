@@ -114,13 +114,15 @@
     }
   }
   .point {
-    font-size: 13px;
+    font-size: 12px;
     margin: 0px;
+    color: grey;
   }
   .event-name {
     h5 {
       // display: inline
       font-size: 15px;
+      font-weight: bold;
     }
   }
   .event-edit {
@@ -175,4 +177,18 @@
       margin-right: 5px;
     }
   }
+}
+
+
+.events-page-heading {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.event-url{
+  font-size: 15px;
+}
+
+.full-width {
+  padding: 0px !important;
 }

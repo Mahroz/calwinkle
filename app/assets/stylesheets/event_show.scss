@@ -1,15 +1,40 @@
 // For the Event Show page
-@media screen and (max-width: 420px) {
+.event-container{
+  background-color: white;
+  padding: 15px; 
+  border-radius: 5px;
+}
+
+@media screen and (min-width: 240px) {
   .event-container {
-    width: 60%;
-    margin-left: 20%;
+    width: 90%;
+    margin-left: 5%;  
+  }
+
+  .event-image{
+    background-size:cover; height: 15.8em; width: 100%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .event-container {
+    width: 80%;
+    margin-left: 10%;
+  }
+
+  .event-image{
+    background-size:cover; height: 20.8em; width: 100%;
   }
 }
 
 @media screen and (min-width: 1200px) {
   .event-container {
-     width: 40%;
-     margin-left: 30%;
+    width: 70%;
+    margin-left: 15%;
+    top: 22em;
+  }
+  .event-image{
+    background-size:cover; height: 26.8em; width: 100%;
   }
 }
 // @media (min-width: 40em) {

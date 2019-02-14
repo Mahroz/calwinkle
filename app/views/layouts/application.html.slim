@@ -13,10 +13,10 @@ html
     <script type="text/javascript" src="https://addevent.com/libs/atc/1.6.1/atc.min.js" async defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  body
+  body class="#{body_class}"
     - if current_user
       .container-fluid
-        = render 'layouts/user_header'
+        = render 'layouts/user_header' if can_show_header?
 
     .alert-container
       = render 'layouts/alerts'

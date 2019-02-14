@@ -1,45 +1,70 @@
-.event-container
-  .event-image.rows
-    img src=@event.main_picture.url max-height='400' width='100%'
-  .event-name.rows
-    strong = @event.name.upcase
-  .event-description.rows
-    = @event.description
-  br/
-  .event-start
-    h5 Starts on:
-    = @event.start_on + "  (#{@event.time_zone})"
-  .event-end
-    h5 Ends on:
-    = @event.end_on + "  (#{@event.time_zone})"
-  br/
-  .event-address
-    h5 Address:
-    = @event.address
-  hr
-  .event-subscribe
-    h5 Subscribe Now To This Event
-    .row
-      .event-qr-code.col-md-5
-        .row
-          p.col-md-12 Scan QR with your phone
-        .row
-          .col-md-12
-            = image_tag get_qr_code(calendar_url(format: :ics, id: @event.id, name: @event.event_url.parameterize), 500), height: 120, width: 120
-      .col-md-2
-        h6 OR
-      .col-md-5
-        .row
-          p.col-md-12 Click To Add To Calendar
-          / = request.user_agent
-        .row
-          .col-md-12
-            / button.btn.btn-primary.subscribe-btn Add To Your Calendar
-            .btn-group role='group'
-              button#btnGroupDrop1.btn.btn-primary.subscribe-btn.dropdown-toggle aria-expanded='false' aria-haspopup='true' data-toggle='dropdown'
-                | Add To Your Calendar
-              .dropdown-menu aria-labelledby='btnGroupDrop1'
-                = link_to 'Apple Mac', calendar_url(protocol: :webcal, format: :ics, id: @event.id, name: @event.event_url.parameterize), class: 'dropdown-item'
-                = link_to 'Google', "https://calendar.google.com/calendar/render?cid=#{calendar_url(format: :ics, id: @event.id, name: @event.event_url.parameterize)}",
-                                     class: 'dropdown-item', target: :_blank
+div style="background-image: url(#{asset_url(@event.main_picture.url)});" class="event-image"
+.event-container style=''
+  .rows
+    .event-name.rows
+      strong = @event.name.upcase
+    
+    br/
 
+  .row
+    .col-md-6.col-sm-12
+      .event-start
+        h5 Starts on:
+        = @event.start_on + "  (#{@event.time_zone})"
+      .event-end
+        h5 Ends on:
+        = @event.end_on + "  (#{@event.time_zone})"
+      br/
+      .event-address
+        h5 Address:
+        = event_address
+    .col-md-6.col-sm-12
+      .event-subscribe
+        h5 Subscribe Now To This Event
+        .row
+          .event-qr-code.col-md-5
+            .row
+              p.col-md-12 Scan QR with your phone
+            .row
+              .col-md-12
+                = image_tag get_qr_code(calendar_url(format: :ics, id: @event.id, name: @event.event_url.parameterize), 500), height: 120, width: 120
+          .col-md-2
+            h6 OR
+          .col-md-5
+            .row
+              p.col-md-12 Click To Add To Calendar
+              / = request.user_agent
+            .row
+              .col-md-12
+                / button.btn.btn-primary.subscribe-btn Add To Your Calendar
+                .btn-group role='group'
+                  button#btnGroupDrop1.btn.btn-primary.subscribe-btn.dropdown-toggle aria-expanded='false' aria-haspopup='true' data-toggle='dropdown'
+                    | Add To Your Calendar
+                  .dropdown-menu aria-labelledby='btnGroupDrop1'
+                    = link_to 'Apple Mac', calendar_url(protocol: :webcal, format: :ics, id: @event.id, name: @event.event_url.parameterize), class: 'dropdown-item'
+                    = link_to 'Google', "https://calendar.google.com/calendar/render?cid=#{calendar_url(format: :ics, id: @event.id, name: @event.event_url.parameterize)}",
+                                         class: 'dropdown-item', target: :_blank
+    .col-md-12.col-sm-12
+      hr /
+      h4 EVENT DETAILS:
+      .event-description.rows
+        = @event.description
+javascript:
+  var header = document.getElementById("main-header");
+  var sticky = null;
+  if(header){
+    header.classList.add('sticky-header')
+    sticky = header.offsetTop;
+    window.onscroll = function() {myFunction()};
+  }
+
+  function myFunction() {
+    if (window.pageYOffset > sticky) {
+      header.style.position='fixed';
+      header.style.backgroundColor = '#4B37C4'
+    } else {
+      header.style.position='absolute';
+      header.style.backgroundColor = 'transparent'
+
+    }
+  }

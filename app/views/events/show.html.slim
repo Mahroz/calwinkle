@@ -51,10 +51,12 @@ div style="background-image: url(#{asset_url(@event.main_picture.url)});" class=
         = @event.description
 javascript:
   var header = document.getElementById("main-header");
-  header.classList.add('sticky-header')
-  window.onscroll = function() {myFunction()};
-
-  var sticky = header.offsetTop;
+  var sticky = null;
+  if(header){
+    header.classList.add('sticky-header')
+    sticky = header.offsetTop;
+    window.onscroll = function() {myFunction()};
+  }
 
   function myFunction() {
     if (window.pageYOffset > sticky) {

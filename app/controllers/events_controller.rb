@@ -67,10 +67,7 @@ class EventsController < ApplicationController
 
   def calendar
     @event = Event.find(params[:id])
-    respond_to do |format|
-      format.html
-      format.ics { render plain: @event.calendar }
-    end
+    render plain: @event.calendar
   end
 
   def destroy

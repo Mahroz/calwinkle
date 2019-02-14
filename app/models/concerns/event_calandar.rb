@@ -9,6 +9,7 @@ module EventCalandar
     event_end = event.end_date.to_datetime +
                 event.end_time.seconds_since_midnight.seconds
     cal = Icalendar::Calendar.new
+    cal.x_wr_calname = "#{name} - CalWinkle"
 
     tzid = event.time_zone
     tz = TZInfo::Timezone.get tzid
@@ -24,7 +25,7 @@ module EventCalandar
       e.status      = 'CANCELLED' if event.is_cancel?
       e.rrule       = occurance_rule unless occurance_rule.blank?
     end
-    cal.publish
+    # cal.publish
     cal.to_ical
   end
 end

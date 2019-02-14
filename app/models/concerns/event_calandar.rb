@@ -22,7 +22,7 @@ module EventCalandar
       e.description = description
       e.location    = address || ''
       e.status      = 'CANCELLED' if event.is_cancel?
-      e.rrule       = occurance_rule
+      e.rrule       = occurance_rule unless occurance_rule.blank?
     end
     cal.publish
     cal.to_ical

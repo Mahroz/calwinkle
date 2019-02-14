@@ -1,4 +1,5 @@
-div style="background-image: url(#{asset_url(@event.main_picture.url)});" class="event-image"
+- main_picture = @event.main_picture.url || "/uploads/event/main_picture/default.jpg"
+div style="background-image: url(#{asset_url(main_picture)});" class="event-image"
 .event-container style=''
   .rows
     .event-name.rows

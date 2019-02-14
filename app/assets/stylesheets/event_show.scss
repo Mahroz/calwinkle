@@ -1,8 +1,11 @@
 // For the Event Show page
 .event-container{
   background-color: white;
-  padding: 15px; 
+  padding: 30px; 
   border-radius: 5px;
+}
+.event-name {
+  font-size: 20px;
 }
 
 @media screen and (min-width: 240px) {
@@ -18,6 +21,7 @@
 
 @media screen and (min-width: 768px) {
   .event-container {
+    margin-top: -75px !important;
     width: 80%;
     margin-left: 10%;
   }
@@ -29,6 +33,7 @@
 
 @media screen and (min-width: 1200px) {
   .event-container {
+    margin-top: -90px !important;
     width: 70%;
     margin-left: 15%;
     top: 22em;
@@ -36,17 +41,13 @@
   .event-image{
     background-size:cover; height: 26.8em; width: 100%;
   }
+  .event-name {
+    font-size: 25px !important;
+  }
 }
-// @media (min-width: 40em) {
-//   /* Probably some parent element that limits the img width */
-//   .event-container {
-//     width: 60%;
-//   }
-// }
 
 .event-container {
-  // margin-left: 30%;
-  // width: 400px;
+  margin-top: -50px;
 
   .event-start, .event-end, .event-address {
     h5 {
@@ -61,7 +62,7 @@
     .subscribe-btn {
       font-size: 12px;
       margin-top: 1.7rem;
+      min-width: 155px;
     }
   }
 }
-////////////////////////////////////////////////////

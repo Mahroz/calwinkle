@@ -43,50 +43,8 @@
 
 
 
-// For the Event Show page
-@media screen and (max-width: 420px) {
-  .event-container {
-    width: 60%;
-    margin-left: 20%;
-  }
-}
 
-@media screen and (min-width: 1200px) {
-  .event-container {
-     width: 40%;
-     margin-left: 30%;
-  }
-}
-// @media (min-width: 40em) {
-//   /* Probably some parent element that limits the img width */
-//   .event-container {
-//     width: 60%;
-//   }
-// }
 
-.event-container {
-  // margin-left: 30%;
-  // width: 400px;
-
-  .event-start, .event-end, .event-address {
-    h5 {
-      display: inline;
-      margin-right: 5px;
-    }
-  }
-  .uploaded-block {
-    display: inline-flex;
-    .img-block {
-      color: black;
-    }
-    .replace-img-block {
-      margin-left: 2rem;
-      a {
-        color: black;
-      }
-    }
-  }
-}
 //////////////////////////////////////////////////
 
 // For event index page

@@ -68,7 +68,7 @@ class Event < ApplicationRecord
   end
 
   def get_formatted_date_time(date,time)
-    date.strftime('%A, %d %b, %Y') + ' - ' + time.strftime('%l:%M %p') rescue 'N/A'
+    date.strftime('%A, %b %d %Y') + ' at ' + time.strftime('%l:%M %P') rescue 'N/A'
   end
 
   def create_event_report

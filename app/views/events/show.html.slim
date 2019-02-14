@@ -49,22 +49,3 @@ div style="background-image: url(#{asset_url(@event.main_picture.url)});" class=
       h4 EVENT DETAILS:
       .event-description.rows
         = @event.description
-javascript:
-  var header = document.getElementById("main-header");
-  var sticky = null;
-  if(header){
-    header.classList.add('sticky-header')
-    sticky = header.offsetTop;
-    window.onscroll = function() {myFunction()};
-  }
-
-  function myFunction() {
-    if (window.pageYOffset > sticky) {
-      header.style.position='fixed';
-      header.style.backgroundColor = '#4B37C4'
-    } else {
-      header.style.position='absolute';
-      header.style.backgroundColor = 'transparent'
-
-    }
-  }

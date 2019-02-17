@@ -2,6 +2,7 @@
 html
   head
     title = @event.name.capitalize
+    = favicon_link_tag asset_path('calwinkle-icon.png')
     = csrf_meta_tags
     = csp_meta_tag
 
@@ -14,7 +15,7 @@ html
     meta name="description" content=@event.description
     meta name="og:title" content=@event.name
     meta property="og:description" content=@event.description
-    meta property="og:image" content='www.calwinkle.com'+@event.main_picture.url
+    meta property="og:image" content='www.calwinkle.com#{@event.main_picture.url}'
 
   body
     = yield

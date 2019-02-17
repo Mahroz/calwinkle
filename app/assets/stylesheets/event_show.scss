@@ -8,6 +8,22 @@
   font-size: 20px;
 }
 
+@media screen and (max-width: 768px){
+  #floating-add-calendar{
+    position: fixed !important;
+    right: 10px;
+    bottom: 10px;
+    z-index: 100;
+    button{
+      font-size: 11px;
+    }
+  }
+
+  .mobile-hidden{
+    display: none;
+  }
+}
+
 @media screen and (min-width: 240px) {
   .event-container {
     width: 90%;
@@ -29,6 +45,9 @@
   .event-image{
     background-size:cover; height: 20.8em; width: 100%;
   }
+  #floating-add-calendar{
+    display: none;
+  }
 }
 
 @media screen and (min-width: 1200px) {
@@ -43,6 +62,9 @@
   }
   .event-name {
     font-size: 25px !important;
+  }
+  #floating-add-calendar{
+    display: none;
   }
 }
 
@@ -62,7 +84,7 @@
     .subscribe-btn {
       font-size: 12px;
       margin-top: 1.7rem;
-      min-width: 155px;
+      min-width: 170px;
     }
   }
 }

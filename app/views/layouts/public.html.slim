@@ -16,6 +16,8 @@ html
     meta name="og:title" content=@event.name
     meta property="og:description" content=@event.description
     meta property="og:image" content='www.calwinkle.com#{@event.main_picture.url}'
+    meta property="og:image:url" content='www.calwinkle.com#{@event.main_picture.url}'
+    meta property="og:image:alt" content='Main Image - #{@event.name}'
 
   body
     = yield

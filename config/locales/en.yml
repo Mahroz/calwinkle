@@ -32,3 +32,4 @@
 en:
   errors:
     end_date_time: The event's End Date and Time can't be before Start Time. 
+    unique_name: "An active event with same name already exists."

@@ -20,6 +20,7 @@ module EventCalandar
       e.dtstart     = Icalendar::Values::DateTime.new event_start, 'tzid' => tzid
       e.dtend       = Icalendar::Values::DateTime.new event_end, 'tzid' => tzid
       e.summary     = name
+      e.summary     = "Cancelled - " + name if event.is_cancel?
       e.description = description
       e.location    = address || ''
       e.status      = 'CANCELLED' if event.is_cancel?

@@ -23,7 +23,7 @@ class EventsController < ApplicationController
 
   def create
     @event = Event.new(permitted_params)
-    @event.event_url = "/#{current_user.name.parameterize}/#{@event.name.parameterize}"
+    @event.event_url = get_event_url
     if @event.save
       flash.now[:notice] = 'An event was created.'
     else
@@ -40,7 +40,7 @@ class EventsController < ApplicationController
 
   def update
     if @event.update(permitted_params)
-      @event.update(event_url: "/#{current_user.name.parameterize}/#{@event.name.parameterize}")
+      @event.update(event_url: get_event_url())
       flash.now[:notice] = 'Event updated successfully.'
     else
       flash.now[:alert] = 'Could not update the event'
@@ -111,5 +111,16 @@ class EventsController < ApplicationController
 
   def set_layout
     'public'
+  end
+
+  def get_event_url
+    index = 0
+    event_url_base = "/#{current_user.name.parameterize}/#{@event.name.parameterize}"
+    event_url = event_url_base
+    while Event.where("id != ? AND event_url = ? ", @event.id, event_url).count > 0
+      index += 1
+      event_url = event_url_base + "-#{index}"
+    end
+    event_url
   end
 end

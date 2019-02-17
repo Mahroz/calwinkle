@@ -43,9 +43,24 @@ div style="background-image: url(#{asset_url(main_picture)}), url(#{asset_url(de
                   button#btnGroupDrop1.btn.btn-primary.subscribe-btn.dropdown-toggle aria-expanded='false' aria-haspopup='true' data-toggle='dropdown'
                     | Add To Your Calendar
                   .dropdown-menu aria-labelledby='btnGroupDrop1'
+                  - if request.user_agent.downcase.include('apple')
                     = link_to 'Apple Mac', calendar_url(protocol: :webcal, format: :ics, id: @event.id, name: @event.event_url.parameterize), class: 'dropdown-item'
-                    = link_to 'Google', "https://calendar.google.com/calendar/render?cid=#{calendar_url(format: :ics, id: @event.id, name: @event.event_url.parameterize)}",
-                                         class: 'dropdown-item', target: :_blank
+                    = link_to 'Google', "https://calendar.google.com/calendar/render?cid=#{calendar_url(format: :ics, id: @event.id, name: @event.event_url.parameterize)}", class: 'dropdown-item', target: :_blank
+                    = link_to 'Outlook.com', "https://outlook.live.com/calendar/deeplink/compose?cid=#{calendar_url(format: :ics, id: @event.id, name: @event.event_url.parameterize)}", class: 'dropdown-item'
+                    = link_to 'Outlook', "https://calendar.google.com/calendar/render?cid=#{calendar_url(format: :ics, id: @event.id, name: @event.event_url.parameterize)}", class: 'dropdown-item', target: :_blank
+                    = link_to 'Yahoo', "http://calendar.yahoo.com/?v=60&view=d&type=20&title=#{URI.encode(@event.name)}&in_loc=#{get_event_url(@event)}&ST=#{@event.start_date.to_formatted_s(:number)}", class: 'dropdown-item', target: :_blank
+                  - elsif request.user_agent.downcase.include('android')
+                    = link_to 'Apple Mac', calendar_url(protocol: :webcal, format: :ics, id: @event.id, name: @event.event_url.parameterize), class: 'dropdown-item'
+                    = link_to 'Google', "https://calendar.google.com/calendar/render?cid=#{calendar_url(format: :ics, id: @event.id, name: @event.event_url.parameterize)}", class: 'dropdown-item', target: :_blank
+                    = link_to 'Outlook.com', "https://outlook.live.com/calendar/deeplink/compose?cid=#{calendar_url(format: :ics, id: @event.id, name: @event.event_url.parameterize)}", class: 'dropdown-item'
+                    = link_to 'Outlook', "https://calendar.google.com/calendar/render?cid=#{calendar_url(format: :ics, id: @event.id, name: @event.event_url.parameterize)}", class: 'dropdown-item', target: :_blank
+                    = link_to 'Yahoo', "http://calendar.yahoo.com/?v=60&view=d&type=20&title=#{URI.encode(@event.name)}&in_loc=#{get_event_url(@event)}&ST=#{@event.start_date.to_formatted_s(:number)}", class: 'dropdown-item', target: :_blank
+                  - else
+                    = link_to 'Apple Mac', calendar_url(protocol: :webcal, format: :ics, id: @event.id, name: @event.event_url.parameterize), class: 'dropdown-item'
+                    = link_to 'Google', "https://calendar.google.com/calendar/render?cid=#{calendar_url(format: :ics, id: @event.id, name: @event.event_url.parameterize)}", class: 'dropdown-item', target: :_blank
+                    = link_to 'Outlook.com', "https://outlook.live.com/calendar/deeplink/compose?cid=#{calendar_url(format: :ics, id: @event.id, name: @event.event_url.parameterize)}", class: 'dropdown-item'
+                    = link_to 'Outlook', "https://calendar.google.com/calendar/render?cid=#{calendar_url(format: :ics, id: @event.id, name: @event.event_url.parameterize)}", class: 'dropdown-item', target: :_blank
+                    = link_to 'Yahoo', "http://calendar.yahoo.com/?v=60&view=d&type=20&title=#{URI.encode(@event.name)}&in_loc=#{get_event_url(@event)}&ST=#{@event.start_date.to_formatted_s(:number)}", class: 'dropdown-item', target: :_blank  
     .col-md-12.col-sm-12
       hr /
       h4 EVENT DETAILS:

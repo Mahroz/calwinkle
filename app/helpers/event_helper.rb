@@ -9,7 +9,7 @@ module EventHelper
   end
 
   def get_event_url(event)
-    "#{request.base_url}/#{current_user.name.parameterize}/#{event.name.parameterize}"
+    "#{request.base_url}/#{event.user.name.parameterize}/#{event.name.parameterize}"
   end
 
   def split_datetime(datetime)

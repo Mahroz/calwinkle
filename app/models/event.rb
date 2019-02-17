@@ -6,6 +6,7 @@ class Event < ApplicationRecord
   validates :name, presence: true, uniqueness: { scope: :user_id }
   validates_presence_of :start_date, :start_time, :end_date, :end_time
   validate :start_end_date_time
+  # validate :name_uniqueness
 
   belongs_to :user
   has_one :event_report
@@ -64,6 +65,14 @@ class Event < ApplicationRecord
       errors.add(:base, I18n.t('errors.end_date_time'))
     elsif end_date == start_date && end_time <= start_time
       errors.add(:base, I18n.t('errors.end_date_time'))
+    end
+  end
+
+  def name_uniqueness
+    return if !name
+    byebug
+    if Event.where(name: name, user_id: user_id, is_cancel: false).count > 0
+      errors.add(:base, I18n.t('errors.unique_name'))
     end
   end
 

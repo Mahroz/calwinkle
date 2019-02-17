@@ -41,7 +41,7 @@ class EventsController < ApplicationController
   def update
     if @event.update(permitted_params)
       @event.update(event_url: "/#{current_user.name.parameterize}/#{@event.name.parameterize}")
-      flash.now[:notice] = 'An event was update.'
+      flash.now[:notice] = 'Event updated successfully.'
     else
       flash.now[:alert] = 'Could not update the event'
       flash.now[:errors] = @event.errors.full_messages
@@ -84,9 +84,9 @@ class EventsController < ApplicationController
 
   def permitted_params
   	params[:event][:start_date] = format_date(params[:start_date]) rescue nil
-  	params[:event][:start_time] = params[:start_time] rescue nil
+  	params[:event][:start_time] = params[:start_time]
   	params[:event][:end_date] = format_date(params[:end_date]) rescue nil
-  	params[:event][:end_time] = params[:end_time] rescue nil
+  	params[:event][:end_time] = params[:end_time]
     params.require(:event).permit(:name, :description, :main_picture,
                                   :address, :start_date, :start_time,
                                   :end_date, :end_time, :user_id,
@@ -106,7 +106,7 @@ class EventsController < ApplicationController
   end
 
   def increase_subscriber_count
-    @event&.subscriber_count_increment
+    @event&.subscriber_count_increment unless @event.is_cancel
   end
 
   def set_layout

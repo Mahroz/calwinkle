@@ -110,6 +110,6 @@ class EventsController < ApplicationController
   end
 
   def set_layout
-    current_user.present? ? 'application' : 'users'
+    'public'
   end
 end

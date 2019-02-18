@@ -23,7 +23,7 @@
           .col-md-4.padding-0
             h5.mt-7 Start Date:
           .col-md-7.padding-0
-            input.form-control(name="start_date" data-role="datebox" data-datebox-mode="calbox" data-options='{"mode":"calbox","dateFieldOrder":["m","d","y"], "overrideDateFormat": "%m/%d/%Y"}' value="#{@event.start_date}")
+            input.form-control(id="start_date" name="start_date" value="#{@event.start_date.strftime('%m/%d/%Y') rescue Date.today.strftime('%m/%d/%Y')}" autocomplete="off")
         .row
           .col-md-4.padding-0
             h5.mt-7.mt-7 Start Time:
@@ -35,7 +35,7 @@
           .col-md-4.padding-0
             h5.mt-7 End Date:
           .col-md-8.padding-0
-            input.form-control(name="end_date" data-role="datebox" data-datebox-mode="calbox" data-options='{"mode":"calbox","dateFieldOrder":["m","d","y"], "overrideDateFormat": "%m/%d/%Y"}' value="#{@event.end_date}")
+            input.form-control(id="end_date" name="end_date" value="#{@event.end_date.strftime('%m/%d/%Y') rescue Date.today.strftime('%m/%d/%Y')}" autocomplete="off")
         .row
           .col-md-4.padding-0
             h5.mt-7 End Time:
@@ -76,6 +76,12 @@
         .replace-img-block
           a href='#' id='replace-img-btn' Replace Image
     .form-group.btn-center
-      - unless persisted
-        button#event-next-btn.btn.btn-primary Next Step
-      button#event-create-btn.btn.btn-primary type='submit' class="#{persisted ? '' : 'hidden'}" #{persisted ? 'Update' : 'Add'}
+      button#event-create-btn.btn.btn-primary type='submit' #{persisted ? 'Update' : 'Add'}
+javascript:
+  $(document).ready(function(){
+    $( "#start_date" ).datepicker();
+    $( "#end_date" ).datepicker();
+    $("[data-role='datebox']").each(function() {
+            $(this).datebox();
+        });
+  });

@@ -3,9 +3,10 @@ class Event < ApplicationRecord
 
   mount_uploader :main_picture, PictureUploader
 
-  validates :name, presence: true, uniqueness: { scope: :user_id }
+  validates :name, presence: true
   validates_presence_of :start_date, :start_time, :end_date, :end_time
   validate :start_end_date_time
+  validate :name_uniqueness
 
   belongs_to :user
   has_one :event_report
@@ -13,7 +14,6 @@ class Event < ApplicationRecord
   delegate :subscriber_count, to: :event_report
 
   after_create :create_event_report
-  after_save   :set_event_report
 
   scope :not_cancelled, -> { where(is_cancel: false) }
 
@@ -67,15 +67,18 @@ class Event < ApplicationRecord
     end
   end
 
+  def name_uniqueness
+    return if !name
+    # if Event.where(name: name, user_id: user_id, is_cancel: false, end_date: Date.today..1.year.from_now ).count > 0
+    #   errors.add(:base, I18n.t('errors.unique_name'))
+    # end
+  end
+
   def get_formatted_date_time(date,time)
     date.strftime('%A, %b %d %Y') + ' at ' + time.strftime('%l:%M %P') rescue 'N/A'
   end
 
   def create_event_report
     EventReport.create(event_id: id)
-  end
-
-  def set_event_report
-    event_report.destroy if is_cancel?
   end
 end

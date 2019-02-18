@@ -23,7 +23,7 @@ class EventsController < ApplicationController
 
   def create
     @event = Event.new(permitted_params)
-    @event.event_url = "/#{current_user.name.parameterize}/#{@event.name.parameterize}"
+    @event.event_url = create_event_url
     if @event.save
       flash.now[:notice] = 'An event was created.'
     else
@@ -40,8 +40,8 @@ class EventsController < ApplicationController
 
   def update
     if @event.update(permitted_params)
-      @event.update(event_url: "/#{current_user.name.parameterize}/#{@event.name.parameterize}")
-      flash.now[:notice] = 'An event was update.'
+      @event.update(event_url: create_event_url())
+      flash.now[:notice] = 'Event updated successfully.'
     else
       flash.now[:alert] = 'Could not update the event'
       flash.now[:errors] = @event.errors.full_messages
@@ -84,9 +84,9 @@ class EventsController < ApplicationController
 
   def permitted_params
   	params[:event][:start_date] = format_date(params[:start_date]) rescue nil
-  	params[:event][:start_time] = params[:start_time] rescue nil
+  	params[:event][:start_time] = params[:start_time]
   	params[:event][:end_date] = format_date(params[:end_date]) rescue nil
-  	params[:event][:end_time] = params[:end_time] rescue nil
+  	params[:event][:end_time] = params[:end_time]
     params.require(:event).permit(:name, :description, :main_picture,
                                   :address, :start_date, :start_time,
                                   :end_date, :end_time, :user_id,
@@ -106,10 +106,21 @@ class EventsController < ApplicationController
   end
 
   def increase_subscriber_count
-    @event&.subscriber_count_increment
+    @event&.subscriber_count_increment unless @event.is_cancel
   end
 
   def set_layout
-    current_user.present? ? 'application' : 'users'
+    'public'
+  end
+
+  def create_event_url
+    index = 0
+    event_url_base = "/#{current_user.name.parameterize}/#{@event.name.parameterize}"
+    event_url = event_url_base
+    while Event.where("id != ? AND event_url = ? ", @event.id.to_i, event_url).count > 0
+      index += 1
+      event_url = event_url_base + "-#{index}"
+    end
+    event_url
   end
 end

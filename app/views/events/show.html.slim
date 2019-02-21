@@ -39,7 +39,7 @@ div style="background-image: url(#{asset_url(main_picture)}), url(#{asset_url(de
             .row
               .col-md-12
                 = image_tag get_qr_code(calendar_url(format: :ics, id: @event.id, name: @event.event_url.parameterize), 500), height: 120, width: 120
-                = link_to 'Problem scanning? Enlarge', '#', data: {toggle: "modal", target: "#myModal"}
+                = link_to 'Enlarge', '#', data: {toggle: "modal", target: "#myModal"}, class: 'btn btn-info btn-xs ml-9'
 
                 #myModal.modal.fade role="dialog" 
                   .modal-dialog
@@ -48,7 +48,7 @@ div style="background-image: url(#{asset_url(main_picture)}), url(#{asset_url(de
                       .modal-header
                         h4.modal-title Scan QR with your phone
                       .modal-body
-                        = image_tag get_qr_code(calendar_url(format: :ics, id: @event.id, name: @event.event_url.parameterize), 500), height: 240, width: 240, style: 'margin-left: 25%;'
+                        = image_tag get_qr_code(calendar_url(format: :ics, id: @event.id, name: @event.event_url.parameterize), 240), height: 240, width: 240
                       .modal-footer
                         button.btn.btn-default data-dismiss="modal" type="button"  Close
 

@@ -7,6 +7,18 @@
 .event-name {
   font-size: 20px;
 }
+.modal-body{
+  text-align: center;
+}
+.btn-xs {
+  padding: .30rem .4rem !important;
+  font-size: .775rem !important;
+  line-height: .5 !important;
+  border-radius: .2rem !important;
+}
+.ml-9{
+  margin-left: 9px;
+}
 
 @media screen and (max-width: 768px){
   #floating-add-calendar{

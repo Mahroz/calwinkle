@@ -76,8 +76,6 @@
         .replace-img-block
           a href='#' id='replace-img-btn' Replace Image
     .form-group.btn-center
-      - unless persisted
-        button#event-next-btn.btn.btn-primary Next Step
       button#event-create-btn.btn.btn-primary type='submit' #{persisted ? 'Update' : 'Add'}
 
 javascript:

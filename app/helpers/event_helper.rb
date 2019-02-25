@@ -9,13 +9,23 @@ module EventHelper
   end
 
   def get_event_url(event)
-    "#{request.base_url}/#{event.user.name.parameterize}/#{event.name.parameterize}"
+    "#{request.base_url}#{event.event_url}"
   end
 
   def split_datetime(datetime)
     date_part = datetime.strftime('%Y/%m/%d') rescue ''
     time_part = datetime.strftime('%H:%M') rescue ''
     [date_part, time_part]
+  end
+
+  def android_device?
+    user_agent = request.headers["HTTP_USER_AGENT"]
+    user_agent.present? && user_agent =~ /\b(Android)\b/i
+  end
+
+  def apple_device?
+    user_agent = request.headers["HTTP_USER_AGENT"]
+    user_agent.present? && user_agent =~ /\b(iPhone|iPad)\b/i
   end
 
   def format_date(date)

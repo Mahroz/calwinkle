@@ -9,5 +9,5 @@
   = link_to 'Apple', calendar_url(protocol: :webcal, format: :ics, id: @event.id, name: @event.event_url.parameterize), class: 'dropdown-item'
     
 = link_to 'Outlook', calendar_url(protocol: :webcal, format: :ics, id: @event.id, name: @event.event_url.parameterize), class: 'dropdown-item'
-= link_to 'Outlook.com', "https://outlook.live.com/calendar/deeplink/compose?cid=#{calendar_url(format: :ics, id: @event.id, name: @event.event_url.parameterize)}", class: 'dropdown-item'
+= link_to 'Outlook.com', "https://outlook.live.com/owa/?path=/calendar/action/compose&rru=addsubscription&url=#{CGI.escape(calendar_url(protocol: :webcal, format: :ics, id: @event.id, name: @event.event_url.parameterize))}&name=#{@event.name}&mkt=en-001", class: 'dropdown-item', target: '_blank'
 = link_to 'Yahoo', "http://calendar.yahoo.com/?v=60&view=d&type=20&title=#{URI.encode(@event.name)}&in_loc=#{get_event_url(@event)}&ST=#{@event.start_date.to_formatted_s(:number)}", class: 'dropdown-item', target: :_blank

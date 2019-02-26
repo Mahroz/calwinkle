@@ -33,9 +33,9 @@ module EventCalandar
       end
       e.alarm do |a|
         a.action  = "DISPLAY"
-        a.summary = "15 minutes before #{name}"
+        a.summary = "5 minutes before #{name}"
         a.description = description
-        a.trigger = "-PT15M" # 15 Mins before
+        a.trigger = "-PT5M" # 15 Mins before
       end
     end
     cal.publish

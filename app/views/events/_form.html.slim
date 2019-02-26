@@ -59,6 +59,7 @@
           - Event::occurance_types.each do |ocr_type, _ocr_id|
             a.dropdown-item.occurance-type href="#"
               = ocr_type
+      
       .custom-occurance-fields.form-group
         .form-group.col-md-12.p-10-0
           .row
@@ -67,6 +68,11 @@
             .col-md-8.padding-0
               = f.number_field :custom_occurance_every_duration, class: 'form-control', min: 1, value: (@event.custom_occurance_every_duration || 1), style: 'width: 49%; float: left;'
               = f.select :custom_occurance_every_duration_type, options_for_select(['days', 'weeks', 'months', 'years'], @event.custom_occurance_every_duration_type), {}, {class: 'form-control', min: 1, style: 'width: 49%; float: right;'}
+          
+          br /
+          .row.monthly-sub-type-selection
+            .col-md-12.padding-0
+              = f.select :custom_occurance_monthly_sub_type, options_for_select(monthly_sub_type_options(@event.start_date), @event.custom_occurance_monthly_sub_type), {}, {class: 'form-control'}
           br /
           .row.week-days-selection
             .col-md-4.padding-0
@@ -145,9 +151,27 @@
     .form-group.btn-center
       button#event-create-btn.btn.btn-primary type='submit' #{persisted ? 'Update' : 'Add'}
 javascript:
+  var toggleCustomOccuranceFields = function(){
+    var occuranceType = $('#event_occurance_type').val()
+    if (occuranceType == 'Custom') {
+      $('.custom-occurance-fields').show()
+    }
+    else{
+     $('.custom-occurance-fields').hide() 
+    }
+  }
+  var toggleCustomOccuranceMonthlySubTypeSelector = function(){
+    var customOccuranceEveryDurationType = $('#event_custom_occurance_every_duration_type').val()
+    if (customOccuranceEveryDurationType == 'months') {
+      $('.monthly-sub-type-selection').show()
+    }
+    else{
+      $('.monthly-sub-type-selection').hide()
+    }
+  }
+
   var toggleCustomOccuranceWeekDaysSelector = function(){
     var customOccuranceEveryDurationType = $('#event_custom_occurance_every_duration_type').val()
-
     if (customOccuranceEveryDurationType == 'weeks') {
       $('.week-days-selection').show()
     }
@@ -181,14 +205,21 @@ javascript:
     });
 
     toggleCustomOccuranceWeekDaysSelector()
+    toggleCustomOccuranceMonthlySubTypeSelector()
     toggleCustomOccuranceEndsOptions()
+    toggleCustomOccuranceFields()
 
     $('#event_custom_occurance_every_duration_type').on('change', function(){
       toggleCustomOccuranceWeekDaysSelector()
+      toggleCustomOccuranceMonthlySubTypeSelector()
     })
 
     $('input[name="event[custom_occurance_ends_on_type]"]').on('change', function(){
       toggleCustomOccuranceEndsOptions()
     })
 
+    $('input#event_occurance_type').change(function(){
+      alert('change')
+      toggleCustomOccuranceFields()
+    })
   });

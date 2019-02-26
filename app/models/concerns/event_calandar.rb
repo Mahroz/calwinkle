@@ -28,11 +28,13 @@ module EventCalandar
       e.alarm do |a|
         a.action  = "DISPLAY"
         a.summary = "30 minutes before #{name}"
+        a.description = description
         a.trigger = "-PT30M" # 30 Mins before
       end
       e.alarm do |a|
         a.action  = "DISPLAY"
         a.summary = "15 minutes before #{name}"
+        a.description = description
         a.trigger = "-PT15M" # 15 Mins before
       end
     end

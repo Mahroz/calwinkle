@@ -25,6 +25,14 @@ module EventCalandar
       e.location    = address || ''
       # e.status      = 'CANCELLED' if event.is_cancel?
       e.rrule       = occurance_rule unless occurance_rule.blank?
+      e.alarm do |a|
+        a.summary = "30 minutes before #{name}"
+        a.trigger = "-PT30M" # 30 Mins before
+      end
+      e.alarm do |a|
+        a.summary = "15 minutes before #{name}"
+        a.trigger = "-PT15M" # 15 Mins before
+      end
     end
     cal.publish
     cal.to_ical

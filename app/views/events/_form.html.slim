@@ -7,44 +7,44 @@
     = f.hidden_field :user_id, value: current_user.id
     .form-group
       h5
-        | Event Name
+        | Event Name *
       = f.text_field :name, class: 'form-control', required: true
     .form-group
       h5
-        | Event Description
+        | Event Description *
       = f.text_area :description, class: 'form-control', maxlength: 8000
     .form-group
       h5
-        | Event Address
+        | Event Address *
       = f.text_field :address, class: 'form-control', id: 'autocomplete'
     .row.event-date-block
       .form-group.col-md-6.p-10-0
         .row
           .col-md-4.padding-0
-            h5.mt-7 Start Date:
+            h5.mt-7 Start Date *
           .col-md-7.padding-0
             input.form-control(id="start_date" name="start_date" value="#{@event.start_date.strftime('%m/%d/%Y') rescue Date.today.strftime('%m/%d/%Y')}" autocomplete="off")
         .row
           .col-md-4.padding-0
-            h5.mt-7.mt-7 Start Time:
+            h5.mt-7.mt-7 Start Time *
           .col-md-7.padding-0
             input.form-control(name="start_time" data-role="datebox" data-datebox-mode="timebox" data-options='{"mode":"timebox"}' value="#{@event.formatted_start_time}")
 
       .form-group.col-md-6.p-10-0
         .row
           .col-md-4.padding-0
-            h5.mt-7 End Date:
+            h5.mt-7 End Date *
           .col-md-8.padding-0
             input.form-control(id="end_date" name="end_date" value="#{@event.end_date.strftime('%m/%d/%Y') rescue Date.today.strftime('%m/%d/%Y')}" autocomplete="off")
         .row
           .col-md-4.padding-0
-            h5.mt-7 End Time:
+            h5.mt-7 End Time *
           .col-md-8.padding-0
             input.form-control(name="end_time" data-role="datebox" data-datebox-mode="timebox" data-options='{"mode":"timebox"}' value="#{@event.formatted_end_time}")
 
     .form-group
       h5
-        | Time Zone
+        | Time Zone *
       select.form-control id='event_time_zone' name='event[time_zone]' data-value=f.object.time_zone
 
     .form-group
@@ -99,6 +99,8 @@
     .form-group
       h5
         | Organizer Picture
+        br/
+        br/
         = f.label :organizer_picture, 'Upload Organizer Image', class: 'btn btn-info'
         = f.file_field :organizer_picture, class: 'form-control file-input', accept: 'image/*'
 

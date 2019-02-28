@@ -56,7 +56,6 @@ class Event < ApplicationRecord
   def subscriber_count_increment
     event_report.increment!(:subscriber_count)
   end
-
   private
 
   def start_end_date_time

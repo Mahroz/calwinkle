@@ -3,44 +3,84 @@
 div style="background-image: url(#{asset_url(main_picture)}), url(#{asset_url(default_url)});" class="event-image"
 #floating-add-calendar
   .btn-group role='group'
-    button.btn.btn-primary.subscribe-btn.dropdown-toggle aria-expanded='false' aria-haspopup='true' data-toggle='dropdown'
-      | Add To Your Calendar
+    button#floating-calendar aria-expanded='false' aria-haspopup='true' data-toggle='dropdown'
+      = image_tag asset_path('icon-calendar.png'), width: 25, height: 25
     .dropdown-menu aria-labelledby='floating-add-calendar'
       = link_to 'Apple Mac', calendar_url(protocol: :webcal, format: :ics, id: @event.id, name: @event.event_url.parameterize), class: 'dropdown-item'
       = link_to 'Google', "https://calendar.google.com/calendar/render?cid=#{calendar_url(format: :ics, id: @event.id, name: @event.event_url.parameterize)}",
                            class: 'dropdown-item', target: :_blank
 .event-container
-  .rows
-    .event-name.rows
-      strong = @event.name.upcase
-    
-    br/
-
   .row
-    .col-md-6.col-sm-12.font-size-14
-      .event-start
-        h5 Starts on:
-        = @event.start_on + "  (#{@event.time_zone})"
-      .event-end
-        h5 Ends on:
-        = @event.end_on + "  (#{@event.time_zone})"
+    .col-md-7.col-sm-12.font-size-14
+      .event-name.rows
+        = @event.name  
       br/
-      .event-address
-        h5 Address:
-        = event_address
+      .event-start.event-date-time-container
+        = image_tag asset_path('icon-clock.png'), height: 20, width: 20, class: 'heading-icon'
+        span.sub-text.light.mobile-hidden 
+          'Date and Time
+          br/
+        - if (@event.start_date == @event.end_date)
+          span.event-date
+            = @event.start_date.strftime('%A, %b %d %Y')
+          span.event-time
+            = @event.start_time.strftime('%l:%M %p') + ' - ' + @event.end_time.strftime('%l:%M %p')
+        - else
+            span.event-multiple-date
+              = @event.start_date.strftime('%A, %b %d %Y') + ' - ' + @event.start_time.strftime('%l:%M %P') + ' to ' + @event.end_date.strftime('%A, %b %d %Y') + ' - ' + @event.end_time.strftime('%l:%M %P')
+      div.time-zone.sub-text.light
+        = "(#{@event.time_zone})"
+
+
+      .event-end.event-address-container
+        = image_tag asset_path('icon-location.png'), height: 20, width: 20, class: 'heading-icon'
+        span.sub-text.light.mobile-hidden 
+          'Address
+          br/
+        span.event-address
+          = event_address
       br/
-    .col-md-6.col-sm-12
+      .social-container.mobile-hidden
+        span.social-text
+          'Share With Friends
+        div.social-icons-wrap
+          div.social-icon-holder
+            = image_tag asset_path('icon-facebook.png'), height: 20, width: 20, class: 'social-icon'
+          div.social-icon-holder
+            = image_tag asset_path('icon-twitter.png'), height: 20, width: 20, class: 'social-icon'
+          div.social-icon-holder
+            = image_tag asset_path('icon-mail.png'), height: 20, width: 20, class: 'social-icon'
+          div.social-icon-holder
+            = image_tag asset_path('icon-copy.png'), height: 20, width: 20, class: 'social-icon'
+
+    .col-md-5.col-sm-12.event-subscribe-wrap
       .event-subscribe
-        h5 Subscribe Now To This Event
+        div.heading-2.mb-20
+          'Subscribe Now
         .row
           .event-qr-code.col-md-5
+            .row.mobile-hidden
+              .col-md-12.h-60.info-text Click to Add to you Calendar
+            hr/
             .row
-              p.col-md-12 Scan QR with your phone
+              .col-md-12.info-text Scan QR with your phone and you will be subscribe automatically
+              = link_to 'Enlarge', '#', data: {toggle: "modal", target: "#myModal"}, class: 'btn btn-info btn-xs ml-15 mt-13'
+
+          .col-md-2.info-text.mobile-hidden.pt-70
+            h6 OR
+          .col-md-5
+            .row.mobile-hidden
+              .btn-group.h-60 role='group'
+                button#btnGroupDrop1.subscribe-btn aria-expanded='false' aria-haspopup='true' data-toggle='dropdown'
+                  | Add To Calendar
+                .dropdown-menu aria-labelledby='btnGroupDrop1'
+                  = link_to 'Apple Mac', calendar_url(protocol: :webcal, format: :ics, id: @event.id, name: @event.event_url.parameterize), class: 'dropdown-item'
+                  = link_to 'Google', "https://calendar.google.com/calendar/render?cid=#{calendar_url(protocol: :webcal, format: :ics, id: @event.id, name: @event.event_url.parameterize)}",
+                                       class: 'dropdown-item', target: :_blank                
+            hr/
             .row
               .col-md-12
                 = image_tag get_qr_code(calendar_url(format: :ics, id: @event.id, name: @event.event_url.parameterize), 500), height: 120, width: 120
-                br/
-                = link_to 'Enlarge', '#', data: {toggle: "modal", target: "#myModal"}, class: 'btn btn-info btn-xs ml-9'
 
                 #myModal.modal.fade role="dialog" 
                   .modal-dialog
@@ -53,24 +93,15 @@ div style="background-image: url(#{asset_url(main_picture)}), url(#{asset_url(de
                       .modal-footer
                         button.btn.btn-default data-dismiss="modal" type="button"  Close
 
-          .col-md-2.mobile-hidden
-            h6 OR
-          .col-md-5.mobile-hidden
-            .row
-              p.col-md-12 Click To Add To Calendar
-              / = request.user_agent
-            .row
-              .col-md-12
-                .btn-group role='group'
-                  button#btnGroupDrop1.btn.btn-primary.subscribe-btn.dropdown-toggle aria-expanded='false' aria-haspopup='true' data-toggle='dropdown'
-                    | Add To Your Calendar
-                  .dropdown-menu aria-labelledby='btnGroupDrop1'
-                    = link_to 'Apple Mac', calendar_url(protocol: :webcal, format: :ics, id: @event.id, name: @event.event_url.parameterize), class: 'dropdown-item'
-                    = link_to 'Google', "https://calendar.google.com/calendar/render?cid=#{calendar_url(protocol: :webcal, format: :ics, id: @event.id, name: @event.event_url.parameterize)}",
-                                         class: 'dropdown-item', target: :_blank
-    p.col-md-12.text-right.mb-0.font-size-13 Powered by <a target='_blank' href="http://www.calwinkle.com">CalWinkle.com</a>
-    .col-md-12.col-sm-12
-      hr /
-      h4 EVENT DETAILS:
-      .event-description.rows.font-size-14
+.details-container
+  .row
+    .col-md-7.col-sm-12
+      div.heading-2
+        'Event Details
+      .event-description.rows
         = auto_link(@event.description.gsub(/\r\n|\r|\n/, '<br>'), html: { target: '_blank'})
+    .col-md-5.col-sm-12
+
+
+.footer
+  'Powered by <a target='_blank' href="http://www.calwinkle.com">CalWinkle.com</a>

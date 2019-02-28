@@ -31,6 +31,6 @@ module EventHelper
   end
 
   def event_address
-    @event.address.present? ? link_to(@event.address, URI.encode("https://www.google.com/maps/search/#{@event.address}"), target: '_blank', style: 'color: rgba(0, 0, 0, 0.8);') : nil
+    @event.address.present? ? link_to(@event.address, URI.encode("https://www.google.com/maps/search/#{@event.address}"), target: '_blank', style: 'color: #4F89FB;') : "Not Available"
   end
 end

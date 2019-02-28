@@ -78,55 +78,37 @@
             .col-md-4.padding-0
               h5.mt-7 Repeat On:
             .col-md-8.padding-0
-              label.checkbox-inline
-                = f.check_box("custom_occurance_weekly_selected_days", value: 'mon', id: 'inlineCheckbox1')
-                | M
-              label.checkbox-inline
-                = f.check_box("custom_occurance_weekly_selected_days", value: 'tue', id: 'inlineCheckbox2')
-                | T
-              label.checkbox-inline
-                = f.check_box("custom_occurance_weekly_selected_days", value: 'wed', id: 'inlineCheckbox3')
-                | W
-
-              label.checkbox-inline
-                = f.check_box("custom_occurance_weekly_selected_days", value: 'thu', id: 'inlineCheckbox4')
-                | T
-
-              label.checkbox-inline
-                = f.check_box("custom_occurance_weekly_selected_days", value: 'fri', id: 'inlineCheckbox5')
-                | F
-
-              label.checkbox-inline
-                = f.check_box("custom_occurance_weekly_selected_days", value: 'sat', id: 'inlineCheckbox6')
-                | S 
-              
-              label.checkbox-inline
-                = f.check_box("custom_occurance_weekly_selected_days", value: 'sun', id: 'inlineCheckbox7')
-                | S
-
+              - week_days.each do |day|
+                
+                label.checkbox-inline  
+                  = f.check_box :custom_occurance_weekly_selected_days, {multiple: true, id: 'inlineCheckbox'}, day.downcase, false
+                  = day.first.upcase
 
           .row
             .col-md-12.padding-0
               br /
               h4 Ends:
             .col-md-4.padding-0
-              label
-                = f.radio_button :custom_occurance_ends_on_type, 'none', :checked => true
-                | None
+              .radio
+                label
+                  = f.radio_button :custom_occurance_ends_on_type, 'none', :checked => @event.custom_occurance_ends_on_type == 'none'
+                  | None
             .col-md-8.padding-0
 
             .col-md-4.padding-0
               br /
-              label
-                = f.radio_button :custom_occurance_ends_on_type, 'on', :checked => true
-                | On
+              .radio
+                label
+                  = f.radio_button :custom_occurance_ends_on_type, 'on', :checked => @event.custom_occurance_ends_on_type == 'on'
+                  | On
             .col-md-8.padding-0
               = f.date_field :custom_occurance_repeat_ends_at, class: 'form-control'
             .col-md-4.padding-0
               br /
-              label
-                = f.radio_button :custom_occurance_ends_on_type, 'after', :checked => true
-                | After
+              .radio
+                label
+                  = f.radio_button :custom_occurance_ends_on_type, 'after', :checked => @event.custom_occurance_ends_on_type == 'after'
+                  | After
             .col-md-8.padding-0
               .input-group
                 = f.number_field :custom_occurance_ends_after_duration, class: 'form-control', min: 1, value: (@event.custom_occurance_ends_after_duration || 1)
@@ -157,7 +139,7 @@ javascript:
       $('.custom-occurance-fields').show()
     }
     else{
-     $('.custom-occurance-fields').hide() 
+      $('.custom-occurance-fields').hide() 
     }
   }
   var toggleCustomOccuranceMonthlySubTypeSelector = function(){
@@ -183,17 +165,17 @@ javascript:
   var toggleCustomOccuranceEndsOptions = function(){
     var customOccuranceEndsType = $('input[name="event[custom_occurance_ends_on_type]"]:checked').val()
     if (customOccuranceEndsType == 'none'){
-      $('#event_custom_occurance_repeat_ends_at').attr('readonly', true)
-      $('#event_custom_occurance_ends_after_duration').attr('readonly', true)
+      $('#event_custom_occurance_repeat_ends_at').val("").removeAttr('required').attr('readonly', true)
+      $('#event_custom_occurance_ends_after_duration').val('').removeAttr('required').attr('readonly', true)
     }
     else if (customOccuranceEndsType == 'on'){
-      $('#event_custom_occurance_repeat_ends_at').removeAttr("readonly")
-      $('#event_custom_occurance_ends_after_duration').attr('readonly', true)
+      $('#event_custom_occurance_repeat_ends_at').removeAttr("readonly").attr('required', 'required')
+      $('#event_custom_occurance_ends_after_duration').val('').removeAttr('required').attr('readonly', true)
     }
 
     else if (customOccuranceEndsType == 'after'){
-      $('#event_custom_occurance_repeat_ends_at').attr('readonly', true)
-      $('#event_custom_occurance_ends_after_duration').removeAttr("readonly")
+      $('#event_custom_occurance_repeat_ends_at').val("").removeAttr('required').attr('readonly', true)
+      $('#event_custom_occurance_ends_after_duration').removeAttr("readonly").attr('required', 'required')
     }
   }
 
@@ -217,9 +199,8 @@ javascript:
     $('input[name="event[custom_occurance_ends_on_type]"]').on('change', function(){
       toggleCustomOccuranceEndsOptions()
     })
-
-    $('input#event_occurance_type').change(function(){
-      alert('change')
+    
+    $('.dropdown-item.occurance-type').on('click', function(){
       toggleCustomOccuranceFields()
     })
   });

@@ -51,4 +51,8 @@ module EventHelper
   def event_address
     @event.address.present? ? link_to(@event.address, URI.encode("https://www.google.com/maps/search/#{@event.address}"), target: '_blank', style: 'color: rgba(0, 0, 0, 0.8);') : nil
   end
+
+  def week_days
+    ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
+  end
 end

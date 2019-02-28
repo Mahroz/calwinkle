@@ -184,3 +184,16 @@
 .checkbox-inline{
   margin-right: 1rem;
 }
+
+.radio label{
+  min-height: 20px;
+  padding-left: 20px;
+  margin-bottom: 0;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.radio input[type='radio']{
+  margin-right: 10px;
+  margin-top: 4px;
+}

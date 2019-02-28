@@ -75,6 +75,33 @@
           span Image Uploaded :)
         .replace-img-block
           a href='#' id='replace-img-btn' Replace Image
+
+    .form-group
+      h5
+        | Organizer Name
+      = f.text_field :organizer_name, class: 'form-control'
+
+    .form-group
+      h5
+        | Organizer Phone
+      = f.number_field :organizer_phone, class: 'form-control'
+
+    .form-group
+      h5
+        | Organizer Email
+      = f.email_field :organizer_email, class: 'form-control'
+
+    .form-group
+      h5
+        | Organizer Website
+      = f.text_field :organizer_website, class: 'form-control'
+
+    .form-group
+      h5
+        | Organizer Picture
+        = f.label :organizer_picture, 'Upload Organizer Image', class: 'btn btn-info'
+        = f.file_field :organizer_picture, class: 'form-control file-input', accept: 'image/*'
+
     .form-group.btn-center
       button#event-create-btn.btn.btn-primary type='submit' #{persisted ? 'Update' : 'Add'}
 

@@ -2,6 +2,7 @@ class Event < ApplicationRecord
   include EventCalandar
 
   mount_uploader :main_picture, PictureUploader
+  mount_uploader :organizer_picture, PictureUploader
 
   validates :name, presence: true
   validates_presence_of :start_date, :start_time, :end_date, :end_time

@@ -87,10 +87,11 @@ class EventsController < ApplicationController
   	params[:event][:start_time] = params[:start_time]
   	params[:event][:end_date] = format_date(params[:end_date]) rescue nil
   	params[:event][:end_time] = params[:end_time]
-    params.require(:event).permit(:name, :description, :main_picture,
-                                  :address, :start_date, :start_time,
-                                  :end_date, :end_time, :user_id,
-                                  :occurance_type, :occurance_rule, :time_zone)
+    params.require(:event).permit(:name, :description, :main_picture, :address,
+                                  :start_date, :start_time, :end_date, :end_time,
+                                  :user_id, :occurance_type, :occurance_rule, 
+                                  :time_zone, :organizer_name, :organizer_phone,
+                                  :organizer_email, :organizer_website, :organizer_picture)
   end
 
   def set_event

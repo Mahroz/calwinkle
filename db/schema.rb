@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_05_204659) do
+ActiveRecord::Schema.define(version: 2019_02_26_184329) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,11 @@ ActiveRecord::Schema.define(version: 2019_02_05_204659) do
     t.integer "occurance_type"
     t.boolean "is_cancel", default: false
     t.string "time_zone"
+    t.string "organizer_name"
+    t.string "organizer_phone"
+    t.string "organizer_email"
+    t.string "organizer_website"
+    t.string "organizer_picture"
     t.index ["event_url"], name: "index_events_on_event_url", unique: true
     t.index ["user_id"], name: "index_events_on_user_id"
   end

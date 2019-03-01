@@ -1,5 +1,7 @@
 - default_url = "/uploads/event/main_picture/default.jpg"
 - main_picture = @event.main_picture.url || default_url
+- default_organiazer_image_url = "/uploads/event/organizer_picture/default_organizer.gif"
+- organizer_image = @event.organizer_picture.url || default_organiazer_image_url
 div style="background-image: url(#{asset_url(main_picture)}), url(#{asset_url(default_url)});" class="event-image"
 #floating-add-calendar
   .btn-group role='group'
@@ -100,7 +102,43 @@ div style="background-image: url(#{asset_url(main_picture)}), url(#{asset_url(de
         'Event Details
       .event-description.rows
         = auto_link(@event.description.gsub(/\r\n|\r|\n/, '<br>'), html: { target: '_blank'})
+        br/ 
+        br/
     .col-md-5.col-sm-12
+      - unless @event.organizer_name.blank?
+        div.organizer-image style="background-image: url(#{asset_url(organizer_image)});"
+        div.organizer-details
+          span.sub-text.light
+            'Event Organizer
+            br/
+          span.heading-2
+            = @event.organizer_name
+        br/
+
+      - unless @event.organizer_phone.blank?
+        div.organizer-detail-holder
+          span.sub-text.light
+            'Phone Number
+            br/
+          span.blue-text
+            = link_to @event.organizer_phone, "tel:#{@event.organizer_phone}", target: :_blank
+          br/
+
+      - unless @event.organizer_email.blank?
+        div.organizer-detail-holder
+          span.sub-text.light
+            'Email
+            br/
+          span.blue-text
+            = link_to @event.organizer_email, "mailto:#{@event.organizer_email}", target: :_blank
+          br/
+      - unless @event.organizer_website.blank?
+        div.organizer-detail-holder
+          span.sub-text.light
+            'Website
+            br/
+          span.blue-text
+            = link_to @event.organizer_website, "#{@event.organizer_website}", target: :_blank
 
 
 .footer

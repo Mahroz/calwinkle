@@ -94,6 +94,13 @@
     float: right;
     margin-left: 5px;
   }
+
+  .event-add-to-cal-widget-generator{
+    color: yellow;
+    font-size: 12px;
+    float: right;
+    margin-right: 5px;
+  }
   .event-viewer-block {
     float: right;
     i {
@@ -167,15 +174,18 @@
 
 pre{
   display: block;
+  text-align: left;
   padding: 9.5px;
   margin: 0 0 10px;
   font-size: 13px;
   line-height: 1.428571429;
-  word-break: break-all;
   word-wrap: break-word;
   color: #333333;
   background-color: #f5f5f5;
   border: 1px solid #ccc;
   border-radius: 4px;
+}
 
+pre xmp{
+  word-wrap: break-word;
 }

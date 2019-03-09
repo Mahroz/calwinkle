@@ -49,6 +49,10 @@ class Event < ApplicationRecord
     get_calendar(self)
   end
 
+  def complete_url
+    Rails.env.production? ? 'www.calwinkle.com' : 'localhost:3000' + event_url
+  end
+
   def viewer_count_increment
     event_report.increment!(:viewer_count)
   end

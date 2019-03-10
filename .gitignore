@@ -30,3 +30,5 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 /config/database.yml
+
+/app/views/users/user_event_calendars/*

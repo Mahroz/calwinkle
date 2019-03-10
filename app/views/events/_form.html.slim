@@ -59,6 +59,61 @@
           - Event::occurance_types.each do |ocr_type, _ocr_id|
             a.dropdown-item.occurance-type href="#"
               = ocr_type
+      
+      .custom-occurance-fields.form-group
+        .form-group.col-md-12.p-10-0
+          .row
+            .col-md-4.padding-0
+              h5.mt-7 Repeat Every:
+            .col-md-8.padding-0
+              = f.number_field :custom_occurance_every_duration, class: 'form-control', min: 1, value: (@event.custom_occurance_every_duration || 1), style: 'width: 49%; float: left;'
+              = f.select :custom_occurance_every_duration_type, options_for_select(['days', 'weeks', 'months', 'years'], @event.custom_occurance_every_duration_type), {}, {class: 'form-control', min: 1, style: 'width: 49%; float: right;'}
+          
+          br /
+          .row.monthly-sub-type-selection
+            .col-md-12.padding-0
+              = f.select :custom_occurance_monthly_sub_type, options_for_select(monthly_sub_type_options(@event.start_date), @event.custom_occurance_monthly_sub_type), {}, {class: 'form-control'}
+          br /
+          .row.week-days-selection
+            .col-md-4.padding-0
+              h5.mt-7 Repeat On:
+            .col-md-8.padding-0
+              - week_days.each do |day|
+                
+                label.checkbox-inline  
+                  = f.check_box :custom_occurance_weekly_selected_days, {multiple: true, id: 'inlineCheckbox'}, day.downcase, false
+                  = day.first.upcase
+
+          .row
+            .col-md-12.padding-0
+              br /
+              h4 Ends:
+            .col-md-4.padding-0
+              .radio
+                label
+                  = f.radio_button :custom_occurance_ends_on_type, 'none', :checked => @event.custom_occurance_ends_on_type == 'none'
+                  | None
+            .col-md-8.padding-0
+
+            .col-md-4.padding-0
+              br /
+              .radio
+                label
+                  = f.radio_button :custom_occurance_ends_on_type, 'on', :checked => @event.custom_occurance_ends_on_type == 'on'
+                  | On
+            .col-md-8.padding-0
+              = f.date_field :custom_occurance_repeat_ends_at, class: 'form-control'
+            .col-md-4.padding-0
+              br /
+              .radio
+                label
+                  = f.radio_button :custom_occurance_ends_on_type, 'after', :checked => @event.custom_occurance_ends_on_type == 'after'
+                  | After
+            .col-md-8.padding-0
+              .input-group
+                = f.number_field :custom_occurance_ends_after_duration, class: 'form-control', min: 1, value: (@event.custom_occurance_ends_after_duration || 1)
+                span#basic-addon2.input-group-addon occurances
+
 
     br/
     h5
@@ -108,12 +163,76 @@
       button#event-create-btn.btn.btn-primary type='submit' #{persisted ? 'Update' : 'Add'}
 
 javascript:
+  var toggleCustomOccuranceFields = function(){
+    var occuranceType = $('#event_occurance_type').val()
+    if (occuranceType == 'Custom') {
+      $('.custom-occurance-fields').show()
+    }
+    else{
+      $('.custom-occurance-fields').hide() 
+    }
+  }
+  var toggleCustomOccuranceMonthlySubTypeSelector = function(){
+    var customOccuranceEveryDurationType = $('#event_custom_occurance_every_duration_type').val()
+    if (customOccuranceEveryDurationType == 'months') {
+      $('.monthly-sub-type-selection').show()
+    }
+    else{
+      $('.monthly-sub-type-selection').hide()
+    }
+  }
+
+  var toggleCustomOccuranceWeekDaysSelector = function(){
+    var customOccuranceEveryDurationType = $('#event_custom_occurance_every_duration_type').val()
+    if (customOccuranceEveryDurationType == 'weeks') {
+      $('.week-days-selection').show()
+    }
+    else{
+      $('.week-days-selection').hide()
+    }
+  }
+
+  var toggleCustomOccuranceEndsOptions = function(){
+    var customOccuranceEndsType = $('input[name="event[custom_occurance_ends_on_type]"]:checked').val()
+    if (customOccuranceEndsType == 'none'){
+      $('#event_custom_occurance_repeat_ends_at').val("").removeAttr('required').attr('readonly', true)
+      $('#event_custom_occurance_ends_after_duration').val('').removeAttr('required').attr('readonly', true)
+    }
+    else if (customOccuranceEndsType == 'on'){
+      $('#event_custom_occurance_repeat_ends_at').removeAttr("readonly").attr('required', 'required')
+      $('#event_custom_occurance_ends_after_duration').val('').removeAttr('required').attr('readonly', true)
+    }
+
+    else if (customOccuranceEndsType == 'after'){
+      $('#event_custom_occurance_repeat_ends_at').val("").removeAttr('required').attr('readonly', true)
+      $('#event_custom_occurance_ends_after_duration').removeAttr("readonly").attr('required', 'required')
+    }
+  }
+
   $(document).ready(function(){
     $( "#start_date" ).datepicker();
     $( "#end_date" ).datepicker();
     $("[data-role='datebox']").each(function() {
       $(this).datebox();
     });
+
+    toggleCustomOccuranceWeekDaysSelector()
+    toggleCustomOccuranceMonthlySubTypeSelector()
+    toggleCustomOccuranceEndsOptions()
+    toggleCustomOccuranceFields()
+
+    $('#event_custom_occurance_every_duration_type').on('change', function(){
+      toggleCustomOccuranceWeekDaysSelector()
+      toggleCustomOccuranceMonthlySubTypeSelector()
+    })
+
+    $('input[name="event[custom_occurance_ends_on_type]"]').on('change', function(){
+      toggleCustomOccuranceEndsOptions()
+    })
+    
+    $('.dropdown-item.occurance-type').on('click', function(){
+      toggleCustomOccuranceFields()
+    })
   });
   // This sample uses the Autocomplete widget to help the user select a
   // place, then it retrieves the address components associated with that

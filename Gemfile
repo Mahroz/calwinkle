@@ -30,6 +30,8 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
+gem 'delayed_job_active_record'
+
 gem 'mini_racer'
 
 # Use Capistrano for deployment
@@ -66,6 +68,7 @@ gem 'rails_autolink'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'pry'
 end
 
 group :development do

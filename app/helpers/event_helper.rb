@@ -58,6 +58,13 @@ module EventHelper
     end
   end
 
+  def user_events_for_calendar
+    non_custom_occurance_types = ['daily', 'weekly', 'weekends']
+    current_user.events.each_with_object([]) do |e, a|
+      
+    end
+  end
+
   def event_address
     @event.address.present? ? link_to(@event.address, URI.encode("https://www.google.com/maps/search/#{@event.address}"), target: '_blank', style: 'color: #4F89FB;') : "Not Available"
   end

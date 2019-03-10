@@ -1,0 +1,47 @@
+<link rel="stylesheet" type="text/css" href="<%= @base_url + ActionController::Base.helpers.asset_url('fullcalendar.min.css') %>" />
+<link rel="stylesheet" type="text/css" href="<%= @base_url + ActionController::Base.helpers.asset_url('fullcalendar.print.min.css') %>" media='print' />
+<script src="<%= @base_url + ActionController::Base.helpers.asset_url('moment.js') %>"></script>
+<script src="<%= @base_url + ActionController::Base.helpers.asset_url('jquery3.js') %>"></script>
+<script src="<%= @base_url + ActionController::Base.helpers.asset_url('fullcalendar.min.js') %>"></script>
+<script>
+  $(document).ready(function() {
+    
+    $('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month'
+      },
+      defaultDate: '2019-03-12',
+      navLinks: true, // can click day/week names to navigate views
+      editable: true,
+      eventLimit: true, // allow "more" link when too many events
+      events: [
+        <% @event_data.map do |e| %>
+          {
+            title: '<%= e[:title] %>',
+            start: '<%= e[:start] %>',
+            end: '<%= e[:end] %>',
+          },
+        <% end %>
+      ]
+    });
+  });
+  
+</script>
+<style>
+  body {
+  margin: 40px 10px;
+  padding: 0;
+  font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+  font-size: 14px;
+  }
+  #calendar {
+  max-width: 900px;
+  margin: 0 auto;
+  }
+</style>
+
+<div class="table-responsive">
+  <div id="calendar" class="fc fc-unthemed fc-ltr"></div>
+</div>

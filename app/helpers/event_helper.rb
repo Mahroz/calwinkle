@@ -35,6 +35,16 @@ module EventHelper
     event_date = event_date.present? ? Date.parse(event_date.to_s) : Date.today
     ["Monthly on day #{event_date.day}", "Monthly on #{get_month_week(event_date).ordinalize} #{event_date.strftime('%A')}"]
   end
+  
+  def android_device?
+    user_agent = request.headers["HTTP_USER_AGENT"]
+    user_agent.present? && user_agent =~ /\b(Android)\b/i
+  end
+
+  def apple_device?
+    user_agent = request.headers["HTTP_USER_AGENT"]
+    user_agent.present? && user_agent =~ /\b(iPhone|iPad)\b/i
+  end
 
   def format_date(date)
     Date.strptime(date, '%m/%d/%Y').strftime('%Y-%m-%d')

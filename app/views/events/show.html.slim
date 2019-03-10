@@ -8,9 +8,7 @@ div style="background-image: url(#{asset_url(main_picture)}), url(#{asset_url(de
     button#floating-calendar aria-expanded='false' aria-haspopup='true' data-toggle='dropdown'
       = image_tag asset_path('icon-calendar.png'), width: 25, height: 25
     .dropdown-menu aria-labelledby='floating-add-calendar'
-      = link_to 'Apple Mac', calendar_url(protocol: :webcal, format: :ics, id: @event.id, name: @event.event_url.parameterize), class: 'dropdown-item'
-      = link_to 'Google', "https://calendar.google.com/calendar/render?cid=#{calendar_url(format: :ics, id: @event.id, name: @event.event_url.parameterize)}",
-                           class: 'dropdown-item', target: :_blank
+      = render partial: 'add_to_calendar_options_for_android_apple_device'
 .event-container
   .row
     .col-md-7.col-sm-12.font-size-14
@@ -75,10 +73,14 @@ div style="background-image: url(#{asset_url(main_picture)}), url(#{asset_url(de
               .btn-group.h-60 role='group'
                 button#btnGroupDrop1.subscribe-btn aria-expanded='false' aria-haspopup='true' data-toggle='dropdown'
                   | Add To Calendar
-                .dropdown-menu aria-labelledby='btnGroupDrop1'
-                  = link_to 'Apple Mac', calendar_url(protocol: :webcal, format: :ics, id: @event.id, name: @event.event_url.parameterize), class: 'dropdown-item'
-                  = link_to 'Google', "https://calendar.google.com/calendar/render?cid=#{calendar_url(protocol: :webcal, format: :ics, id: @event.id, name: @event.event_url.parameterize)}",
-                                       class: 'dropdown-item', target: :_blank                
+                / button.btn.btn-primary.subscribe-btn Add To Your Calendar
+                .dropdown
+                  button#btnGroupDrop1.btn.btn-primary.subscribe-btn.dropdown-toggle aria-expanded='false' aria-haspopup='true' data-toggle='dropdown'
+                    | Add To Your Calendar
+                  ul.dropdown-menu aria-labelledby='btnGroupDrop1'
+                    - if !android_device? && !apple_device?
+                      = render partial: 'add_to_calendar_options_for_other_device'
+
             
             hr/
             .row
@@ -94,7 +96,8 @@ div style="background-image: url(#{asset_url(main_picture)}), url(#{asset_url(de
                       .modal-body
                         = image_tag get_qr_code(calendar_url(format: :ics, id: @event.id, name: @event.event_url.parameterize), 240), height: 240, width: 240
                       .modal-footer
-                        button.btn.btn-default data-dismiss="modal" type="button"  Close        
+                        button.btn.btn-default data-dismiss="modal" type="button"  Close
+
 
 .details-container
   .row
@@ -143,4 +146,5 @@ div style="background-image: url(#{asset_url(main_picture)}), url(#{asset_url(de
 
 
 .footer
-  'Powered by <a target='_blank' href="http://www.calwinkle.com">CalWinkle.com</a>
+  'Powered by <a target='_blank' href="http://www.calwinkle.com">CalWinkle.com</a>                    
+    p.col-md-12.text-right.mb-0.font-size-13 Powered by <a target='_blank' href="http://www.calwinkle.com">CalWinkle.com</a>

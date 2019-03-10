@@ -79,6 +79,7 @@ div style="background-image: url(#{asset_url(main_picture)}), url(#{asset_url(de
                   = link_to 'Apple Mac', calendar_url(protocol: :webcal, format: :ics, id: @event.id, name: @event.event_url.parameterize), class: 'dropdown-item'
                   = link_to 'Google', "https://calendar.google.com/calendar/render?cid=#{calendar_url(protocol: :webcal, format: :ics, id: @event.id, name: @event.event_url.parameterize)}",
                                        class: 'dropdown-item', target: :_blank                
+            
             hr/
             .row
               .col-md-12
@@ -93,7 +94,7 @@ div style="background-image: url(#{asset_url(main_picture)}), url(#{asset_url(de
                       .modal-body
                         = image_tag get_qr_code(calendar_url(format: :ics, id: @event.id, name: @event.event_url.parameterize), 240), height: 240, width: 240
                       .modal-footer
-                        button.btn.btn-default data-dismiss="modal" type="button"  Close
+                        button.btn.btn-default data-dismiss="modal" type="button"  Close        
 
 .details-container
   .row

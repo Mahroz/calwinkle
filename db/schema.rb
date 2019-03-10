@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_26_184329) do
+ActiveRecord::Schema.define(version: 2019_02_26_121548) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,14 @@ ActiveRecord::Schema.define(version: 2019_02_26_184329) do
     t.string "organizer_email"
     t.string "organizer_website"
     t.string "organizer_picture"
+    t.integer "custom_occurance_every_duration"
+    t.string "custom_occurance_every_duration_type"
+    t.text "custom_occurance_weekly_selected_days", default: [], array: true
+    t.date "custom_occurance_monthly_at"
+    t.date "custom_occurance_repeat_ends_at"
+    t.string "custom_occurance_ends_on_type"
+    t.integer "custom_occurance_ends_after_duration"
+    t.string "custom_occurance_monthly_sub_type"
     t.index ["event_url"], name: "index_events_on_event_url", unique: true
     t.index ["user_id"], name: "index_events_on_user_id"
   end

@@ -32,6 +32,8 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'mini_racer'
 
+gem 'to_words'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

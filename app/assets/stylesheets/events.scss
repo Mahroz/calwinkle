@@ -188,4 +188,34 @@ pre{
 
 pre xmp{
   word-wrap: break-word;
+.input-group-addon {
+    padding: 10px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    color: #555;
+    text-align: center;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    vertical-align: middle;
+        border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  } 
+
+.checkbox-inline{
+  margin-right: 1rem;
+}
+
+.radio label{
+  min-height: 20px;
+  padding-left: 20px;
+  margin-bottom: 0;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.radio input[type='radio']{
+  margin-right: 10px;
+  margin-top: 4px;
 }

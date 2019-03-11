@@ -24,10 +24,10 @@ class Event < ApplicationRecord
   OCR_WEEKENDS = 'Weekends'.freeze
   OCR_MONTHLY = 'Monthly'.freeze
   OCR_YEARLY = 'Yearly'.freeze
-  OCR_CUSTOM = 'Custom Days'.freeze
+  OCR_CUSTOM = 'Custom'.freeze
 
   enum occurance_type: [OCR_DONT_REPEAT, OCR_DAILY, OCR_WEEKL_DAYS,
-                        OCR_WEEKENDS, OCR_MONTHLY, OCR_YEARLY]
+                        OCR_WEEKENDS, OCR_MONTHLY, OCR_YEARLY, OCR_CUSTOM]
 
   def formatted_start_time
     start_time.strftime('%I:%M %p') rescue '12:00 PM'
@@ -49,6 +49,10 @@ class Event < ApplicationRecord
     get_calendar(self)
   end
 
+  def complete_url
+    Rails.env.production? ? 'www.calwinkle.com' : 'localhost:3000' + event_url
+  end
+
   def viewer_count_increment
     event_report.increment!(:viewer_count)
   end
@@ -56,6 +60,32 @@ class Event < ApplicationRecord
   def subscriber_count_increment
     event_report.increment!(:subscriber_count)
   end
+
+  def cal_data
+    dates = case self.occurance_type
+    when 'Daily'
+      (self.start_date..self.start_date+6.months).to_a
+    when 'Week Days'
+      (self.start_date..self.start_date+6.months).group_by(&:wday)[self.start_date.wday+1]
+    when 'Weekends'
+      sat_in_6_months = (self.start_date.beginning_of_week(:monday)..self.start_date+6.months).group_by(&:wday)[6]
+      sun_in_6_months = (self.start_date.beginning_of_week(:monday)..self.start_date+6.months).group_by(&:wday)[7]
+      [sat_in_6_months, sun_in_6_months].flatten
+    when 'Monthly'
+      (0..6).to_a.map{|m| self.start_date + m.month}
+    when 'Yearly'
+      (0..2).to_a.map{|y| self.start_date + y.year}
+    when 'Do not repeat'
+      [self.start_date]
+    when 'Custom'
+      [self.start_date]
+    when nil
+      [self.start_date]
+    end
+    base_object = {title: self.name}
+    dates.map{|d| base_object.merge({start: "#{d}T#{self.start_time.strftime('%H:%M:%S')}", end: "#{d}T#{self.end_time.strftime('%H:%M:%S')}"})}
+  end
+
   private
 
   def start_end_date_time
@@ -81,4 +111,6 @@ class Event < ApplicationRecord
   def create_event_report
     EventReport.create(event_id: id)
   end
+
+  
 end

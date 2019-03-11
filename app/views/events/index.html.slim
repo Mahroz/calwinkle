@@ -5,8 +5,6 @@
       .event-list
         - @events.each do |event|
           = render partial: 'event_item', locals: { event: event }
-      button.btn.btn-primary data-target="#myModal" data-toggle="modal" type="button" 
-        | Generate Calendar Widget
     .col-md-5.order-1.order-lg-2.new-event-block
       h4
         | CREATE A NEW EVENT
@@ -14,6 +12,12 @@
       .btn-center
         = link_to  'Create new event', new_event_path, class: 'btn btn-primary'
       hr/
+
+      h4
+        | Generate Calendar Widget Code
+      br/
+      button.btn.btn-primary data-target="#myModal" data-toggle="modal" type="button" 
+        | Generate Calendar Widget
 
     #myModal.modal.fade aria-labelledby="myModalLabel" role="dialog" tabindex="-1" 
       .modal-dialog role="document" 

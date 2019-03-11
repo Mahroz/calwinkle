@@ -25,7 +25,9 @@ class EventsController < ApplicationController
     @event = Event.new(permitted_params)
     @event.event_url = create_event_url
     if @event.save
-      current_user.delay.set_events_calendar_data
+      current_user.set_events_calendar_data
+      # Removing delayed functionlity for now
+      # current_user.delay.set_events_calendar_data
       flash.now[:notice] = 'An event was created.'
     else
       flash.now[:alert] = 'Could not create new event'
@@ -41,7 +43,9 @@ class EventsController < ApplicationController
 
   def update
     if @event.update(permitted_params)
-      current_user.delay.set_events_calendar_data
+      current_user.set_events_calendar_data
+      # Removing delayed functionlity for now
+      # current_user.delay.set_events_calendar_data
       @event.update(event_url: create_event_url())
       flash.now[:notice] = 'Event updated successfully.'
     else
@@ -74,7 +78,9 @@ class EventsController < ApplicationController
 
   def destroy
     if @event.update(is_cancel: true)
-      current_user.delay.set_events_calendar_data
+      current_user.set_events_calendar_data
+      # Removing delayed functionlity for now
+      # current_user.delay.set_events_calendar_data
       flash[:notice] = 'Event was successfully deleted.'
     else
       flash[:alert]  = 'Event cant be deleted.'

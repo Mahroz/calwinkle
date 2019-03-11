@@ -50,7 +50,7 @@ div id="AddEvent_#{event.id}ToCalendarButtonJsModal" class="modal fade" role="di
       .modal-header
         h4.modal-title Add to Calendar button Widget
       .modal-body
-        pre
+        pre style='max-height: 30em; overflow-y: auto;'
           = render partial: 'events/add_to_cal_js_button', locals: {event: event}
       .modal-footer
         button.btn.btn-default data-dismiss="modal" type="button"  Close

@@ -5,7 +5,7 @@
 
 
   <div class="dropdown">
-    <button class="btn btn-primary dropdown-toggle" id="menu1" type="button" data-toggle="dropdown">Dropdown Example 
+    <button class="btn btn-primary dropdown-toggle" id="menu1" type="button" data-toggle="dropdown">Add to Calendar 
       <span class="caret"></span>
     </button> 
     <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
@@ -13,8 +13,9 @@
   </div>
 
   <script type="text/javascript">
+
     $(document).ready(function(){
-      var googleOption = "<li><a class='dropdown-item' target='_blank' href='https://calendar.google.com/calendar/render?cid=<%= calendar_url(format: :ics, id: event.id, name: event.event_url.parameterize)%>'>Google</a></li>"
+      var googleOption = "<li><a class='dropdown-item' target='_blank' href='https://calendar.google.com/calendar/render?cid=<%= calendar_url(protocol: :webcal, format: :ics, id: event.id, name: event.event_url.parameterize)%>'>Google</a></li>"
       var appleOption = "<li><a class='dropdown-item' href='<%= calendar_url(protocol: :webcal, format: :ics, id: event.id, name: event.event_url.parameterize)%>'>Apple</a></li>"
       var outlookOption = "<li><a class='dropdown-item' target='_blank' href='<%= calendar_url(protocol: :webcal, format: :ics, id: event.id, name: event.event_url.parameterize) %>'>Outlook</a></li>"
       var outlookDotComOption = "<li><a class='dropdown-item' target='_blank' href='https://outlook.live.com/owa/?path=/calendar/action/compose&rru=addsubscription&url=<%= CGI.escape(calendar_url(protocol: :webcal, format: :ics, id: event.id, name: event.event_url.parameterize))%>&name=<%= event.name %>&mkt=en-001'>Outlook.com</a></li>"

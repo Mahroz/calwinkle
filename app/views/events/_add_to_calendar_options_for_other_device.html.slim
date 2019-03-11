@@ -1,5 +1,5 @@
 li  
-  = link_to 'Google', "https://calendar.google.com/calendar/render?cid=#{calendar_url(format: :ics, id: @event.id, name: @event.event_url.parameterize)}", class: 'dropdown-item', target: :_blank
+  = link_to 'Google', "https://calendar.google.com/calendar/render?cid=#{calendar_url(protocol: :webcal, format: :ics, id: @event.id, name: @event.event_url.parameterize)}", class: 'dropdown-item', target: :_blank    
 li  
   = link_to 'Outlook', calendar_url(protocol: :webcal, format: :ics, id: @event.id, name: @event.event_url.parameterize), class: 'dropdown-item'
 li  

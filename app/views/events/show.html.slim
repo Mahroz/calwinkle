@@ -3,12 +3,12 @@
 - default_organiazer_image_url = "/uploads/event/organizer_picture/default_organizer.gif"
 - organizer_image = @event.organizer_picture.url || default_organiazer_image_url
 div style="background-image: url(#{asset_url(main_picture)}), url(#{asset_url(default_url)});" class="event-image"
-#floating-add-calendar
-  .btn-group role='group'
-    button#floating-calendar aria-expanded='false' aria-haspopup='true' data-toggle='dropdown'
-      = image_tag asset_path('icon-calendar.png'), width: 25, height: 25
-    .dropdown-menu aria-labelledby='floating-add-calendar'
-      = render partial: 'add_to_calendar_options_for_android_apple_device'
+/ #floating-add-calendar
+/   .btn-group role='group'
+/     button#floating-calendar aria-expanded='false' aria-haspopup='true' data-toggle='dropdown'
+/       = image_tag asset_path('icon-calendar.png'), width: 25, height: 25
+/     .dropdown-menu aria-labelledby='floating-add-calendar'
+/       = render partial: 'add_to_calendar_options_for_android_apple_device'
 .event-container
   .row
     .col-md-7.col-sm-12.font-size-14
@@ -58,9 +58,15 @@ div style="background-image: url(#{asset_url(main_picture)}), url(#{asset_url(de
         div.heading-2.mb-20
           'Subscribe Now
         .row
+          .btn-group.h-60.ml-15.mobile-visible role='group'
+            button#btnGroupDrop1.subscribe-btn aria-expanded='false' aria-haspopup='true' data-toggle='dropdown'
+              | Add To Calendar
+            ul.dropdown-menu aria-labelledby='btnGroupDrop1'
+              - if !android_device? && !apple_device?
+                = render partial: 'add_to_calendar_options_for_other_device'
           .event-qr-code.col-md-5
             .row.mobile-hidden
-              .col-md-12.h-60.info-text Click to Add to you Calendar
+              .col-md-12.h-60.info-text Click to Add to your Calendar
             hr/
             .row
               .col-md-12.info-text Scan QR with your phone and you will be subscribe automatically
@@ -73,13 +79,9 @@ div style="background-image: url(#{asset_url(main_picture)}), url(#{asset_url(de
               .btn-group.h-60 role='group'
                 button#btnGroupDrop1.subscribe-btn aria-expanded='false' aria-haspopup='true' data-toggle='dropdown'
                   | Add To Calendar
-                / button.btn.btn-primary.subscribe-btn Add To Your Calendar
-                .dropdown
-                  button#btnGroupDrop1.btn.btn-primary.subscribe-btn.dropdown-toggle aria-expanded='false' aria-haspopup='true' data-toggle='dropdown'
-                    | Add To Your Calendar
-                  ul.dropdown-menu aria-labelledby='btnGroupDrop1'
-                    - if !android_device? && !apple_device?
-                      = render partial: 'add_to_calendar_options_for_other_device'
+                ul.dropdown-menu aria-labelledby='btnGroupDrop1'
+                  - if !android_device? && !apple_device?
+                    = render partial: 'add_to_calendar_options_for_other_device'
 
             
             hr/
@@ -146,5 +148,4 @@ div style="background-image: url(#{asset_url(main_picture)}), url(#{asset_url(de
 
 
 .footer
-  'Powered by <a target='_blank' href="http://www.calwinkle.com">CalWinkle.com</a>                    
-    p.col-md-12.text-right.mb-0.font-size-13 Powered by <a target='_blank' href="http://www.calwinkle.com">CalWinkle.com</a>
+  'Powered by <a target='_blank' href="http://www.calwinkle.com">CalWinkle.com</a>

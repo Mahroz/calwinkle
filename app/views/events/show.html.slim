@@ -16,29 +16,35 @@ div style="background-image: url(#{asset_url(main_picture)}), url(#{asset_url(de
         = @event.name
       br/
       .event-start.event-date-time-container
-        = image_tag asset_path('icon-clock.png'), height: 20, width: 20, class: 'heading-icon'
-        span.sub-text.light.mobile-hidden
-          'Date and Time
-          br/
-        - if (@event.start_date == @event.end_date)
-          span.event-date
-            = @event.start_date.strftime('%A, %b %d %Y')
-          span.event-time
-            = @event.start_time.strftime('%l:%M %p') + ' - ' + @event.end_time.strftime('%l:%M %p')
-        - else
-            span.event-multiple-date
-              = @event.start_date.strftime('%A, %b %d %Y') + ' - ' + @event.start_time.strftime('%l:%M %P') + (@event.end_date.present? && @event.end_time.present? ? (' to ' + @event.end_date.strftime('%A, %b %d %Y') + ' - ' + @event.end_time.strftime('%l:%M %P')) : '')
+        .row
+          .event-data-icon
+            = image_tag asset_path('icon-clock.png'), height: 20, width: 20, class: 'heading-icon'
+          .event-data-text
+            span.sub-text.light.mobile-hidden 
+              'Date and Time
+              br/
+            - if (@event.start_date == @event.end_date)
+              span.event-date
+                = @event.start_date.strftime('%a, %b %d %Y')
+              span.event-time
+                = @event.start_time.strftime('%l:%M %p') + ' - ' + @event.end_time.strftime('%l:%M %p')
+            - else
+                span.event-multiple-date
+                  = @event.start_date.strftime('%a, %b %d %Y') + ' - ' + @event.start_time.strftime('%l:%M %P') + ' to ' + @event.end_date.strftime('%a, %b %d %Y') + ' - ' + @event.end_time.strftime('%l:%M %P')
       div.time-zone.sub-text.light
         = "(#{@event.time_zone})"
 
 
       .event-end.event-address-container
-        = image_tag asset_path('icon-location.png'), height: 20, width: 20, class: 'heading-icon'
-        span.sub-text.light.mobile-hidden
-          'Address
-          br/
-        span.event-address
-          = event_address
+        .row
+          .event-data-icon
+            = image_tag asset_path('icon-location.png'), height: 20, width: 20, class: 'heading-icon'
+          .event-data-text  
+            span.sub-text.light.mobile-hidden 
+              'Address
+              br/
+            span.event-address
+              = event_address
       br/
       .social-container.mobile-hidden
         span.social-text
@@ -66,13 +72,13 @@ div style="background-image: url(#{asset_url(main_picture)}), url(#{asset_url(de
                 = render partial: 'add_to_calendar_options_for_other_device'
           .event-qr-code.col-md-5
             .row.mobile-hidden
-              .col-md-12.h-60.info-text Click to Add to your Calendar
+              .col-md-12.h-60.info-text Click to add this event to your Calendar
             hr/
-            .row
-              .col-md-12.info-text Scan QR with your phone and you will be subscribed automatically
-              = link_to 'Enlarge', '#', data: {toggle: "modal", target: "#myModal"}, class: 'btn btn-info btn-xs ml-15 mt-13'
+            .row.mobile-hidden
+              .col-md-12.info-text Scan QR with your phone and to subscribe automatically
+              
 
-          .col-md-2.info-text.mobile-hidden.pt-70
+          .col-md-2.info-text.mobile-hidden.pt-70.mobile-hidden
             h6 OR
           .col-md-5
             .row.mobile-hidden
@@ -83,13 +89,13 @@ div style="background-image: url(#{asset_url(main_picture)}), url(#{asset_url(de
                   - if !android_device? && !apple_device?
                     = render partial: 'add_to_calendar_options_for_other_device'
 
-
-            hr/
+            .mobile-hidden
+              hr/
             .row
-              .col-md-12
+              .col-md-12.mobile-hidden
                 = image_tag get_qr_code(calendar_url(format: :ics, id: @event.id, name: @event.event_url.parameterize), 500), height: 120, width: 120
-
-                #myModal.modal.fade role="dialog"
+                = link_to 'Enlarge', '#', data: {toggle: "modal", target: "#myModal"}, class: 'btn btn-info btn-xs ml-15 mt-13'
+                #myModal.modal.fade role="dialog" 
                   .modal-dialog
                     /! Modal content
                     .modal-content

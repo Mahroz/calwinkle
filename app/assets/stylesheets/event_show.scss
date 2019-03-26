@@ -45,7 +45,7 @@
 
 .light{ color: #A9ABB2 !important;}
 
-.heading-icon { margin-right: 8px;}
+.heading-icon { margin-top: 15px;}
 
 .event-date{
   line-height: 35px;
@@ -183,8 +183,8 @@
   border-radius: 100px;
 }
 .organizer-image{
-  width: 68px;
-  height: 68px;
+  width: 100px;
+  height: 100px;
   border-radius: 34px;
   background-size: cover;
   background-position: center;
@@ -207,6 +207,19 @@
 .mobile-visible{
   display: none !important;
 }
+
+.event-data-icon{
+  width: 10%;
+  vertical-align: top;
+  display: inline-block;
+}
+
+.event-data-text{
+  width: 90%;
+  vertical-align: center;
+  display: inline-block;
+}
+
 @media screen and (min-width: 240px) {
   .event-container {
     width: 90%; 
@@ -234,7 +247,11 @@
     margin-top: 15px;
   }
   .event-address{
-    line-height: 20px;
+    margin-top: 15px;
+  }
+
+  .event-address a{
+    margin-top: 15px;
   }
 }
 

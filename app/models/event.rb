@@ -5,7 +5,8 @@ class Event < ApplicationRecord
   mount_uploader :organizer_picture, PictureUploader
 
   validates :name, presence: true
-  validates_presence_of :start_date, :start_time, :end_date, :end_time
+  validates_presence_of :start_date, :start_time
+
   validate :start_end_date_time
   validate :name_uniqueness
 
@@ -62,19 +63,24 @@ class Event < ApplicationRecord
   end
 
   def cal_data
+    repeat_end_date = self.repeat_until || Date.today+6.month
     dates = case self.occurance_type
     when 'Daily'
-      (self.start_date..self.start_date+6.months).to_a
+      (self.start_date..repeat_end_date).to_a
     when 'Week Days'
-      (self.start_date..self.start_date+6.months).group_by(&:wday)[self.start_date.wday+1]
+      (self.start_date..repeat_end_date).group_by(&:wday)[self.start_date.wday]
     when 'Weekends'
-      sat_in_6_months = (self.start_date.beginning_of_week(:monday)..self.start_date+6.months).group_by(&:wday)[6]
-      sun_in_6_months = (self.start_date.beginning_of_week(:monday)..self.start_date+6.months).group_by(&:wday)[7]
-      [sat_in_6_months, sun_in_6_months].flatten
+      sat_in_date_range = (self.start_date.beginning_of_week(:monday)..repeat_end_date).group_by(&:wday)[6]
+      sun_in_date_range = (self.start_date.beginning_of_week(:monday)..repeat_end_date).group_by(&:wday)[7]
+      [sat_in_date_range, sun_in_date_range].flatten
     when 'Monthly'
-      (0..6).to_a.map{|m| self.start_date + m.month}
+      d = []
+      ((repeat_end_date - self.start_date).to_f / 365 * 12).round.times {|y| self.start_date + y.month}
+      d
     when 'Yearly'
-      (0..2).to_a.map{|y| self.start_date + y.year}
+      d = []
+      ((repeat_end_date - self.start_date).to_f / 365).round.times{|y| d << self.start_date + y.year}
+      d
     when 'Do not repeat'
       [self.start_date]
     when 'Custom'
@@ -83,7 +89,7 @@ class Event < ApplicationRecord
       [self.start_date]
     end
     base_object = {title: self.name}
-    dates.map{|d| base_object.merge({start: "#{d}T#{self.start_time.strftime('%H:%M:%S')}", end: "#{d}T#{self.end_time.strftime('%H:%M:%S')}"})}
+    dates.select{|d| d.present?}.map{|d| base_object.merge({start: "#{d}T#{self.start_time.strftime('%H:%M:%S')}", end: "#{d}T#{self.end_time&.strftime('%H:%M:%S')}"})}
   end
 
   private
@@ -112,5 +118,5 @@ class Event < ApplicationRecord
     EventReport.create(event_id: id)
   end
 
-  
+
 end

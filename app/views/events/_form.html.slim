@@ -24,13 +24,15 @@
             h5.mt-7 Start Date *
           .col-md-7.padding-0
             input.form-control(id="start_date" name="start_date" value="#{@event.start_date.strftime('%m/%d/%Y') rescue Date.today.strftime('%m/%d/%Y')}" autocomplete="off")
+
+
         .row
           .col-md-4.padding-0
             h5.mt-7.mt-7 Start Time *
           .col-md-7.padding-0
             input.form-control(name="start_time" data-role="datebox" data-datebox-mode="timebox" data-options='{"mode":"timebox"}' value="#{@event.formatted_start_time}")
 
-      .form-group.col-md-6.p-10-0
+      .form-group.col-md-6.p-10-0.endDateTime
         .row
           .col-md-4.padding-0
             h5.mt-7 End Date *
@@ -42,24 +44,38 @@
           .col-md-8.padding-0
             input.form-control(name="end_time" data-role="datebox" data-datebox-mode="timebox" data-options='{"mode":"timebox"}' value="#{@event.formatted_end_time}")
 
+    .row
+      .col-md-12.padding-0.isMultiDayEvent
+        h5
+          = f.check_box :is_multi_day_event, {}, true, false
+          |  Is Multi Day Event
+        br
     .form-group
       h5
         | Time Zone *
       select.form-control id='event_time_zone' name='event[time_zone]' data-value=f.object.time_zone
 
-    .form-group
-      h5
-        | How often does it reoccurs?
-      = f.hidden_field :occurance_type, id: 'event_occurance_type'
-      = f.hidden_field :occurance_rule, id: 'event_occurance_rule'
-      .occurance-dropdown.show
-        a#dropdownMenuLink.btn aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" role="button"
-          = f.object.occurance_type
-        .dropdown-menu aria-labelledby="dropdownMenuLink"
-          - Event::occurance_types.each do |ocr_type, _ocr_id|
-            a.dropdown-item.occurance-type href="#"
-              = ocr_type
-      
+    .row
+      .col-md-6.padding-0
+        .form-group
+          h5
+            | How often does it reoccurs?
+          = f.hidden_field :occurance_type, id: 'event_occurance_type'
+          = f.hidden_field :occurance_rule, id: 'event_occurance_rule'
+          .occurance-dropdown.show
+            a#dropdownMenuLink.btn aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" role="button"
+              = f.object.occurance_type
+            .dropdown-menu aria-labelledby="dropdownMenuLink"
+              - Event::occurance_types.each do |ocr_type, _ocr_id|
+                a.dropdown-item.occurance-type href="#"
+                  = ocr_type
+
+      .col-md-6.padding-0          
+        .form-group.repeatUntilField
+          h5
+            | Repeat Until
+          input.form-control(id="repeat_until" name="repeat_until" value="#{@event.repeat_until.strftime('%m/%d/%Y') rescue Date.today.strftime('%m/%d/%Y')}" autocomplete="off")
+    .form-group  
       .custom-occurance-fields.form-group
         .form-group.col-md-12.p-10-0
           .row
@@ -68,7 +84,8 @@
             .col-md-8.padding-0
               = f.number_field :custom_occurance_every_duration, class: 'form-control', min: 1, value: (@event.custom_occurance_every_duration || 1), style: 'width: 49%; float: left;'
               = f.select :custom_occurance_every_duration_type, options_for_select(['days', 'weeks', 'months', 'years'], @event.custom_occurance_every_duration_type), {}, {class: 'form-control', min: 1, style: 'width: 49%; float: right;'}
-          
+
+
           br /
           .row.monthly-sub-type-selection
             .col-md-12.padding-0
@@ -79,8 +96,8 @@
               h5.mt-7 Repeat On:
             .col-md-8.padding-0
               - week_days.each do |day|
-                
-                label.checkbox-inline  
+
+                label.checkbox-inline
                   = f.check_box :custom_occurance_weekly_selected_days, {multiple: true, id: 'inlineCheckbox'}, day.downcase, false
                   = day.first.upcase
 
@@ -117,7 +134,7 @@
 
     br/
     h5
-      | IMAGE UPLOAD 
+      | IMAGE UPLOAD
       label
         |  ( Event Main Picture - suggested size: 1600x400 )
     .form-group
@@ -163,13 +180,23 @@
       button#event-create-btn.btn.btn-primary type='submit' #{persisted ? 'Update' : 'Add'}
 
 javascript:
+  var toggleRepeatUntilField = function(){
+    var occuranceType = $('#event_occurance_type').val()
+    if (occuranceType != 'Do not repeat') {
+      $('.repeatUntilField').show()
+    }
+    else{
+      $('.repeatUntilField').hide()
+    }
+  }
+
   var toggleCustomOccuranceFields = function(){
     var occuranceType = $('#event_occurance_type').val()
     if (occuranceType == 'Custom') {
       $('.custom-occurance-fields').show()
     }
     else{
-      $('.custom-occurance-fields').hide() 
+      $('.custom-occurance-fields').hide()
     }
   }
   var toggleCustomOccuranceMonthlySubTypeSelector = function(){
@@ -209,9 +236,22 @@ javascript:
     }
   }
 
+  
+
+  var toggleEndDateTimeFieldOnIsMultiDayEventChange = function(){
+    if($('#event_is_multi_day_event').prop('checked')){
+      $('.endDateTime').show();
+      $('.endDateTime').find('input').val('').prop('required', 'required');
+    } else {
+      $('.endDateTime').find('input').val('').removeAttr('required')
+      $('.endDateTime').hide();
+    }
+  }
+
   $(document).ready(function(){
     $( "#start_date" ).datepicker();
     $( "#end_date" ).datepicker();
+    $('#repeat_until').datepicker();
     $("[data-role='datebox']").each(function() {
       $(this).datebox();
     });
@@ -220,20 +260,28 @@ javascript:
     toggleCustomOccuranceMonthlySubTypeSelector()
     toggleCustomOccuranceEndsOptions()
     toggleCustomOccuranceFields()
+    toggleRepeatUntilField()
+    toggleEndDateTimeFieldOnIsMultiDayEventChange()
 
     $('#event_custom_occurance_every_duration_type').on('change', function(){
       toggleCustomOccuranceWeekDaysSelector()
       toggleCustomOccuranceMonthlySubTypeSelector()
     })
 
+    $('#event_is_multi_day_event').on('change', function(){
+      toggleEndDateTimeFieldOnIsMultiDayEventChange();
+    })
+
     $('input[name="event[custom_occurance_ends_on_type]"]').on('change', function(){
       toggleCustomOccuranceEndsOptions()
     })
-    
+
     $('.dropdown-item.occurance-type').on('click', function(){
       toggleCustomOccuranceFields()
+      toggleRepeatUntilField()
     })
   });
+
   // This sample uses the Autocomplete widget to help the user select a
   // place, then it retrieves the address components associated with that
   // place, and then it populates the form fields with those details.
@@ -257,7 +305,7 @@ javascript:
     // Create the autocomplete object, restricting the search predictions to
     // geographical location types.
     autocomplete = new google.maps.places.Autocomplete(
-        document.getElementById('autocomplete'), {types: ['geocode']});
+      document.getElementById('autocomplete'), {types: ['geocode']});
 
     // Avoid paying for data that you don't need by restricting the set of
     // place fields that are returned to just the address components.
@@ -298,10 +346,10 @@ javascript:
           lng: position.coords.longitude
         };
         var circle = new google.maps.Circle(
-            {center: geolocation, radius: position.coords.accuracy});
+          {center: geolocation, radius: position.coords.accuracy});
         autocomplete.setBounds(circle.getBounds());
       });
     }
   }
-    // })
+
 script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFzdjvK1HUMNZmivMiJmWMTR_Npjbp3kg&libraries=places&callback=initAutocomplete" async='' defer=''

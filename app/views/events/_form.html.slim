@@ -32,8 +32,8 @@
           .col-md-7.padding-0
             input.form-control(name="start_time" data-role="datebox" data-datebox-mode="timebox" data-options='{"mode":"timebox"}' value="#{@event.formatted_start_time}")
 
-      .form-group.col-md-6.p-10-0.endDateTime
-        .row
+      .form-group.col-md-6.p-10-0
+        .row.endDate
           .col-md-4.padding-0
             h5.mt-7 End Date *
           .col-md-8.padding-0
@@ -242,11 +242,11 @@ javascript:
 
   var toggleEndDateTimeFieldOnIsMultiDayEventChange = function(){
     if($('#event_is_multi_day_event').prop('checked')){
-      $('.endDateTime').show();
-      $('.endDateTime').find('input').val('').prop('required', 'required');
+      $('.endDate').show();
+      $('.endDate').find('input').prop('required', 'required');
     } else {
-      $('.endDateTime').find('input').val('').removeAttr('required')
-      $('.endDateTime').hide();
+      $('.endDate').find('input').val('').removeAttr('required')
+      $('.endDate').hide();
     }
   }
 

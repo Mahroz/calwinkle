@@ -76,6 +76,7 @@ div style="background-image: url(#{asset_url(main_picture)}), url(#{asset_url(de
             hr/
             .row.mobile-hidden
               .col-md-12.info-text Scan QR with your phone and to subscribe automatically
+              = link_to 'Enlarge', '#', data: {toggle: "modal", target: "#myModal"}, class: 'btn btn-info btn-xs ml-15 mt-13'
               
 
           .col-md-2.info-text.mobile-hidden.pt-70.mobile-hidden
@@ -94,7 +95,6 @@ div style="background-image: url(#{asset_url(main_picture)}), url(#{asset_url(de
             .row
               .col-md-12.mobile-hidden
                 = image_tag get_qr_code(calendar_url(format: :ics, id: @event.id, name: @event.event_url.parameterize), 500), height: 120, width: 120
-                = link_to 'Enlarge', '#', data: {toggle: "modal", target: "#myModal"}, class: 'btn btn-info btn-xs ml-15 mt-13'
                 #myModal.modal.fade role="dialog" 
                   .modal-dialog
                     /! Modal content
@@ -118,6 +118,7 @@ div style="background-image: url(#{asset_url(main_picture)}), url(#{asset_url(de
         br/
     .col-md-5.col-sm-12
       - unless @event.organizer_name.blank?
+        hr.mobile-visible style='border-top: 1px solid rgba(0, 0, 0, 0.1);'
         div.organizer-image style="background-image: url(#{asset_url(organizer_image)});"
         div.organizer-details
           span.sub-text.light

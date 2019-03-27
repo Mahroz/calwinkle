@@ -58,6 +58,7 @@
   font-size: 16px;
   letter-spacing: 0.02em;
   float: right;
+  margin-right: 5px;
 }
 .time-zone{
   width: 100%;
@@ -235,12 +236,15 @@
 
 @media screen and (max-width: 480px) {
   .event-date-time-container{ height: 55px;}
-  .event-time, .time-zone{
+  .event-time{
     width: 100%;
-    padding-left: 28px;
+    padding-left: 5px;
     text-align: left;
   }
   .time-zone{
+    padding-left: 5px;
+    text-align: left;
+    margin-left: 12px; 
     margin-top: -6px;
   }
   .event-address-container{

@@ -5,6 +5,8 @@
 .event-form
   = form_for(@event, remote: !@event.persisted?, html: { id: 'event-form' }) do |f|
     = f.hidden_field :user_id, value: current_user.id
+    = f.hidden_field :event_type, value: (params[:et] || 'one_time_event')
+    
     .form-group
       h5
         | Event Name *
@@ -24,8 +26,6 @@
             h5.mt-7 Start Date *
           .col-md-7.padding-0
             input.form-control(id="start_date" name="start_date" value="#{@event.start_date.strftime('%m/%d/%Y') rescue Date.today.strftime('%m/%d/%Y')}" autocomplete="off")
-
-
         .row
           .col-md-4.padding-0
             h5.mt-7.mt-7 Start Time *
@@ -44,99 +44,101 @@
           .col-md-8.padding-0
             input.form-control(name="end_time" data-role="datebox" data-datebox-mode="timebox" data-options='{"mode":"timebox"}' value="#{@event.formatted_end_time}")
 
-    .row
-      .col-md-12.padding-0.isMultiDayEvent
-        h5
-          = f.check_box :is_multi_day_event, {}, true, false
-          |  Is Multi Day Event
-        br
+    - if @event.is_one_time_event?
+      .row
+        .col-md-12.padding-0.isMultiDayEvent
+          h5
+            = f.check_box :is_multi_day_event, {}, true, false
+            |  Is Multi Day Event
+          br
+    - else
+      = f.hidden_field :is_multi_day_event, value: false      
     .form-group
       h5
         | Time Zone *
       select.form-control id='event_time_zone' name='event[time_zone]' data-value=f.object.time_zone
+    - if @event.is_recurring_event?
+      .row
+        .col-md-6.padding-0
+          .form-group
+            h5
+              | How often does it reoccurs?
+            = f.hidden_field :occurance_type, id: 'event_occurance_type'
+            = f.hidden_field :occurance_rule, id: 'event_occurance_rule'
+            .occurance-dropdown.show
+              a#dropdownMenuLink.btn aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" role="button"
+                = f.object.occurance_type
+              .dropdown-menu aria-labelledby="dropdownMenuLink"
+                - Event::occurance_types.each do |ocr_type, _ocr_id|
+                  a.dropdown-item.occurance-type href="#"
+                    = ocr_type
 
-    .row
-      .col-md-6.padding-0
-        .form-group
-          h5
-            | How often does it reoccurs?
-          = f.hidden_field :occurance_type, id: 'event_occurance_type'
-          = f.hidden_field :occurance_rule, id: 'event_occurance_rule'
-          .occurance-dropdown.show
-            a#dropdownMenuLink.btn aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" role="button"
-              = f.object.occurance_type
-            .dropdown-menu aria-labelledby="dropdownMenuLink"
-              - Event::occurance_types.each do |ocr_type, _ocr_id|
-                a.dropdown-item.occurance-type href="#"
-                  = ocr_type
-
-      .col-md-6.padding-0          
-        .form-group.repeatUntilField
-          h5
-            | Repeat Until
-          input.form-control(id="repeat_until" name="repeat_until" value="#{@event.repeat_until.strftime('%m/%d/%Y') rescue Date.today.strftime('%m/%d/%Y')}" autocomplete="off")
-      
-    .form-group
-      h5
-        | Group
-      = f.collection_select :group_id, current_user.groups, :id, :name, {}, {class: 'form-control'}
-      
-      .custom-occurance-fields.form-group
-        .form-group.col-md-12.p-10-0
-          .row
-            .col-md-4.padding-0
-              h5.mt-7 Repeat Every:
-            .col-md-8.padding-0
-              = f.number_field :custom_occurance_every_duration, class: 'form-control', min: 1, value: (@event.custom_occurance_every_duration || 1), style: 'width: 49%; float: left;'
-              = f.select :custom_occurance_every_duration_type, options_for_select(['days', 'weeks', 'months', 'years'], @event.custom_occurance_every_duration_type), {}, {class: 'form-control', min: 1, style: 'width: 49%; float: right;'}
+        .col-md-6.padding-0          
+          .form-group.repeatUntilField
+            h5
+              | Repeat Until
+            input.form-control(id="repeat_until" name="repeat_until" value="#{@event.repeat_until.strftime('%m/%d/%Y') rescue Date.today.strftime('%m/%d/%Y')}" autocomplete="off")
+      .form-group  
+        .custom-occurance-fields.form-group
+          .form-group.col-md-12.p-10-0
+            .row
+              .col-md-4.padding-0
+                h5.mt-7 Repeat Every:
+              .col-md-8.padding-0
+                = f.number_field :custom_occurance_every_duration, class: 'form-control', min: 1, value: (@event.custom_occurance_every_duration || 1), style: 'width: 49%; float: left;'
+                = f.select :custom_occurance_every_duration_type, options_for_select(['days', 'weeks', 'months', 'years'], @event.custom_occurance_every_duration_type), {}, {class: 'form-control', min: 1, style: 'width: 49%; float: right;'}
 
 
-          br /
-          .row.monthly-sub-type-selection
-            .col-md-12.padding-0
-              = f.select :custom_occurance_monthly_sub_type, options_for_select(monthly_sub_type_options(@event.start_date), @event.custom_occurance_monthly_sub_type), {}, {class: 'form-control'}
-          br /
-          .row.week-days-selection
-            .col-md-4.padding-0
-              h5.mt-7 Repeat On:
-            .col-md-8.padding-0
-              - week_days.each do |day|
+            br /
+            .row.monthly-sub-type-selection
+              .col-md-12.padding-0
+                = f.select :custom_occurance_monthly_sub_type, options_for_select(monthly_sub_type_options(@event.start_date), @event.custom_occurance_monthly_sub_type), {}, {class: 'form-control'}
+            br /
+            .row.week-days-selection
+              .col-md-4.padding-0
+                h5.mt-7 Repeat On:
+              .col-md-8.padding-0
+                - week_days.each do |day|
 
-                label.checkbox-inline
-                  = f.check_box :custom_occurance_weekly_selected_days, {multiple: true, id: 'inlineCheckbox'}, day.downcase, false
-                  = day.first.upcase
+                  label.checkbox-inline
+                    = f.check_box :custom_occurance_weekly_selected_days, {multiple: true, id: 'inlineCheckbox'}, day.downcase, false
+                    = day.first.upcase
 
-          .row
-            .col-md-12.padding-0
-              br /
-              h4 Ends:
-            .col-md-4.padding-0
-              .radio
-                label
-                  = f.radio_button :custom_occurance_ends_on_type, 'none', :checked => @event.custom_occurance_ends_on_type == 'none'
-                  | None
-            .col-md-8.padding-0
+            .row
+              .col-md-12.padding-0
+                br /
+                h4 Ends:
+              .col-md-4.padding-0
+                .radio
+                  label
+                    = f.radio_button :custom_occurance_ends_on_type, 'none', :checked => @event.custom_occurance_ends_on_type == 'none'
+                    | None
+              .col-md-8.padding-0
 
-            .col-md-4.padding-0
-              br /
-              .radio
-                label
-                  = f.radio_button :custom_occurance_ends_on_type, 'on', :checked => @event.custom_occurance_ends_on_type == 'on'
-                  | On
-            .col-md-8.padding-0
-              = f.date_field :custom_occurance_repeat_ends_at, class: 'form-control'
-            .col-md-4.padding-0
-              br /
-              .radio
-                label
-                  = f.radio_button :custom_occurance_ends_on_type, 'after', :checked => @event.custom_occurance_ends_on_type == 'after'
-                  | After
-            .col-md-8.padding-0
-              .input-group
-                = f.number_field :custom_occurance_ends_after_duration, class: 'form-control', min: 1, value: (@event.custom_occurance_ends_after_duration || 1)
-                span#basic-addon2.input-group-addon occurances
+              .col-md-4.padding-0
+                br /
+                .radio
+                  label
+                    = f.radio_button :custom_occurance_ends_on_type, 'on', :checked => @event.custom_occurance_ends_on_type == 'on'
+                    | On
+              .col-md-8.padding-0
+                = f.date_field :custom_occurance_repeat_ends_at, class: 'form-control'
+              .col-md-4.padding-0
+                br /
+                .radio
+                  label
+                    = f.radio_button :custom_occurance_ends_on_type, 'after', :checked => @event.custom_occurance_ends_on_type == 'after'
+                    | After
+              .col-md-8.padding-0
+                .input-group
+                  = f.number_field :custom_occurance_ends_after_duration, class: 'form-control', min: 1, value: (@event.custom_occurance_ends_after_duration || 1)
+                  span#basic-addon2.input-group-addon occurances
 
-
+    - if @event.is_group_events?
+      .form-group
+        h5
+          | Group
+        = f.collection_select :group_id, current_user.groups, :id, :name, {}, {class: 'form-control'}
     br/
     h5
       | IMAGE UPLOAD

@@ -11,7 +11,7 @@ class Event < ApplicationRecord
   validate :name_uniqueness
 
   belongs_to :user
-  belongs_to :group
+  belongs_to :group, optional: true
   
   has_one :event_report
   delegate :viewer_count, to: :event_report
@@ -50,6 +50,18 @@ class Event < ApplicationRecord
 
   def calendar
     get_calendar(self)
+  end
+
+  def is_one_time_event?
+    event_type == 'one_time_event'
+  end
+
+  def is_recurring_event?
+    event_type == 'recurring_event'
+  end
+
+  def is_group_events?
+    event_type == 'group_events'
   end
 
   def complete_url

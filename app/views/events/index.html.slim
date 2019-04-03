@@ -10,7 +10,24 @@
         | CREATE A NEW EVENT
       br/
       .btn-center
-        = link_to  'Create new event', new_event_path, class: 'btn btn-primary'
+        = link_to  'One Time Event', new_event_path(et: 'one_time_event'), class: 'btn btn-primary'
+        .point Choose this, if your event only happens once.
+
+      br/
+      .btn-center
+        = link_to  'Recurring Event', new_event_path(et: 'recurring_event'), class: 'btn btn-primary'
+        .point 
+          | Choose this, if your event happens regularly.
+          br
+          | (ex: happens everyday or every month)
+
+      br/
+      .btn-center
+        = link_to  'Group of Events', new_event_path(et: 'group_events'), class: 'btn btn-primary'
+        .point 
+          | Choose this, if you have many events for a
+          br /
+          | related topic. (ex: basketball schedule for the year)  
       hr/
 
       h4

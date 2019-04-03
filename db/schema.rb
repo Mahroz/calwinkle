@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_11_105803) do
+ActiveRecord::Schema.define(version: 2019_04_02_110944) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,16 +74,20 @@ ActiveRecord::Schema.define(version: 2019_03_11_105803) do
     t.string "organizer_email"
     t.string "organizer_website"
     t.string "organizer_picture"
-    t.integer "custom_occurance_every_duration"
-    t.string "custom_occurance_every_duration_type"
-    t.text "custom_occurance_weekly_selected_days", default: [], array: true
-    t.date "custom_occurance_monthly_at"
-    t.date "custom_occurance_repeat_ends_at"
-    t.string "custom_occurance_ends_on_type"
-    t.integer "custom_occurance_ends_after_duration"
-    t.string "custom_occurance_monthly_sub_type"
+    t.boolean "is_multi_day_event"
+    t.date "repeat_until"
+    t.integer "group_id"
     t.index ["event_url"], name: "index_events_on_event_url", unique: true
     t.index ["user_id"], name: "index_events_on_user_id"
+  end
+
+  create_table "groups", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.integer "user_id"
+    t.string "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

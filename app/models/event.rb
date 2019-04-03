@@ -10,6 +10,8 @@ class Event < ApplicationRecord
   validate :name_uniqueness
 
   belongs_to :user
+  belongs_to :group
+  
   has_one :event_report
   delegate :viewer_count, to: :event_report
   delegate :subscriber_count, to: :event_report

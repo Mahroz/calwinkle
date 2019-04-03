@@ -36,6 +36,8 @@ gem 'mini_racer'
 
 gem 'to_words'
 
+gem "mini_magick"
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

@@ -75,7 +75,12 @@
           h5
             | Repeat Until
           input.form-control(id="repeat_until" name="repeat_until" value="#{@event.repeat_until.strftime('%m/%d/%Y') rescue Date.today.strftime('%m/%d/%Y')}" autocomplete="off")
-    .form-group  
+      
+    .form-group
+      h5
+        | Group
+      = f.collection_select :group_id, current_user.groups, :id, :name, {}, {class: 'form-control'}
+      
       .custom-occurance-fields.form-group
         .form-group.col-md-12.p-10-0
           .row

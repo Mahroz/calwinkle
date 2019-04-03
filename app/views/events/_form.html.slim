@@ -60,6 +60,12 @@
             a.dropdown-item.occurance-type href="#"
               = ocr_type
       
+      .form-group
+        br 
+        h5
+          | Group
+        = f.collection_select :group_id, current_user.groups, :id, :name, {}, {class: 'form-control'}
+      
       .custom-occurance-fields.form-group
         .form-group.col-md-12.p-10-0
           .row

@@ -8,6 +8,8 @@ class User < ApplicationRecord
   validates :name, presence: true, uniqueness: true
 
   has_many :events
+  has_many :groups
+  
   has_one :event_calendar
 
   def set_events_calendar_data

@@ -10,14 +10,12 @@
           ul
             - @group.errors.full_messages.each do |message|
               li = message
+  = f.hidden_field :user_id, value: current_user.id
   .row
     .col-lg-12
       .form-group
         = f.label :name
         = f.text_field :name, class: 'form-control'
-      .form-group
-        = f.label :user_id
-        = f.collection_select :user_id, User.all, :id, :name, {}, {class: 'form-control'}
   .row
     .col-lg-12      
       .form-group

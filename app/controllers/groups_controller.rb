@@ -1,11 +1,12 @@
 class GroupsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_group, only: [:show, :edit, :update, :destroy]
+  before_action :validate_user, only: %i[edit update destroy]
 
   # GET /groups
   # GET /groups.json
   def index
-    @groups = Group.all
+    @groups = current_user.groups
   end
 
   # GET /groups/1
@@ -64,6 +65,10 @@ class GroupsController < ApplicationController
   end
 
   private
+    def validate_user
+      redirect_to groups_url, notice: "Couldn't find the group." unless @group.user == current_user
+    end
+    
     # Use callbacks to share common setup or constraints between actions.
     def set_group
       @group = Group.find(params[:id])

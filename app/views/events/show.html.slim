@@ -44,7 +44,7 @@ div style="background-image: url(#{asset_url(main_picture)}), url(#{asset_url(de
               'Address
               br/
             span.event-address
-              = event_address
+              = event_address(@event)
       br/
       .social-container.mobile-hidden
         span.social-text
@@ -69,7 +69,7 @@ div style="background-image: url(#{asset_url(main_picture)}), url(#{asset_url(de
               | Add To Calendar
             ul.dropdown-menu aria-labelledby='btnGroupDrop1'
               - if !android_device? && !apple_device?
-                = render partial: 'add_to_calendar_options_for_other_device'
+                = render partial: 'add_to_calendar_options_for_other_device', locals: {event: @event}
           .event-qr-code.col-md-5
             .row.mobile-hidden
               .col-md-12.h-60.info-text Click to add this event to your Calendar
@@ -88,7 +88,7 @@ div style="background-image: url(#{asset_url(main_picture)}), url(#{asset_url(de
                   | Add To Calendar
                 ul.dropdown-menu aria-labelledby='btnGroupDrop1'
                   - if !android_device? && !apple_device?
-                    = render partial: 'add_to_calendar_options_for_other_device'
+                    = render partial: 'add_to_calendar_options_for_other_device', locals: {event: @event}
 
             .mobile-hidden
               hr/
@@ -116,6 +116,29 @@ div style="background-image: url(#{asset_url(main_picture)}), url(#{asset_url(de
         = auto_link(@event.description.gsub(/\r\n|\r|\n/, '<br>'), html: { target: '_blank'})
         br/
         br/
+      - if @event.group.present?  
+        .heading-2
+          'Other group events
+        .event-description.rows
+          table.table
+            thead
+              th Event Name
+              th Location
+              th Organizer Name
+              th
+            tbody
+              - @event.other_events_in_group.each do |event|
+                tr
+                  td = event.name
+                  td = event_address(event)
+                  td = event.organizer_name
+                  td
+                    .btn-group.h-60 role='group'
+                      button#btnGroupDrop1.subscribe-btn aria-expanded='false' aria-haspopup='true' data-toggle='dropdown'
+                        | Add To Calendar
+                      ul.dropdown-menu aria-labelledby='btnGroupDrop1'
+                        - if !android_device? && !apple_device?
+                          = render partial: 'add_to_calendar_options_for_other_device', locals: {event: @event}
     .col-md-5.col-sm-12
       - unless @event.organizer_name.blank?
         hr.mobile-visible style='border-top: 1px solid rgba(0, 0, 0, 0.1);'

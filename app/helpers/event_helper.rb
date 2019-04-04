@@ -65,8 +65,8 @@ module EventHelper
     end
   end
 
-  def event_address
-    @event.address.present? ? link_to(@event.address, URI.encode("https://www.google.com/maps/search/#{@event.address}"), target: '_blank', style: 'color: #4F89FB;') : "Not Available"
+  def event_address(event)
+    event.address.present? ? link_to(event.address, URI.encode("https://www.google.com/maps/search/#{event.address}"), target: '_blank', style: 'color: #4F89FB;') : "Not Available"
   end
 
   def week_days

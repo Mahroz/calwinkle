@@ -112,6 +112,21 @@
   line-height: 28px;
   font-size: 16px;
 }
+
+.subscribe-btn {
+  background: linear-gradient(107.51deg, #FF7979 23.95%, #FFB077 91.97%);
+  box-shadow: 0px 4px 20px rgba(255, 122, 118, 0.28);
+  border-radius: 100px;
+  height: 46px;
+  min-width: 140px;
+  font-weight: bold;
+  line-height: 23px;
+  font-size: 14px;
+  text-align: center;
+  color: #FFFFFF;
+  border: none;
+}
+
 .event-container {
   margin: auto;
   margin-top: -50px;
@@ -127,19 +142,7 @@
     p {
       font-size: 12px;
     }
-    .subscribe-btn {
-      background: linear-gradient(107.51deg, #FF7979 23.95%, #FFB077 91.97%);
-      box-shadow: 0px 4px 20px rgba(255, 122, 118, 0.28);
-      border-radius: 100px;
-      height: 46px;
-      min-width: 140px;
-      font-weight: bold;
-      line-height: 23px;
-      font-size: 14px;
-      text-align: center;
-      color: #FFFFFF;
-      border: none;
-    }
+    
   }
 }
 .details-container{

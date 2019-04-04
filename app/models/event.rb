@@ -36,6 +36,10 @@ class Event < ApplicationRecord
     start_time.strftime('%I:%M %p') rescue '12:00 PM'
   end
 
+  def other_events_in_group
+    self.group.events.where.not(id: self.id) 
+  end
+
   def formatted_end_time
     end_time.strftime('%I:%M %p') rescue '01:00 PM'
   end

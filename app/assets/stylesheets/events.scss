@@ -49,6 +49,7 @@
 // For event index page
 .new-event-block, .event-list-block {
   margin-bottom: 7px;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
   h4 {
     text-align: center;
     font-size: 18px;
@@ -221,3 +222,4 @@ pre xmp{
   margin-right: 10px;
   margin-top: 4px;
 }
+

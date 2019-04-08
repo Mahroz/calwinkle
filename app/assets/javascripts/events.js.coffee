@@ -54,7 +54,7 @@ $(document).on 'turbolinks:load', (e) ->
 
   getOccuranceRule = (type) ->
     rule       = ''
-    start_date = moment($('input[name="start_date"]').val(), 'DD/MM/YYYY')
+    start_date = moment($('input[name="start_date"]').val(), 'MM/DD/YYYY')
 
     if (type == OCR_DAILY)
       rule = 'FREQ=DAILY;INTERVAL=1'

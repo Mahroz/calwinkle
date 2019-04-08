@@ -68,8 +68,8 @@ div style="background-image: url(#{asset_url(main_picture)}), url(#{asset_url(de
             button#btnGroupDrop1.subscribe-btn aria-expanded='false' aria-haspopup='true' data-toggle='dropdown'
               | Add To Calendar
             ul.dropdown-menu aria-labelledby='btnGroupDrop1'
-              - if !android_device? && !apple_device?
-                = render partial: 'add_to_calendar_options_for_other_device'
+              - if android_device? || apple_device?
+                = render partial: 'add_to_calendar_options_for_android_apple_device'
           .event-qr-code.col-md-5
             .row.mobile-hidden
               .col-md-12.h-60.info-text Click to add this event to your Calendar

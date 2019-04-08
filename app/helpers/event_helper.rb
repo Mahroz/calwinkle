@@ -38,12 +38,12 @@ module EventHelper
   
   def android_device?
     user_agent = request.headers["HTTP_USER_AGENT"]
-    user_agent.present? && user_agent =~ /\b(Android)\b/i
+    user_agent.present? && (user_agent =~ /\b(Android)\b/i).present?
   end
 
   def apple_device?
     user_agent = request.headers["HTTP_USER_AGENT"]
-    user_agent.present? && user_agent =~ /\b(iPhone|iPad)\b/i
+    user_agent.present? && (user_agent =~ /\b(iPhone|iPad)\b/i).present?
   end
 
   def format_date(date)

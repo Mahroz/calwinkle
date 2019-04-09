@@ -28,9 +28,9 @@ class Event < ApplicationRecord
   OCR_MONTHLY = 'Monthly'.freeze
   OCR_YEARLY = 'Yearly'.freeze
   OCR_CUSTOM = 'Custom'.freeze
+  OCR_WEEKLY = 'Weekly'.freeze
 
-  enum occurance_type: [OCR_DONT_REPEAT, OCR_DAILY, OCR_WEEKL_DAYS,
-                        OCR_WEEKENDS, OCR_MONTHLY, OCR_YEARLY, OCR_CUSTOM]
+  enum occurance_type: [OCR_DONT_REPEAT, OCR_DAILY, OCR_WEEKLY, OCR_MONTHLY, OCR_YEARLY]
 
   def formatted_start_time
     start_time.strftime('%I:%M %p') rescue '12:00 PM'
@@ -83,6 +83,8 @@ class Event < ApplicationRecord
       (self.start_date..repeat_end_date).to_a
     when 'Week Days'
       (self.start_date..repeat_end_date).group_by(&:wday)[self.start_date.wday]
+    when 'Weekly'
+      (self.start_date..repeat_end_date).group_by(&:wday)[self.start_date.wday]  
     when 'Weekends'
       sat_in_date_range = (self.start_date.beginning_of_week(:monday)..repeat_end_date).group_by(&:wday)[6]
       sun_in_date_range = (self.start_date.beginning_of_week(:monday)..repeat_end_date).group_by(&:wday)[7]

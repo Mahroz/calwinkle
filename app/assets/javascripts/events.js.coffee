@@ -69,6 +69,9 @@ $(document).on 'turbolinks:load', (e) ->
       day   = start_date.format('DD')
       month = start_date.format('MM')
       rule  = "FREQ=YEARLY;BYMONTH=#{month};BYMONTHDAY=#{day}"
+    else if (type == 'OCR_WEEKLY')
+      day = start_date.format('DD')
+      rule = "FREQ=WEEKLY;BYDAY=#{day};INTERVAL=1"
     else if (type == OCR_CUSTOM)
       rule = 'bohot heavy'
 

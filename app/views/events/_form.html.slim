@@ -249,11 +249,11 @@ javascript:
 
   var toggleEndDateTimeFieldOnIsMultiDayEventChange = function(){
     if($('#event_is_multi_day_event').prop('checked')){
-      $('.endDate').show();
+      $('.endDate').css('visibility','visible');
       $('.endDate').find('input').prop('required', 'required');
     } else {
       $('.endDate').find('input').val('').removeAttr('required')
-      $('.endDate').hide();
+      $('.endDate').css('visibility','hidden');
     }
   }
 

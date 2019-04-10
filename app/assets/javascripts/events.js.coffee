@@ -3,6 +3,7 @@ $(document).on 'turbolinks:load', (e) ->
   OCR_DAILY = 'Daily'
   OCR_WEEKL_DAYS = 'Week Days'
   OCR_WEEKENDS = 'Weekends'
+  OCR_WEEKLY = 'Weekly'
   OCR_MONTHLY = 'Monthly'
   OCR_YEARLY = 'Yearly'
   OCR_CUSTOM = 'Custom Days'

@@ -27,7 +27,7 @@ module EventCalandar
       unless occurance_rule.blank?
         repeat_until_statement = ""
         repeat_until_statement = ";UNTIL=#{event.repeat_until.strftime('%Y%m%d')}T000000Z"  unless event.repeat_until.blank?
-        e.rrule = occurance_rule
+        e.rrule = event.occurance_rule + repeat_until_statement
       end
       e.alarm do |a|
         a.action  = "DISPLAY"

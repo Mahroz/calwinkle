@@ -5,12 +5,14 @@
       br/
       .btn-center.event-create-buttons
         = link_to  'One Time Event', new_event_path(et: 'one_time_event'), class: 'btn btn-primary'
+        br/
         .point 
           | Choose this, if your event only happens once.
 
       br/
       .btn-center.event-create-buttons
         = link_to  'Recurring Event', new_event_path(et: 'recurring_event'), class: 'btn btn-primary'
+        br/
         .point 
           | Choose this, if your event happens regularly.
           br
@@ -19,6 +21,7 @@
       br/
       .btn-center.event-create-buttons
         = link_to  'Group of Events', new_event_path(et: 'group_events'), class: 'btn btn-primary'
+        br/
         .point 
           | Choose this, if you have many events for a
           br /
@@ -34,8 +37,8 @@
           | easy for your site visitors to view events and
           br /
           | subscribe to the ones they like.
-        br /
-        br /
+          br /
+        br/
         button.btn.btn-primary data-target="#myModal" data-toggle="modal" type="button" 
           | Generate Calendar Widget
     .col-md-8.order-1.order-lg-2.event-list-block

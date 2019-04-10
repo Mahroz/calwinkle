@@ -24,7 +24,11 @@ module EventCalandar
       e.description = "#{description}<br><br>Event Details:<br>#{complete_url}"
       e.location    = address || ''
       # e.status      = 'CANCELLED' if event.is_cancel?
-      e.rrule       = occurance_rule unless occurance_rule.blank?
+      unless occurance_rule.blank?
+        repeat_until_statement = ""
+        repeat_until_statement = ";UNTIL=" + (Icalendar::Values::DateTime.new event.repeat_until.to_datetime, 'tzid' => tzid) unless event.repeat_until.blank?
+        e.rrule = occurance_rule + repeat_until_statement
+      end
       e.alarm do |a|
         a.action  = "DISPLAY"
         a.summary = "30 minutes before #{name}"

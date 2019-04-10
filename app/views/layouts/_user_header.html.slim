@@ -4,8 +4,6 @@ div class='user-header-block' id='main-header'
 
   = link_to destroy_user_session_path, method: :delete do
     span Logout
-  = link_to  'Groups', groups_url, class: 'mr-15 nav-item-4'
-  = link_to  'Create New Event', new_event_path, class: 'mr-15 nav-item-3'
   = link_to  'Home', authenticated_root_url, class: 'mr-15 nav-item-2'
   
   strong.mr-15.black-text.nav-item-1 = "Welcome #{current_user.name.capitalize}"

@@ -65,7 +65,7 @@ class Event < ApplicationRecord
   end
 
   def complete_url
-    Rails.env.production? ? 'www.calwinkle.com' : 'localhost:3000' + event_url
+    Rails.env.production? ? 'https://www.calwinkle.com/' : 'http://localhost:3000/' + event_url
   end
 
   def viewer_count_increment
@@ -105,7 +105,7 @@ class Event < ApplicationRecord
       [self.start_date]
     end
     base_object = {title: self.name}
-    dates.select{|d| d.present?}.map{|d| base_object.merge({start: "#{d}T#{self.start_time.strftime('%H:%M:%S')}", end: "#{d}T#{self.end_time&.strftime('%H:%M:%S')}"})}
+    dates.select{|d| d.present?}.map{|d| base_object.merge({start: "#{d}T#{self.start_time.strftime('%H:%M:%S')}", end: "#{d}T#{self.end_time&.strftime('%H:%M:%S')}", url: self.complete_url})}
   end
 
   private

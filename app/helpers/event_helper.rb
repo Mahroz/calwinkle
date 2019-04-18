@@ -1,7 +1,5 @@
 module EventHelper
-  def display_date(date)
-    date.strftime("%m/%d/%Y") rescue 'MM/DD/YY'
-  end
+  
 
   def get_qr_code(url, size)
     RQRCode::QRCode.new(url).to_img

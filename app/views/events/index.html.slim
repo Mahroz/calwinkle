@@ -19,8 +19,15 @@
           | (ex: happens everyday or every month)
 
       br/
-      .btn-center.event-create-buttons
-        = link_to  'Group of Events', new_event_path(et: 'group_events'), class: 'btn btn-primary'
+      .dropdown.btn-center.event-create-buttons
+        button#dLabel aria-expanded="false" aria-haspopup="true" class='btn btn-primary' data-toggle="dropdown" type="button"
+          | Group of Events
+          span.caret
+        ul.dropdown-menu aria-labelledby="dLabel" 
+          li
+            = link_to 'Create New Group', new_group_url
+          li 
+            = link_to 'View Current Groups', '#', data: {target: "#userGroups", toggle: "modal"}
         br/
         .point 
           | Choose this, if you have many events for a
@@ -59,3 +66,39 @@
           .modal-footer
             button.btn.btn-default data-dismiss="modal" type="button"  Close
   
+  #userGroups.modal.fade role="dialog" 
+    .modal-dialog
+      /! Modal content
+      .modal-content
+        .modal-header
+          h4.modal-title Current Group Events
+        .modal-body
+          .col-md-12
+            .point.pull-left style='text-align: left;'
+              | These are your current groups of events.
+              br/
+              | - To add another event to a group, click "Add Event".
+              br /
+              | - To view an event in a group, click "View" to see all events.
+              br /
+              | - To delete an entire group of events, click "Delete".
+              br /
+              | Note: changes done will automatically update on your customer's calendars.
+          .col-md-12.groups-table
+            table.table.table-bordered
+              thead
+                tr
+                  th Name
+                  th Description
+                  th colspan='3' Actions
+
+              tbody
+                - current_user.groups.each do |group|
+                  tr
+                    td = group.name
+                    td = group.description
+                    td = link_to 'Add Event', new_event_path(et: 'group_events', gid: group.id)
+                    td = link_to 'View', edit_group_path(group)
+                    td = link_to 'Delete', group, data: { confirm: 'This will delete all the events in this group. Are you sure?' }, method: :delete
+        .modal-footer
+          button.btn.btn-default data-dismiss="modal" type="button"  Close

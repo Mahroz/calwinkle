@@ -14,6 +14,10 @@ Rails.application.routes.draw do
 
   resources :events, except: [:show]
   resources :groups, exept: :show
+
+  get '/:username/groups/:groupname' => 'groups#show', as: :show_group
+
+
   get '/:username/:eventname' => 'events#show', as: :show_event
   post '/new/preview' => 'events#preview', as: :event_preview
   get '/events/:id/calendar/:name' => 'events#calendar', as: :calendar

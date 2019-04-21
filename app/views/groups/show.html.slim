@@ -1,18 +1,53 @@
-p#notice = notice
+<!DOCTYPE html>
+html
+  head
+    / = xmlns "http://www.w3.org/1999/xhtml"
+    / = xmlns:fb "http://ogp.me/ns/fb#"
+    title = @group.name.capitalize
+    = favicon_link_tag asset_path('calwinkle-icon.png')
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag 'users', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'users', 'data-turbolinks-track': 'reload'
 
-p
-  strong Name:
-  = @group.name
-p
-  strong Description:
-  = @group.description
-p
-  strong User:
-  = @group.user_id
-p
-  strong Image:
-  = @group.image
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <script type="text/javascript" src="https://addevent.com/libs/atc/1.6.1/atc.min.js" async defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-=> link_to 'Edit', edit_group_path(@group)
-'|
-=< link_to 'Back', groups_path
+    body
+      div.event-container style='margin-top: 0px !important;'
+        .row
+          .col-md-12.col-sm-12.font-size-14
+            .event-name.rows
+              = @group.name
+              hr /
+        .row
+          .col-md-12.col-sm-12
+            div.heading-2
+              'Group Details
+            .event-description.rows
+              = auto_link(@group.description.gsub(/\r\n|\r|\n/, '<br>'), html: { target: '_blank'})
+              br/
+              br/
+            .heading-2
+              'Group events
+            .event-description.rows
+              table.table
+                thead
+                  th Event Name
+                  th Location
+                  th Organizer Name
+                  th
+                tbody
+                  - @group.events.each do |event|
+                    tr
+                      td = event.name
+                      td = event_address(event)
+                      td = event.organizer_name
+                      td
+                        .btn-group.h-60 role='group'
+                          button#btnGroupDrop1.subscribe-btn aria-expanded='false' aria-haspopup='true' data-toggle='dropdown'
+                            | Add To Calendar
+                          ul.dropdown-menu aria-labelledby='btnGroupDrop1'
+                            - if !android_device? && !apple_device?
+                              = render partial: 'events/add_to_calendar_options_for_other_device', locals: {event: event}

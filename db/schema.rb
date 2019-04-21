@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_02_110944) do
+ActiveRecord::Schema.define(version: 2019_04_21_170705) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 2019_04_02_110944) do
     t.boolean "is_multi_day_event"
     t.date "repeat_until"
     t.integer "group_id"
+    t.string "event_type"
     t.index ["event_url"], name: "index_events_on_event_url", unique: true
     t.index ["user_id"], name: "index_events_on_user_id"
   end
@@ -88,6 +89,7 @@ ActiveRecord::Schema.define(version: 2019_04_02_110944) do
     t.string "image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "group_url"
   end
 
   create_table "users", force: :cascade do |t|

@@ -56,7 +56,7 @@
       .col-md-12
         h6.event-url-heading QR CODE:
       .col-md-2
-        
+        = image_tag get_group_qr_code(@group&.complete_url, 100) if @group.persisted?
       .col-md-10
         .point
           | OR codes makes it easy for your customer to scan and to add subscription to your calendar.

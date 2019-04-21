@@ -44,7 +44,7 @@ div style="background-image: url(#{asset_url(main_picture)}), url(#{asset_url(de
               'Address
               br/
             span.event-address
-              = event_address
+              = event_address(@event)
       br/
       .social-container.mobile-hidden
         span.social-text
@@ -88,7 +88,7 @@ div style="background-image: url(#{asset_url(main_picture)}), url(#{asset_url(de
                   | Add To Calendar
                 ul.dropdown-menu aria-labelledby='btnGroupDrop1'
                   - if !android_device? && !apple_device?
-                    = render partial: 'add_to_calendar_options_for_other_device'
+                    = render partial: 'events/add_to_calendar_options_for_other_device', locals: {event: @event}
 
             .mobile-hidden
               hr/

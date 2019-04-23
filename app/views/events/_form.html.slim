@@ -135,10 +135,13 @@
                   span#basic-addon2.input-group-addon occurances
 
     - if @event.is_group_events?
-      .form-group
-        h5
-          | Group
-        = f.collection_select :group_id, current_user.groups, :id, :name, {}, {class: 'form-control'}
+      - if params[:gid].blank?
+        .form-group
+          h5
+            | Group
+          = f.collection_select :group_id, current_user.groups, :id, :name, {}, {class: 'form-control'}
+      - else
+        = f.hidden_field :group_id, value: params[:gid]    
     br/
     h5
       | IMAGE UPLOAD

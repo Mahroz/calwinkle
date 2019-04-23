@@ -79,14 +79,15 @@
               tr
                 th Name
                 th Event Date
-                th colspan='2' Actions
+                th colspan='3' Actions
 
             tbody
               - @group.events.each do |event|
                 tr
                   td = event.name
                   td = display_date(event.start_date)
-                  td = link_to 'View Event', edit_event_path(event, et: 'group_events', gid: @group.id)
+                  td = link_to 'View Event', get_event_url(event), target: :_blank
+                  td = link_to 'Edit Event', edit_event_path(event, et: 'group_events', gid: @group.id)
                   td = link_to 'Delete Event', event, data: { confirm: 'Are you sure?' }, method: :delete
           br /
 

@@ -6,9 +6,7 @@ module EventHelper
                    .resize(size, size).to_data_url
   end
 
-  def get_event_url(event)
-    "#{request.base_url}#{event.event_url}"
-  end
+  
 
   def split_datetime(datetime)
     date_part = datetime.strftime('%Y/%m/%d') rescue ''

@@ -69,7 +69,7 @@
   #userGroups.modal.fade role="dialog" 
     .modal-dialog
       /! Modal content
-      .modal-content
+      .modal-content.events-group-modal
         .modal-header
           h4.modal-title Current Group Events
         .modal-body
@@ -97,7 +97,7 @@
                   tr
                     td = group.name
                     td = group.description
-                    td = link_to 'Add Event', new_event_path(et: 'group_events', gid: group.id)
+                    td width='20%' = link_to 'Add Event', new_event_path(et: 'group_events', gid: group.id)
                     td = link_to 'View', edit_group_path(group)
                     td = link_to 'Delete', group, data: { confirm: 'This will delete all the events in this group. Are you sure?' }, method: :delete
         .modal-footer

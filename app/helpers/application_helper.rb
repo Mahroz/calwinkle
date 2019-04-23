@@ -19,4 +19,8 @@ module ApplicationHelper
   def event_address(event)
     event.address.present? ? link_to(event.address, URI.encode("https://www.google.com/maps/search/#{event.address}"), target: '_blank', style: 'color: #4F89FB;') : "Not Available"
   end
+
+  def get_event_url(event)
+    "#{request.base_url}#{event.event_url}"
+  end
 end

@@ -51,3 +51,7 @@
   br/
   .btn-center
     = link_to 'Done', events_path, class: 'btn btn-primary'
+    - if @event.is_group_events?
+      br /
+      br /
+      = link_to 'Add Another Event', new_event_url(et: 'group_events', gid: @event.group_id), class: 'btn btn-primary'

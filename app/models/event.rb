@@ -56,6 +56,10 @@ class Event < ApplicationRecord
     event_type == 'one_time_event'
   end
 
+  def other_events_in_group
+    self.group.events.where.not(id: self.id) 
+  end
+
   def is_recurring_event?
     event_type == 'recurring_event'
   end

@@ -129,7 +129,7 @@ div style="background-image: url(#{asset_url(main_picture)}), url(#{asset_url(de
             tbody
               - @event.other_events_in_group.each do |event|
                 tr
-                  td = event.name
+                  td = link_to event.name, get_event_url(event), target: :_blank
                   td = event_address(event)
                   td = event.organizer_name
                   td

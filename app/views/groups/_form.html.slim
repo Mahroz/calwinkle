@@ -1,94 +1,97 @@
-.col-md-6
-  .h4
-    | Group Events:
-    hr
-  = form_for @group, multipart: true do |f|
-    .row
-      .col-lg-12
-        - if @group.errors.any?
-          #error_explanation
-            h2 = "#{pluralize(@group.errors.count, "error")} prohibited this group from being saved:"
-            ul
-              - @group.errors.full_messages.each do |message|
-                li = message
-    = f.hidden_field :user_id, value: current_user.id
-    .row
-      .col-lg-12
-        .form-group
-          h5
-            | Group Event Name *
-          = f.text_field :name, class: 'form-control'
-    .row
-      .col-lg-12      
-        .form-group
-          h5
-            | Group Event Description *
-          = f.text_area :description, class: 'form-control'
-        .form-group
-          h5
-            | Group Event Image *
-          = f.label :image
-          br /
-          - if @group.image.present?
-            = image_tag @group.image.url, style: 'width: 100px; height: 100px;' 
+.row
+  .col-md-6
+    .h4
+      | Group Events:
+      hr
+    = form_for @group, multipart: true do |f|
+      .row
+        .col-lg-12
+          - if @group.errors.any?
+            #error_explanation
+              h2 = "#{pluralize(@group.errors.count, "error")} prohibited this group from being saved:"
+              ul
+                - @group.errors.full_messages.each do |message|
+                  li = message
+      = f.hidden_field :user_id, value: current_user.id
+      .row
+        .col-lg-12
+          .form-group
+            h5
+              | Group Event Name *
+            = f.text_field :name, class: 'form-control'
+      .row
+        .col-lg-12      
+          .form-group
+            h5
+              | Group Event Description *
+            = f.text_area :description, class: 'form-control'
+          .form-group
+            h5
+              | Group Event Image *
+            = f.label :image
+            br /
+            - if @group.image.present?
+              = image_tag @group.image.url, style: 'width: 100px; height: 100px;' 
+              br /
+              br /
+            = f.file_field :image, required: !@group.image.present?
+      .row
+        .col-lg-12      
+          .form-group 
+            = f.submit 'Submit', class: 'btn btn-primary'
+  .col-md-6
+    - if @group.persisted?      
+      .row
+        .col-lg-12
+          .form-group
+            h5
+              | Group Event Details
+        .col-md-2
+          h6.event-url-heading URL:
+        .col-md-10
+          = link_to new_event_url(et: 'group_events', gid: @group&.id), new_event_url(et: 'group_events', gid: @group&.id), target: '_blank', style: 'font-size: 15px;'
+          .point
+            | Share this url with your customers. When they click on
+            br /
+            | the url, they can view your event and subscribe to your
+            br /
+            | calendar.
+        .col-md-12
+          h6.event-url-heading QR CODE:
+        .col-md-2
+          = image_tag get_group_qr_code(@group&.complete_url, 100) if @group.persisted?
+        .col-md-10
+          .point
+            | OR codes makes it easy for your customer to scan and to add subscription to your calendar.
             br /
             br /
-          = f.file_field :image, required: !@group.image.present?
-    .row
-      .col-lg-12      
-        .form-group 
-          = f.submit 'Submit', class: 'btn btn-primary'
-    .row
-      .col-lg-12
-        .form-group
-          h5
-            | Group Event Details
-      .col-md-2
-        h6.event-url-heading URL:
-      .col-md-10
-        = link_to new_event_url(et: 'group_events', gid: @group&.id), new_event_url(et: 'group_events', gid: @group&.id), target: '_blank', style: 'font-size: 15px;'
-        .point
-          | Share this url with your customers. When they click on
-          br /
-          | the url, they can view your event and subscribe to your
-          br /
-          | calendar.
-      .col-md-12
-        h6.event-url-heading QR CODE:
-      .col-md-2
-        = image_tag get_group_qr_code(@group&.complete_url, 100) if @group.persisted?
-      .col-md-10
-        .point
-          | OR codes makes it easy for your customer to scan and to add subscription to your calendar.
-          br /
-          br /
-          | Tip: download and share this QR code via email, on your printed materials, etc.
-          br /
-          br /
-          | To download, right click and click "Save Image as".
-      .col-md-12
-        hr /
-        - if @group.persisted?
-          .h4
-            | EVENTS IN THIS GROUP: 
-            = @group.events.count
-          br /
+            | Tip: download and share this QR code via email, on your printed materials, etc.
+            br /
+            br /
+            | To download, right click and click "Save Image as".
+        .col-md-12
+          hr /
+          - if @group.persisted?
+            .h4
+              | EVENTS IN THIS GROUP: 
+              = @group.events.count
+            br /
 
-          table.table
-            thead
-              tr
-                th Name
-                th Event Date
-                th colspan='3' Actions
-
-            tbody
-              - @group.events.each do |event|
+            table.table
+              thead
                 tr
-                  td = event.name
-                  td = display_date(event.start_date)
-                  td = link_to 'View Event', get_event_url(event), target: :_blank
-                  td = link_to 'Edit Event', edit_event_path(event, et: 'group_events', gid: @group.id)
-                  td = link_to 'Delete Event', event, data: { confirm: 'Are you sure?' }, method: :delete
-          br /
+                  th Name
+                  th Event Date
+                  th colspan='3' Actions
 
-          = link_to 'Add New Event', new_event_url(et: 'group_events', gid: @group.id), class: 'btn btn-primary'
+              tbody
+                - @group.events.each do |event|
+                  tr
+                    td = event.name
+                    td = display_date(event.start_date)
+                    td = link_to 'View Event', get_event_url(event), target: :_blank
+                    td = link_to 'Edit Event', edit_event_path(event, et: 'group_events', gid: @group.id)
+                    td = link_to 'Delete Event', event, data: { confirm: 'Are you sure?' }, method: :delete
+            br /
+
+            = link_to 'Add New Event', new_event_url(et: 'group_events', gid: @group.id), class: 'btn btn-primary'

@@ -3,6 +3,7 @@
     = display_date(event.start_date)
   .col-md-10
     - url = get_event_url(event)
+
     .event-name
       h5 = event.name
       = link_to event_path(event), method: :delete, data: { confirm: 'Are you sure?' }, class: 'event-delete' do
@@ -18,6 +19,12 @@
         a class='event-url' target='_blank' href=url #{url}
         .point
           | Share this url with your customers. When they click on the url, they can view your event and subscribe to your calendar.
+      - if event.group_id.present?
+        .col-md-2
+          h6.event-url-heading Group:
+        .col-md-10
+          a class='event-url' target='_blank' href=edit_group_url(event.group) #{event.group.name}
+          br /
     .event-qr-code
       .row
         .col-md-2

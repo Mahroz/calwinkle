@@ -5,7 +5,13 @@
     - url = get_event_url(event)
 
     .event-name
-      h5 = event.name
+      h5 
+        = event.name
+      - if event.group_id.present?
+        h6  
+          | Group: 
+          
+          = link_to event.group&.name, edit_event_url(event.group)
       = link_to event_path(event), method: :delete, data: { confirm: 'Are you sure?' }, class: 'event-delete' do
         button.btn.btn-danger.btn-xs Delete
       = link_to  edit_event_path(event), class: 'event-edit' do
@@ -19,12 +25,7 @@
         a class='event-url' target='_blank' href=url #{url}
         .point
           | Share this url with your customers. When they click on the url, they can view your event and subscribe to your calendar.
-      - if event.group_id.present?
-        .col-md-2
-          h6.event-url-heading Group:
-        .col-md-10
-          a class='event-url' target='_blank' href=edit_group_url(event.group) #{event.group.name}
-          br /
+      
     .event-qr-code
       .row
         .col-md-2

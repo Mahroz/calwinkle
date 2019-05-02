@@ -11,7 +11,7 @@
         h6  
           | Group: 
           
-          = link_to event.group&.name, edit_event_url(event.group)
+          = link_to event.group&.name, edit_group_path(event.group)
       = link_to event_path(event), method: :delete, data: { confirm: 'Are you sure?' }, class: 'event-delete' do
         button.btn.btn-danger.btn-xs Delete
       = link_to  edit_event_path(event), class: 'event-edit' do
